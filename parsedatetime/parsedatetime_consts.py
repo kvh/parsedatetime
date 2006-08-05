@@ -4,7 +4,6 @@
 CalendarConstants defines all constants used by parsedatetime.py.
 """
 
-__version__ = '0.6.1'
 __license__ = """Copyright (c) 2004-2006 Mike Taylor, All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");

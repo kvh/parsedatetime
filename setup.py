@@ -10,7 +10,7 @@ desc='Parse "human readable" date/time expressions',
 
 
 setuptools.setup(name='parsedatetime',
-      version='0.6.1',
+      version='0.6.2',
       description=desc,
       summary=desc,
       author='Mike Taylor',

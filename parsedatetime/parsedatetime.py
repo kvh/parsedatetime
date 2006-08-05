@@ -4,7 +4,6 @@
 Parse human-readable date/time text.
 """
 
-__version__ = '0.6.1'
 __license__ = """Copyright (c) 2004-2006 Mike Taylor, All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -233,72 +232,7 @@ class Calendar:
         """
 
         if _debug:
-            print '[%s][%s][%s]' % (quantity, modifier, units)
-
-        if source is None:
-            source = time.localtime()
-
-        if quantity is None:
-            quantity = ''
-        else:
-            quantity = string.strip(quantity)
-
-        if len(quantity) == 0:
-            qty = 1
-        else:
-            try:
-                qty = int(quantity)
-            except ValueError:
-                qty = 0
-
-        if modifier in self.ptc.Modifiers:
-            qty = qty * self.ptc.Modifiers[modifier]
-
-            if units == None or units == '':
-                units = 'dy'
-
-        # plurals are handled by regex's (could be a bug tho)
-
-        if units in self.ptc.Units:
-            u = self.ptc.Units[units]
-        else:
-            u = 1
-
-        (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = source
-
-        start  = datetime.datetime(yr, mth, dy, hr, mn, sec)
-        target = start
-
-        if units.startswith('y'):
-            target = self.inc(start, year=qty)
-        elif units.endswith('th'):
-            target = self.inc(start, month=qty)
-        else:
-            if units.startswith('d'):
-                target = start + datetime.timedelta(days=qty)
-            elif units.startswith('h'):
-                target = start + datetime.timedelta(hours=qty)
-            elif units.startswith('m'):
-                target = start + datetime.timedelta(minutes=qty)
-            elif units.startswith('s'):
-                target = start + datetime.timedelta(seconds=qty)
-            elif units.startswith('w'):
-                target = start + datetime.timedelta(weeks=qty)
-
-        if target != start:
-            self.invalidFlag = 0
-
-        return target.timetuple()
-
-
-    def _buildTime(self, source, quantity, modifier, units):
-        """
-        Take quantity, modifier and unit strings and convert them into values.
-        Then calcuate the time and return the adjusted sourceTime
-        """
-
-        if _debug:
-            print '[%s][%s][%s]' % (quantity, modifier, units)
+            print '_buildTime: [%s][%s][%s]' % (quantity, modifier, units)
 
         if source is None:
             source = time.localtime()
@@ -336,7 +270,7 @@ class Calendar:
 
         if units.startswith('y'):
             target = self.inc(start, year=qty)
-        elif units.endswith('th') or units.endswith('ths'): 
+        elif units.endswith('th') or units.endswith('ths'):
             target = self.inc(start, month=qty)
         else:
             if units.startswith('d'):
@@ -409,7 +343,7 @@ class Calendar:
             dy = 1
 
         if m.group('year') !=  None:
-            yr  = int(m.group('year'))
+            yr = int(m.group('year'))
         elif (mth < currentMth) or (mth == currentMth and dy < currentDy):
             # if that day and month have already passed in this year,
             # then increment the year by 1
@@ -430,6 +364,7 @@ class Calendar:
         Evaluates the string if there is a modifier in it
         """
         offset = self.ptc.Modifiers[modifier]
+
         if totalTime is not None:
             (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = totalTime
         else:
@@ -447,7 +382,8 @@ class Calendar:
 
         flag = 0
 
-        if unit == 'month' or unit == 'mth':
+        if unit == self.ptc.Target_Text['month'] or \
+           unit == self.ptc.Target_Text['mth']:
             if offset == 0:
                 dy        = self.ptc.DaysInMonthList[mth - 1]
                 totalTime = (yr, mth, dy, 9, 0, 0, wd, yd, isdst)
@@ -466,7 +402,9 @@ class Calendar:
 
             flag = 1
 
-        if unit == 'week' or unit == 'wk' or unit == 'w':
+        if unit == self.ptc.Target_Text['week'] or \
+             unit == self.ptc.Target_Text['wk'] or \
+             unit == self.ptc.Target_Text['w']:
             if offset == 0:
                 start     = datetime.datetime(yr, mth, dy, 17, 0, 0)
                 target    = start + datetime.timedelta(days=(4-wd))
@@ -480,7 +418,9 @@ class Calendar:
 
             flag = 1
 
-        if unit == 'day' or unit == 'dy' or unit == 'd':
+        if unit == self.ptc.Target_Text['day'] or \
+            unit == self.ptc.Target_Text['dy'] or \
+            unit == self.ptc.Target_Text['d']:
             if offset == 0:
                 totalTime = (yr, mth, dy, 17, 0, 0, wd, yd, isdst)
             elif offset == 2:
@@ -494,7 +434,8 @@ class Calendar:
 
             flag = 1
 
-        if unit == 'hour' or unit == 'hr':
+        if unit == self.ptc.Target_Text['hour'] or \
+           unit == self.ptc.Target_Text['hr']:
             if offset == 0:
                 totalTime = (yr, mth, dy, hr, 0, 0, wd, yd, isdst)
             else:
@@ -504,7 +445,9 @@ class Calendar:
 
             flag = 1
 
-        if unit == 'year' or unit == 'yr' or unit == 'y':
+        if unit == self.ptc.Target_Text['year'] or \
+             unit == self.ptc.Target_Text['yr'] or \
+             unit == self.ptc.Target_Text['y']:
             if offset == 0:
                 totalTime = (yr, 12, 31, hr, mn, sec, wd, yd, isdst)
             elif offset == 2:
@@ -543,18 +486,19 @@ class Calendar:
                 flag              = 1
                 self.modifierFlag = 0
 
-       # if the word after next is a number, the string is likely to be something like 
-       # "next 4 hrs" for which we have to combine the units with the rest of the string
+        # if the word after next is a number, the string is likely to be something like 
+        # "next 4 hrs" for which we have to combine the units with the rest of the string
         if flag == 0:
             if offset < 0:
                 # if offset is negative, the unit has to be made negative
                 unit = '-' + unit
-            str2 = unit + ' ' + str2
+            str2 = '%s %s' % (unit, str2)
 
-        str = str1 + ' ' + str2  #combine the rest of the string
+        str = '%s %s' % (str1, str2)
+
         self.modifierFlag = 0
 
-        return  str, totalTime
+        return str, totalTime
 
 
     def evalModifier2(self, modifier, str1 , str2, totalTime):
@@ -562,6 +506,7 @@ class Calendar:
         Evaluates the string if there is a modifier in it
         """
         offset = self.ptc.Modifiers[modifier]
+
         if totalTime is not None:
             (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = totalTime
         else:
@@ -577,29 +522,34 @@ class Calendar:
         # calculate the totalTime
         if offset < 0:
             digit = r'\d+'
+
             m = re.match(digit, string.strip(str2))
             if m is not None:
-                qty = int(m.group())*(-1)
+                qty  = int(m.group())*(-1)
                 str2 = str2[m.end():]
-                str2 = repr(qty) + str2
+                str2 = '%d%s' % (qty, str2)
 
         totalTime, flag = self.parse(str2, totalTime)
+
         if str1 != '':
             if offset < 0:
                 digit = r'\d+'
+
                 m = re.match(digit, string.strip(str1))
                 if m is not None:
-                    qty = int(m.group())*(-1)
+                    qty  = int(m.group())*(-1)
                     str1 = str1[m.end():]
-                    str1 = repr(qty) + str1
-            totalTime,  flag = self.parse (str1, totalTime) 
-        return '',totalTime
+                    str1 = '%d%s' % (qty, str1)
+
+            totalTime, flag = self.parse (str1, totalTime) 
+
+        return '', totalTime
+
 
     def parse(self, datetimeString, sourceTime=None):
         """
         Splits the string into tokens, finds the regex matches and helps evaluate the datetime
         """
-
         s         = string.strip(datetimeString.lower())
         dateStr   = ''
         parseStr  = ''
@@ -608,7 +558,7 @@ class Calendar:
         self.invalidFlag = 0
 
         if s == '' :
-            if sourceTime != None:
+            if sourceTime is not None:
                 return (sourceTime, 0)
             else:
                 return (time.localtime(), 1)
@@ -617,6 +567,9 @@ class Calendar:
             flag = 0
             str1 = ''
             str2 = ''
+
+            if _debug:
+                print 'parse (top of loop): [%s][%s]' % (s, parseStr)
 
             if parseStr == '':
                 # Modifier like next\prev..
@@ -640,9 +593,9 @@ class Calendar:
                     if (m.group('modifier') != s):
                         # capture remaining string
                         parseStr = m.group('modifier')
-                        str1    = string.strip(s[:m.start('modifier')])
-                        str2    = string.strip(s[m.end('modifier'):])
-                        flag    = 1
+                        str1     = string.strip(s[:m.start('modifier')])
+                        str2     = string.strip(s[m.end('modifier'):])
+                        flag     = 1
                     else:
                         parseStr = s
 
@@ -699,10 +652,10 @@ class Calendar:
                     if (m.group('qty') != s):
                         # capture remaining string
                         parseStr = m.group('qty')
-                        str1    = s[:m.start('qty')]
-                        str2    = s[m.end('qty'):]
-                        s       = str1 + ' ' + str2
-                        flag    = 1
+                        str1     = s[:m.start('qty')]
+                        str2     = s[m.end('qty'):]
+                        s        = '%s %s' % (str1, str2)
+                        flag     = 1
                     else:
                         parseStr = s
 
@@ -714,10 +667,10 @@ class Calendar:
                     if (m.group('qty') != s):
                         # capture remaining string
                         parseStr = m.group('qty')
-                        str1    = s[:m.start('qty')]
-                        str2    = s[m.end('qty'):]
-                        s       = str1 + ' ' + str2
-                        flag    = 1
+                        str1     = s[:m.start('qty')]
+                        str2     = s[m.end('qty'):]
+                        s        = '%s %s' % (str1, str2)
+                        flag     = 1
                     else:
                         parseStr = s 
 
@@ -729,10 +682,10 @@ class Calendar:
                     if (m.group('weekday') != s):
                         # capture remaining string
                         parseStr = m.group()
-                        str1    = s[:m.start('weekday')]
-                        str2    = s[m.end('weekday'):]
-                        s       = str1 + ' ' + str2
-                        flag    = 1
+                        str1     = s[:m.start('weekday')]
+                        str2     = s[m.end('weekday'):]
+                        s        = '%s %s' % (str1, str2)
+                        flag     = 1
                     else:
                         parseStr = s
 
@@ -767,8 +720,8 @@ class Calendar:
                             str2     = s[m.end('meridian'):] 
                     else:
                         parseStr = m.group('hours')+' '+m.group('meridian')
-                        str1    = s[:m.start('hours')]
-                        str2    = s[m.end('meridian'):]
+                        str1     = s[:m.start('hours')]
+                        str2     = s[m.end('meridian'):]
 
                     s    = '%s %s' % (str1, str2)
                     flag = 1
@@ -794,16 +747,25 @@ class Calendar:
             if flag is 0:
                 s = ''
 
+            if _debug:
+                print 'parse (bottom) [%s][%s][%s][%s]' % (s, parseStr, str1, str2)
+                print 'invalid [%d] weekday [%d] dateStd [%d] dateStr [%d] time [%d] timeStr [%d] meridian [%d]' % \
+                       (self.invalidFlag, self.weekdyFlag, self.dateStdFlag, self.dateStrFlag, self.timeFlag, self.timeStrFlag, self.meridianFlag)
+                print 'dayStr [%d] modifier [%d] modifier2 [%d] units [%d] qunits[%d]' % \
+                       (self.dayStrFlag, self.modifierFlag, self.modifier2Flag, self.unitsFlag, self.qunitsFlag)
+
             # evaluate the matched string
             if parseStr != '':
                 if self.modifierFlag == 1:
                     str, totalTime = self.evalModifier(parseStr, str1, str2, totalTime)
+
                     return self.parse(str, totalTime)
+
                 elif self.modifier2Flag == 1:
                     s, totalTime = self.evalModifier2(parseStr, str1, str2, totalTime)
                 else:
                     totalTime = self.evalString(parseStr, totalTime)
-                    parseStr = ''
+                    parseStr  = ''
 
         # String is not parsed at all
         if totalTime is None or totalTime == sourceTime:
@@ -841,7 +803,6 @@ class Calendar:
             m = self.CRE_TIMEHMS2.search(s)
             if m is not None:
                 dt = s[:m.start('meridian')].strip()
-                #dt = string.strip(dt)
                 if len(dt) <= 2:
                     hr  = int(dt)
                     mn  = 0
