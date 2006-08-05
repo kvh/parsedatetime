@@ -4,7 +4,7 @@
 CalendarConstants defines all constants used by parsedatetime.py.
 """
 
-__version__ = '0.6'
+__version__ = '0.6.1'
 __license__ = """Copyright (c) 2004-2006 Mike Taylor, All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -31,16 +31,19 @@ class CalendarConstants:
         self.TIMESEP      = ':'
 
         self.RE_SPECIAL   = r'(?P<special>^[in|on|of|at]+)\s+'
-        self.RE_UNITS     = r'\s*(?P<units>hour|hr|minute|min|second|sec|day|dy|week|wk|month|year|yr)'
-        self.RE_QUNITS    = r'\d+\s?(?P<qunits>h|m|s|d|w|m|y)(\s|,|$)'
-        self.RE_MODIFIER  = r'(?P<modifier>from|before|after|ago|prior|prev|last|next|tomorrow|today|yesterday)'
-        self.RE_MERIDIAN  = r'\d\s?(?P<meridian>am|pm|a.m.|p.m.|a|p)'
-        self.RE_TIMEHM    = r'(?P<hours>\d\d?)(?P<tsep>:|)(?P<minutes>\d\d)'
-        self.RE_TIMEHM2   = r'(?P<hours>\d\d?)(?P<tsep>:|)(?P<minutes>\d\d)\s?(?P<meridian>am|pm|a.m.|p.m.|a|p)'
+        self.RE_UNITS     = r'(?P<qty>(-?\d+\s*(?P<units>((hour|hr|minute|min|second|sec|day|dy|week|wk|month|mth|year|yr)s?))))'
+        self.RE_QUNITS    = r'(?P<qty>(-?\d+\s?(?P<qunits>h|m|s|d|w|m|y)(\s|,|$)))'
+        self.RE_MODIFIER  = r'(?P<modifier>(previous|prev|last|next|this|eo|(end\sof)|(in\sa)))'
+        self.RE_MODIFIER2 = r'(?P<modifier>(from|before|after|ago|prior))'
         self.RE_TIMEHMS   = r'(?P<hours>\d\d?)(?P<tsep>:|)(?P<minutes>\d\d)(?:(?P=tsep)(?P<seconds>\d\d(?:[.,]\d+)?))?'
-        self.RE_TIMEHMS2  = r'(?P<hours>\d\d?)(?P<tsep>:|)(?P<minutes>\d\d)(?:(?P=tsep)(?P<seconds>\d\d(?:[.,]\d+)?))?\s?(?P<meridian>am|pm|a.m.|p.m.|a|p)'
-        self.RE_DATE      = r'\d+([/.\\]\d+)+'
+        self.RE_TIMEHMS2  = r'(?P<hours>(\d\d?))((?P<tsep>:|)(?P<minutes>(\d\d?))(?:(?P=tsep)(?P<seconds>\d\d?(?:[.,]\d+)?))?)?\s?(?P<meridian>(am|pm|a.m.|p.m.|a|p))'
+        self.RE_DATE      = r'(?P<date>\d+([/.\\]\d+)+)'
         self.RE_DATE2     = r'[/.\\]'
+        self.RE_DATE3     = r'(?P<date>((?P<mthname>(january|february|march|april|may|june|july|august|september|october|november|december))\s?((?P<day>\d\d?)(\s|rd|st|nd|th|,|$)+)?(?P<year>\d\d\d\d)?))'
+        self.RE_MONTH     = r'(?P<month>((?P<mthname>(january|february|march|april|may|june|july|august|september|october|november|december))(\s?(?P<year>(\d\d\d\d)))?))'
+        self.RE_WEEKDAY   = r'(?P<weekday>(monday|mon|tuesday|tue|wednesday|wed|thursday|thu|friday|saturday|sat|sunday|sun))'
+        self.RE_DAY       = r'(?P<day>(today|tomorrow|yesterday))'
+        self.RE_TIME      = r'\s*(?P<time>(morning|breakfast|noon|lunch|evening|midnight|tonight|dinner|night|now))' 
         self.RE_REMAINING = r'\s+'
 
           # Used to adjust the returned date before/after the source
@@ -53,10 +56,12 @@ class CalendarConstants:
                            'prev':      -1,
                            'last':      -1,
                            'next':       1,
-                           'tomorrow':   1,
-                           'yesterday': -1,
-                           'today':      0,
-                         }
+                           'this':       0,
+                           'previous':  -1,
+                           'in a':       2,
+                           'end of':     0,
+                           'eo':         0,
+                        }
 
         self.Second =   1
         self.Minute =  60 * self.Second
@@ -84,8 +89,8 @@ class CalendarConstants:
 
           # dictionary to allow for locale specific text
           # NOTE: The keys are the localized values - the parsing
-          #       code will be using Target_Text using as the key
-          #       text extracted *from* the user's input
+          #       code will be using Target_Text using the values
+          #       extracted *from* the user's input
 
         self.Target_Text = { 'datesep':   '-',
                              'timesep':   ':',
@@ -197,6 +202,23 @@ class CalendarConstants:
                             self.Target_Text['december'],
                           ]
 
+
+        self.MthNames = { 'january':    1,
+                          'february':   2,
+                          'march':      3,
+                          'april':      4,
+                          'may' :       5,
+                          'june':       6,
+                          'july':       7,
+                          'august':     8,
+                          'september':  9,
+                          'october':   10,
+                          'november':  11,
+                          'december':  12,
+                        }
+
+
+
           # This looks hokey - but it is a nice simple way to get
           # the proper unit value and it has the advantage that
           # later I can morph it into something localized.
@@ -252,6 +274,6 @@ class CalendarConstants:
                             'eighty':    80,
                             'ninety':    90,
                             'half':      0.5,
-                            'quarter':   0.25,
+                            'quarter':  0.25,
                          }
 

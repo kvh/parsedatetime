@@ -68,3 +68,5 @@ class test(unittest.TestCase):
         t = datetime.datetime(2007, 3, 1, 12, 0, 0)
         self.assertTrue(_compareResults(self.cal.inc(s, year=-1).timetuple(), t.timetuple()))
 
+if __name__ == "__main__":
+    unittest.main()

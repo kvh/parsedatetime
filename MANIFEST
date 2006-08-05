@@ -1,6 +1,7 @@
 README.txt
 LICENSE.txt
 setup.py
+ez_setup.py
 parsedatetime/__init__.py
 parsedatetime/parsedatetime.py
 parsedatetime/parsedatetime_consts.py

@@ -10,15 +10,15 @@ import parsedatetime.parsedatetime as pt
 
   # a special compare function is used to allow us to ignore the seconds as
   # the running of the test could cross a minute boundary
-def _compareResults(target, value):
-    t_yr, t_mth, t_dy, t_hr, t_min, t_sec, t_wd, t_yd, t_isdst = target
-    v_yr, v_mth, v_dy, v_hr, v_min, v_sec, v_wd, v_yd, v_isdst = value
+def _compareResults(result, check):
+  target, t_flag = result
+  value,  v_flag = check
 
-    #print "t: ",t_yr, t_mth, t_dy, t_hr, t_min, t_sec, t_wd, t_yd, t_isdst
-    #print "v: ",v_yr, v_mth, v_dy, v_hr, v_min, v_sec, v_wd, v_yd, v_isdst
+  t_yr, t_mth, t_dy, t_hr, t_min, t_sec, t_wd, t_yd, t_isdst = target
+  v_yr, v_mth, v_dy, v_hr, v_min, v_sec, v_wd, v_yd, v_isdst = value
 
-    return ((t_yr == v_yr) and (t_mth == v_mth) and (t_dy == v_dy) and
-            (t_hr == v_hr) and (t_min == v_min)) #and (t_wd == v_wd) and (t_yd == v_yd))
+  return ((t_yr == v_yr) and (t_mth == v_mth) and (t_dy == v_dy) and
+          (t_hr == v_hr) and (t_min == v_min)) and (t_flag == v_flag)
 
 class test(unittest.TestCase):
     def setUp(self):
@@ -26,119 +26,109 @@ class test(unittest.TestCase):
         self.yr, self.mth, self.dy, self.hr, self.mn, self.sec, self.wd, self.yd, self.isdst = time.localtime()
 
     def testMinutesFromNow(self):
-        #start  = int(time.time())
-        #target = start + 5 * self.cal.ptc.Minute
         s = datetime.datetime.now()
         t = s + datetime.timedelta(minutes=5)
 
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('5 minutes from now', start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 min from now',     start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5m from now',        start), target))
-        self.assertTrue(_compareResults(self.cal.parse('in 5 minutes',       start), target))
-        self.assertTrue(_compareResults(self.cal.parse('in 5 min',           start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 min from now',     start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 minutes',          start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 min',              start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5m',                 start), target))
+        self.assertTrue(_compareResults(self.cal.parse('5 minutes from now', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 min from now',     start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5m from now',        start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('in 5 minutes',       start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('in 5 min',           start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 min from now',     start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 minutes',          start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 min',              start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5m',                 start), (target, False)))
 
 
     def testMinutesBeforeNow(self):
-        #start  = int(time.time())
-        #target = start - 5 * self.cal.ptc.Minute
         s = datetime.datetime.now()
         t = s + datetime.timedelta(minutes=-5)
 
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('5 minutes before now', start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 min before now',     start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5m before now',        start), target))
+        self.assertTrue(_compareResults(self.cal.parse('5 minutes before now', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 min before now',     start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5m before now',        start), (target, False)))
 
 
     def testOffsetAfterNoon(self):
-        #source_noon = (self.yr, self.mth, self.dy, 12,  0,   0, self.wd, self.yd, self.isdst)
-        #start  = int(time.mktime(source_noon))
-        #target = start + 5 * self.cal.ptc.Hour
-        s = datetime.datetime(self.yr, self.mth, self.dy, 12,  0,   0)
-        t = s + datetime.timedelta(hours=5)
+        s = datetime.datetime.now()
+        t = datetime.datetime(self.yr, self.mth, self.dy, 12, 0, 0) + datetime.timedelta(hours=5)
 
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('5 hours from noon',      start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 hours after noon',     start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 hours after 12pm',     start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 hours after 12 pm',    start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 hours after 12:00pm',  start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 hours after 12:00 pm', start), target))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours from noon',      start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours after noon',     start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours after 12pm',     start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours after 12 pm',    start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours after 12:00pm',  start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours after 12:00 pm', start), (target, False)))
 
 
     def testOffsetBeforeNoon(self):
-        #source_noon = (self.yr, self.mth, self.dy, 12,  0,   0, self.wd, self.yd, self.isdst)
-        #start  = int(time.mktime(source_noon))
-        #target = start - 5 * self.cal.ptc.Hour
-        s = datetime.datetime(self.yr, self.mth, self.dy, 12,  0,   0)
-        t = s + datetime.timedelta(hours=-5)
+        s = datetime.datetime.now()
+        t = datetime.datetime(self.yr, self.mth, self.dy, 12, 0, 0) + datetime.timedelta(hours=-5)
 
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('5 hours before noon',     start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 hours before 12pm',     start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 hours before 12 pm',    start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 hours before 12:00pm',  start), target))
-        self.assertTrue(_compareResults(self.cal.parse('5 hours before 12:00 pm', start), target))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours before noon',     start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours before 12pm',     start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours before 12 pm',    start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours before 12:00pm',  start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours before 12:00 pm', start), (target, False)))
 
 
     def testWeekFromNow(self):
-        #start  = int(time.time())
-        #target = start + self.cal.ptc.Week
         s = datetime.datetime.now()
         t = s + datetime.timedelta(weeks=1)
 
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('in 1 week',       start), target))
-        self.assertTrue(_compareResults(self.cal.parse('next week',       start), target))
-        self.assertTrue(_compareResults(self.cal.parse('1 week from now', start), target))
-        self.assertTrue(_compareResults(self.cal.parse('in 7 days',       start), target))
-        self.assertTrue(_compareResults(self.cal.parse('7 days from now', start), target))
+        self.assertTrue(_compareResults(self.cal.parse('in 1 week',       start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('1 week from now', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('in 7 days',       start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('7 days from now', start), (target, False)))
+        #self.assertTrue(_compareResults(self.cal.parse('next week',       start), (target, False)))
 
 
     def testWeekBeforeNow(self):
-        #start  = int(time.time())
-        #target = start - self.cal.ptc.Week
         s = datetime.datetime.now()
         t = s + datetime.timedelta(weeks=-1)
 
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('last week',         start), target))
-        self.assertTrue(_compareResults(self.cal.parse('1 week before now', start), target))
-        self.assertTrue(_compareResults(self.cal.parse('7 days before now', start), target))
+        self.assertTrue(_compareResults(self.cal.parse('1 week before now', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('7 days before now', start), (target, False)))
+        #self.assertTrue(_compareResults(self.cal.parse('last week',         start), (target, False)))
 
 
     def testSpecials(self):
         s = datetime.datetime.now()
-        t = s + datetime.timedelta(days=1)
+        t = datetime.datetime(self.yr, self.mth, self.dy, 9, 0, 0) + datetime.timedelta(days=1)
 
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('today',     start), start))
-        self.assertTrue(_compareResults(self.cal.parse('tomorrow',  start), target))
-        self.assertTrue(_compareResults(self.cal.parse('next day',  start), target))
+        self.assertTrue(_compareResults(self.cal.parse('tomorrow', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('next day', start), (target, False)))
 
-        t      = s + datetime.timedelta(days=-1)
+        t      = datetime.datetime(self.yr, self.mth, self.dy, 9, 0, 0) + datetime.timedelta(days=-1)
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('yesterday', start), target))
+        self.assertTrue(_compareResults(self.cal.parse('yesterday', start), (target, False)))
+
+        t      = datetime.datetime(self.yr, self.mth, self.dy, 9, 0, 0)
+        target = t.timetuple()
+
+        self.assertTrue(_compareResults(self.cal.parse('today', start), (target, False)))
 
 
 if __name__ == "__main__":
