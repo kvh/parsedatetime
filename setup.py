@@ -6,16 +6,14 @@ use_setuptools(version="0.6a11")
 
 import setuptools
 
-desc='Parse "human readable" date/time expressions',
-
+desc='Parse human-readable date/time expressions',
 
 setuptools.setup(name='parsedatetime',
-      version='0.6.2',
+      version='0.6.3',
       description=desc,
-      summary=desc,
       author='Mike Taylor',
       author_email='bear@code-bear.com',
-      url='',
+      url='http://code-bear.com/code/parsedatetime/',
       license='http://www.apache.org/licenses/LICENSE-2.0',
       packages=['parsedatetime'],
       platforms=['Any'],
