@@ -331,15 +331,15 @@ class Calendar:
         s = dateString
         m = self.CRE_DATE2.search(s)
         if m is not None:
-            indx = m.start()
-            mth  = int(s[:indx])
-            s    = s[indx + 1:]
+            index = m.start()
+            mth   = int(s[:index])
+            s     = s[index + 1:]
 
         m = self.CRE_DATE2.search(s)
         if m is not None:
-            indx = m.start()
-            dy   = int(s[:indx])
-            yr   = int(s[indx + 1:])
+            index = m.start()
+            dy    = int(s[:index])
+            yr    = int(s[index + 1:])
             # TODO should this have a birthday epoch constraint?
             if yr < 99:
                 yr += 2000
@@ -427,7 +427,7 @@ class Calendar:
         if m is not None:
             index  = m.start() + 1
             unit   = chunk2[:m.start()]
-            chunk2 = chunk2[indx:]
+            chunk2 = chunk2[index:]
         else:
             unit   = chunk2
             chunk2 = ''
