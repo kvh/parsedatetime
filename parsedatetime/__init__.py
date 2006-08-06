@@ -1,5 +1,6 @@
-__version__ = '0.6.2'
-__license__ = """Copyright (c) 2004-2006 Mike Taylor, All rights reserved.
+version = '0.6.2'
+author  = 'Mike Taylor <http://code-bear.com>'
+license = """Copyright (c) 2004-2006 Mike Taylor, All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,5 +14,4 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-__author__       = 'Mike Taylor <http://code-bear.com>'
 

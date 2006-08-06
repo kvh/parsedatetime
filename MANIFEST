@@ -2,6 +2,8 @@ README.txt
 LICENSE.txt
 setup.py
 ez_setup.py
+epydoc.conf
+docs/
 parsedatetime/__init__.py
 parsedatetime/parsedatetime.py
 parsedatetime/parsedatetime_consts.py

@@ -21,6 +21,17 @@ cal = pdt.Calendar()
 cal.parse("tomorrow")
 
 
+Documentation
+-------------
+
+Epydoc generated documentation can be found in the docs/
+directory.
+
+Generated using:
+
+    epydoc --html --config epydoc.conf
+
+
 Notes
 -----
 
