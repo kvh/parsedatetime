@@ -22,7 +22,7 @@ __author__       = 'Mike Taylor <http://code-bear.com>'
 __contributors__ = ['Darshana Chhajed <mailto://darshana@osafoundation.org>',
                    ]
 
-_debug = True
+_debug = False
 
 
 import string, re, time
@@ -937,9 +937,8 @@ class Calendar:
                             parseStr = '-%s' % parseStr
                             chunk1   = chunk1[:-1]
 
-                        s        = '%s %s' % (chunk1, chunk2)
-                        flag     = True
-                        print m.group('qty'), m.start('qty'), m.end('qty'), chunk1, chunk2
+                        s    = '%s %s' % (chunk1, chunk2)
+                        flag = True
                     else:
                         parseStr = s
 
@@ -958,8 +957,8 @@ class Calendar:
                             parseStr = '-%s' % parseStr
                             chunk1   = chunk1[:-1]
 
-                        s        = '%s %s' % (chunk1, chunk2)
-                        flag     = True
+                        s    = '%s %s' % (chunk1, chunk2)
+                        flag = True
                     else:
                         parseStr = s 
 

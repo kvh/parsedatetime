@@ -63,5 +63,31 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('3y, 2w, 5d ',                 start), (target, False)))
 
 
+    def testUnixATStyle(self):
+        s = datetime.datetime.now()
+        t = s + datetime.timedelta(days=3)
+
+        t = t.replace(hour=16, minute=0, second=0)
+
+        start  = s.timetuple()
+        target = t.timetuple()
+
+        self.assertTrue(_compareResults(self.cal.parse('4pm + 3 days', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('4pm +3 days',  start), (target, False)))
+
+
+    def testUnixATStyleNegative(self):
+        s = datetime.datetime.now()
+        t = s + datetime.timedelta(days=-3)
+
+        t = t.replace(hour=16, minute=0, second=0)
+
+        start  = s.timetuple()
+        target = t.timetuple()
+
+        self.assertTrue(_compareResults(self.cal.parse('4pm - 3 days', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('4pm -3 days',  start), (target, False)))
+
+
 if __name__ == "__main__":
     unittest.main()

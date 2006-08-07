@@ -65,6 +65,26 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('1 d',    start), (target, False)))
 
 
+    def testNegativeDays(self):
+        s = datetime.datetime.now()
+        t = s + datetime.timedelta(days=-1)
+
+        start  = s.timetuple()
+        target = t.timetuple()
+
+        self.assertTrue(_compareResults(self.cal.parse('-1 day',  start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('-1 days', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('-1days',  start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('-1 dy',   start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('-1 d',    start), (target, False)))
+
+        self.assertTrue(_compareResults(self.cal.parse('- 1 day',  start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('- 1 days', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('- 1days',  start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('- 1 dy',   start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('- 1 d',    start), (target, False)))
+
+
     def testWeeks(self):
         s = datetime.datetime.now()
         t = s + datetime.timedelta(weeks=1)
