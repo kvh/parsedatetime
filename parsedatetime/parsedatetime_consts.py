@@ -50,11 +50,11 @@ class pdtLocale_en:
     usesMeridian  = True
     uses24        = False
 
-    Weekdays      = [ u'sunday', u'monday', u'tuesday',
-                      u'wednesday', u'thursday', u'friday', u'saturday',
+    Weekdays      = [ u'monday', u'tuesday', u'wednesday',
+                      u'thursday', u'friday', u'saturday', u'sunday',
                     ]
-    shortWeekdays = [ u'sun', u'mon', u'tues',
-                      u'wed', u'thu', u'fri', u'sat',
+    shortWeekdays = [ u'mon', u'tues', u'wed',
+                      u'thu', u'fri', u'sat', u'sun',
                     ]
     Months        = [ u'january', u'february', u'march',
                       u'april',   u'may',      u'june',
@@ -152,11 +152,11 @@ class pdtLocale_es:
     usesMeridian  = False
     uses24        = True
 
-    Weekdays      = [ u'domingo', u'lunes', u'martes',
-                      u'mi\xe9rcoles', u'jueves', u'viernes', u's\xe1bado',
+    Weekdays      = [ u'lunes', u'martes', u'mi\xe9rcoles',
+                      u'jueves', u'viernes', u's\xe1bado', u'domingo',
                     ]
-    shortWeekdays = [ 'dom', u'lun', u'mar',
-                      u'mi\xe9', u'jue', u'vie', u's\xe1b',
+    shortWeekdays = [ u'lun', u'mar', u'mi\xe9',
+                      u'jue', u'vie', u's\xe1b', u'dom',
                     ]
     Months        = [ u'enero', u'febrero', u'marzo',
                       u'abril', u'mayo', u'junio',
@@ -199,19 +199,19 @@ class pdtLocale_es:
                     }
 
       # Used to adjust the returned date before/after the source
-    modifiers = { 'from':       1,
-                  'before':    -1,
-                  'after':      1,
-                  'ago':        1,
-                  'prior':     -1,
-                  'prev':      -1,
-                  'last':      -1,
-                  'next':       1,
-                  'this':       0,
-                  'previous':  -1,
-                  'in a':       2,
-                  'end of':     0,
-                  'eo':         0,
+    modifiers = { 'from':      1,
+                  'before':   -1,
+                  'after':     1,
+                  'ago':       1,
+                  'prior':    -1,
+                  'prev':     -1,
+                  'last':     -1,
+                  'next':      1,
+                  'this':      0,
+                  'previous': -1,
+                  'in a':      2,
+                  'end of':    0,
+                  'eo':        0,
                 }
 
     dayoffsets = { 'tomorrow':   1,
@@ -223,15 +223,15 @@ class pdtLocale_es:
       # each element in the dictionary is a dictionary that is used
       # to fill in any value to be replace - the current date/time will
       # already have been populated by the method buildSources
-    re_sources    = { 'noon':      { 'hr': 12,  'mn': 0, 'sec': 0 },
-                      'lunch':     { 'hr': 12,  'mn': 0, 'sec': 0 },
-                      'morning':   { 'hr':  6,  'mn': 0, 'sec': 0 },
-                      'breakfast': { 'hr':  8,  'mn': 0, 'sec': 0 },
-                      'dinner':    { 'hr': 19,  'mn': 0, 'sec': 0 },
-                      'evening':   { 'hr': 18,  'mn': 0, 'sec': 0 },
-                      'midnight':  { 'hr':  0,  'mn': 0, 'sec': 0 },
-                      'night':     { 'hr': 21,  'mn': 0, 'sec': 0 },
-                      'tonight':   { 'hr': 21,  'mn': 0, 'sec': 0 },
+    re_sources    = { 'noon':      { 'hr': 12, 'mn': 0, 'sec': 0 },
+                      'lunch':     { 'hr': 12, 'mn': 0, 'sec': 0 },
+                      'morning':   { 'hr':  6, 'mn': 0, 'sec': 0 },
+                      'breakfast': { 'hr':  8, 'mn': 0, 'sec': 0 },
+                      'dinner':    { 'hr': 19, 'mn': 0, 'sec': 0 },
+                      'evening':   { 'hr': 18, 'mn': 0, 'sec': 0 },
+                      'midnight':  { 'hr':  0, 'mn': 0, 'sec': 0 },
+                      'night':     { 'hr': 21, 'mn': 0, 'sec': 0 },
+                      'tonight':   { 'hr': 21, 'mn': 0, 'sec': 0 },
                     }
 
 
@@ -254,8 +254,13 @@ def _initLocale(ptc):
 
         ptc.icuSymbols    = pyicu.DateFormatSymbols(ptc.icuLocale)
 
-        ptc.Weekdays      = map(string.lower, ptc.icuSymbols.getWeekdays()[1:])
-        ptc.shortWeekdays = map(string.lower, ptc.icuSymbols.getShortWeekdays()[1:])
+          # grab ICU list of weekdays, skipping first entry which is always blank
+        wd  = map(string.lower, ptc.icuSymbols.getWeekdays()[1:])
+        swd = map(string.lower, ptc.icuSymbols.getShortWeekdays()[1:])
+
+          # store them in our list with Monday first (ICU puts Sunday first)
+        ptc.Weekdays      = wd[1:] + wd[0:1]
+        ptc.shortWeekdays = swd[1:] + swd[0:1]
         ptc.Months        = map(string.lower, ptc.icuSymbols.getMonths())
         ptc.shortMonths   = map(string.lower, ptc.icuSymbols.getShortMonths())
 
@@ -288,7 +293,8 @@ def _initLocale(ptc):
         if not ptc.localeID in pdtLocales:
             ptc.localeID = 'en_US'
 
-        ptc.locale = pdtLocales[ptc.localeID]
+        ptc.locale   = pdtLocales[ptc.localeID]
+        ptc.usePyICU = False
 
         ptc.Weekdays      = ptc.locale.Weekdays
         ptc.shortWeekdays = ptc.locale.shortWeekdays
@@ -477,7 +483,7 @@ def _initConstants(ptc):
     Create localized versions of the units, week and month names
     """
       # build weekday offsets - yes, it assumes the Weekday and shortWeekday
-      # lists are in the same order and Sun..Sat
+      # lists are in the same order and Mon..Sun (Python style)
     ptc.WeekdayOffsets = {}
 
     o = 0

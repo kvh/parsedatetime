@@ -1,0 +1,10 @@
+24 Aug 2006 - bear
+
+    Issue #2 http://code.google.com/p/parsedatetime/issues/detail?id=2
+
+    Turns out that ICU works with weekdays in Sun..Sat order
+    and that Python uses Mon..Sun order.  Fixed PyICU locale code to
+    build the internal weekday list to be Python Style.
+
+    Bumping version to 0.7.1 as this is causing Chandler bug 6567
+    http://bugzilla.osafoundation.org/show_bug.cgi?id=6567
