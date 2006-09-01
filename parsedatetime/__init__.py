@@ -1,4 +1,4 @@
-version = '0.7.1'
+version = '0.7.2'
 author  = 'Mike Taylor <http://code-bear.com>'
 license = """Copyright (c) 2004-2006 Mike Taylor, All rights reserved.
 
