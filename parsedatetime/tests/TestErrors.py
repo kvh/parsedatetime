@@ -29,7 +29,17 @@ class test(unittest.TestCase):
         s     = datetime.datetime.now()
         start = s.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('01/0',  start), (start, True)))
+        self.assertTrue(_compareResults(self.cal.parse('01/0',   start), (start, True)))
+        self.assertTrue(_compareResults(self.cal.parse('08/35',  start), (start, True)))
+        self.assertTrue(_compareResults(self.cal.parse('18/35',  start), (start, True)))
+        self.assertTrue(_compareResults(self.cal.parse('1799',   start), (start, True)))
+        self.assertTrue(_compareResults(self.cal.parse('781',    start), (start, True)))
+        self.assertTrue(_compareResults(self.cal.parse('2702',   start), (start, True)))
+        self.assertTrue(_compareResults(self.cal.parse('78',     start), (start, True)))
+        self.assertTrue(_compareResults(self.cal.parse('11',     start), (start, True)))
+        self.assertTrue(_compareResults(self.cal.parse('1',      start), (start, True)))
+        self.assertTrue(_compareResults(self.cal.parse('174565', start), (start, True)))
+        self.assertTrue(_compareResults(self.cal.parse('177505', start), (start, True)))
 
 
 if __name__ == "__main__":

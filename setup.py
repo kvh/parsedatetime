@@ -2,7 +2,7 @@
 
 from ez_setup import use_setuptools
 
-use_setuptools(version="0.6a11")
+use_setuptools()
 
 import setuptools
 

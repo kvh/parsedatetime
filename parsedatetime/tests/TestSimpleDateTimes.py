@@ -25,6 +25,37 @@ class test(unittest.TestCase):
         self.cal = pt.Calendar()
         self.yr, self.mth, self.dy, self.hr, self.mn, self.sec, self.wd, self.yd, self.isdst = time.localtime()
 
+
+    def testDays(self):
+        s = datetime.datetime.now()
+        t = s + datetime.timedelta(days=1)
+
+        start  = s.timetuple()
+        target = t.timetuple()
+
+        d = self.wd + 1
+
+        if d > 6:
+            d = 0
+
+        day = self.cal.ptc.Weekdays[d]
+
+        self.assertTrue(_compareResults(self.cal.parse(day, start), (target, False)))
+
+        t = s + datetime.timedelta(days=6)
+
+        target = t.timetuple()
+
+        d = self.wd - 1
+
+        if d < 0:
+            d = 6
+
+        day = self.cal.ptc.Weekdays[d]
+
+        self.assertTrue(_compareResults(self.cal.parse(day, start), (target, False)))
+
+
     def testTimes(self):
         start  = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()
         target = datetime.datetime(self.yr, self.mth, self.dy, 23, 0, 0).timetuple()
@@ -59,16 +90,6 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('1730',   start), (target, False)))
         self.assertTrue(_compareResults(self.cal.parse('173000', start), (target, False)))
 
-          # invalid text - result should be start with invalid-flag set
-        self.assertTrue(_compareResults(self.cal.parse('1799',   start), (start, True)))
-        self.assertTrue(_compareResults(self.cal.parse('781',    start), (start, True)))
-        self.assertTrue(_compareResults(self.cal.parse('2702',   start), (start, True)))
-        self.assertTrue(_compareResults(self.cal.parse('78',     start), (start, True)))
-        self.assertTrue(_compareResults(self.cal.parse('11',     start), (start, True)))
-        self.assertTrue(_compareResults(self.cal.parse('1',      start), (start, True)))
-        self.assertTrue(_compareResults(self.cal.parse('174565', start), (start, True)))
-        self.assertTrue(_compareResults(self.cal.parse('177505', start), (start, True)))
-
 
     def testDates(self):
         start  = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()
@@ -81,10 +102,7 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('8.25',       start), (target, False)))
         self.assertTrue(_compareResults(self.cal.parse('08/25',      start), (target, False)))
 
-          # invalid text - result should be start with invalid-flag set
-        self.assertTrue(_compareResults(self.cal.parse('08/35',      start), (start, True)))
-        self.assertTrue(_compareResults(self.cal.parse('18/35',      start), (start, True)))
-   
+
     def testSpecialTimes(self):
         start  = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()
         target = datetime.datetime(self.yr, self.mth, self.dy, 6, 0, 0).timetuple()

@@ -1,3 +1,38 @@
+31 Aug 2006 - bear
+
+    Fixed two bugs found by Darshana today.
+
+    The first is one of those forehead-slapping bugs that you see as
+    being so obvious *after* the fact :)  The problem is with Inc()
+    for months - if you increment from a month with the day set to
+    a value that is past the end of the month for the new month you
+    get an error.  For example Aug 31 to Sept - Sept doesn't have 31
+    days so it's an invalid date.
+
+    The second is with the code that identifies modifiers when you have
+    multiple "chunks" of text.  Darshana describes the bug this way:
+
+      "if you have "flight from SFO at 4pm" i.e. if you have a
+       non-date/time string before a modifier, then the invalidflag
+       is set"
+
+    I provided the Inc() fix and Darshana the modifier fix.
+
+    I also added a new unit test for the Inc() bug and also a new test
+    file for the modifier bug: TestPhrases.py
+
+29 Aug 2006 - bear
+
+    Updated ez_setup.py to latest version v0.6c1 and removed
+    hard-coded version in setup.py for setuptools
+
+25 Aug 2006 - bear
+
+    Moved the error tests into a single TestErrors.py
+    Added two tests for days - it figures out what the
+    previous day and next day is from the weekday the
+    test is run on
+
 24 Aug 2006 - bear
 
     Issue #2 http://code.google.com/p/parsedatetime/issues/detail?id=2

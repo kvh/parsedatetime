@@ -771,7 +771,8 @@ class Calendar:
                 chunk2 = chunk2[m.end():]
                 chunk2 = '%d%s' % (qty, chunk2)
 
-        sourceTime, flag = self.parse(chunk2, sourceTime)
+        sourceTime, flag1 = self.parse(chunk2, sourceTime)
+        flag2 = False
 
         if chunk1 != '':
             if offset < 0:
@@ -781,9 +782,16 @@ class Calendar:
                     chunk1 = chunk1[m.end():]
                     chunk1 = '%d%s' % (qty, chunk1)
 
-            sourceTime, flag = self.parse(chunk1, sourceTime)
+            sourceTime2, flag2 = self.parse(chunk1, sourceTime)
 
-        return '', sourceTime
+        # if chunk1 is not a datetime and chunk2 is
+        # then do not use datetime value returned by
+        # parsing chunk1
+        if not (flag1 == False and flag2 == True):
+            sourceTime       = sourceTime2
+            self.invalidFlag = False
+
+        return sourceTime, (flag1 and flag2)
 
 
     def _evalString(self, datetimeString, sourceTime=None):
@@ -1213,7 +1221,7 @@ class Calendar:
                     return self.parse(t, totalTime)
 
                 elif self.modifier2Flag == True:
-                    s, totalTime = self._evalModifier2(parseStr, chunk1, chunk2, totalTime)
+                    totalTime, self.invalidFlag = self._evalModifier2(parseStr, chunk1, chunk2, totalTime)
                 else:
                     totalTime = self._evalString(parseStr, totalTime)
                     parseStr  = ''
@@ -1247,6 +1255,7 @@ class Calendar:
         """
         yr  = source.year
         mth = source.month
+        dy  = source.day
 
         if year:
             try:
@@ -1279,7 +1288,12 @@ class Calendar:
 
             yr += y
 
-        d = source.replace(year=yr, month=mth)
+            # if the day ends up past the last day of
+            # the new month, set it to the last day
+            if dy > self.ptc.DaysInMonthList[mth - 1]:
+                dy = self.ptc.DaysInMonthList[mth - 1]
+
+        d = source.replace(year=yr, month=mth, day=dy)
 
         return source + (d - source)
 
