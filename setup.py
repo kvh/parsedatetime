@@ -9,7 +9,7 @@ import setuptools
 desc='Parse human-readable date/time expressions',
 
 setuptools.setup(name='parsedatetime',
-      version='0.7.2',
+      version='0.7.3',
       description=desc,
       author='Mike Taylor',
       author_email='bear@code-bear.com',
