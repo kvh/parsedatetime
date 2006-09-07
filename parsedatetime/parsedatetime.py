@@ -336,23 +336,47 @@ class Calendar:
         """
         yr, mth, dy, hr, mn, sec, wd, yd, isdst = time.localtime()
 
+          # values pulled from regex's will be stored here
+          # and later assigned to mth, dy, yr based
+          # on information from the locale
+          # -1 is used as the marker value because we want
+          # zero values to be passed thru so they can be
+          # flagged as errors later
+        v1 = -1
+        v2 = -1
+        v3 = -1
+
         s = dateString
         m = self.CRE_DATE2.search(s)
         if m is not None:
             index = m.start()
-            mth   = int(s[:index])
+            v1    = int(s[:index])
             s     = s[index + 1:]
 
         m = self.CRE_DATE2.search(s)
         if m is not None:
             index = m.start()
-            dy    = int(s[:index])
-            yr    = int(s[index + 1:])
-            # TODO should this have a birthday epoch constraint?
-            if yr < 99:
-                yr += 2000
+            v2    = int(s[:index])
+            v3    = int(s[index + 1:])
         else:
-            dy = int(string.strip(s))
+            v2 = int(string.strip(s))
+
+        v = [ v1, v2, v3 ]
+        d = { 'm': mth, 'd': dy, 'y': yr }
+
+        for i in range(0, 3):
+            n = v[i]
+            c = self.ptc.dp_order[i]
+            if n >= 0:
+                d[c] = n
+
+        mth = d['m']
+        dy  = d['d']
+        yr  = d['y']
+
+        # TODO should this have a birthday epoch constraint?
+        if yr < 99:
+            yr += 2000
 
         if (mth > 0 and mth <= 12) and (dy > 0 and dy <= self.ptc.DaysInMonthList[mth - 1]):
             sourceTime = (yr, mth, dy, hr, mn, sec, wd, yd, isdst)

@@ -1,3 +1,20 @@
+6 Sep 2006 - bear
+
+    Alan Green filed Issue #5 http://code.google.com/p/parsedatetime/issues/detail?id=5
+
+    In it he asked for support for Australian date formats "dd-mm-yyyy"
+
+    This is the first attempt at supporting the parsing of dates where the order of the
+    day, month and year can vary.  I adjusted the parseDate() code to be data driven
+    and added a dp_order list to the Constants() class that is either initialized to the
+    proper order by the pdtLocale classes or the order is determined by parsing the ICU
+    short date format to figure out what the date separator is and then to find out what
+    order it's in.
+
+    I also added a TestAustralianLocale.py as a starting point for tests.
+
+    Attaching a diff of this code to the Issue so he can test it.
+
 1 Sep 2006 - bear
 
     0.7.2 release

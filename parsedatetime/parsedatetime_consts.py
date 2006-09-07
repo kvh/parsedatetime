@@ -40,12 +40,12 @@ class pdtLocale_en:
     This class will be used to initialize C{Constants} if PyICU is not located.
 
     Defined as class variables are the lists and strings needed by parsedatetime
-    to evaluate strings in English (US)
+    to evaluate strings for USA
     """
 
     localeID      = 'en_US'   # don't use a unicode string
-    dateSep       = u'/'
-    timeSep       = u':'
+    dateSep       = [ u'/', u'.' ]
+    timeSep       = [ u':' ]
     meridian      = [ u'AM', u'PM' ]
     usesMeridian  = True
     uses24        = False
@@ -76,6 +76,110 @@ class pdtLocale_en:
                       'medium': 'h:mm:ss a',
                       'short':  'h:mm a',
                     }
+
+    dp_order = [ u'm', u'd', u'y' ]
+
+      # this will be added to re_consts later
+    units = { 'seconds': [ 'second', 'sec' ],
+              'minutes': [ 'minute', 'min' ],
+              'hours':   [ 'hour',   'hr'  ],
+              'days':    [ 'day',    'dy'  ],
+              'weeks':   [ 'week',   'wk'  ],
+              'months':  [ 'month',  'mth' ],
+              'years':   [ 'year',   'yr'  ],
+            }
+
+      # text constants to be used by regex's later
+    re_consts     = { 'specials':      'in|on|of|at',
+                      'timeseperator': ':',
+                      'daysuffix':     'rd|st|nd|th',
+                      'meridian':      'am|pm|a.m.|p.m.|a|p',
+                      'qunits':        'h|m|s|d|w|m|y',
+                      'now':           [ 'now' ],
+                    }
+
+      # Used to adjust the returned date before/after the source
+    modifiers = { 'from':       1,
+                  'before':    -1,
+                  'after':      1,
+                  'ago':        1,
+                  'prior':     -1,
+                  'prev':      -1,
+                  'last':      -1,
+                  'next':       1,
+                  'this':       0,
+                  'previous':  -1,
+                  'in a':       2,
+                  'end of':     0,
+                  'eo':         0,
+                }
+
+    dayoffsets = { 'tomorrow':   1,
+                   'today':      0,
+                   'yesterday': -1,
+                 }
+
+      # special day and/or times, i.e. lunch, noon, evening
+      # each element in the dictionary is a dictionary that is used
+      # to fill in any value to be replace - the current date/time will
+      # already have been populated by the method buildSources
+    re_sources    = { 'noon':      { 'hr': 12, 'mn': 0, 'sec': 0 },
+                      'lunch':     { 'hr': 12, 'mn': 0, 'sec': 0 },
+                      'morning':   { 'hr':  6, 'mn': 0, 'sec': 0 },
+                      'breakfast': { 'hr':  8, 'mn': 0, 'sec': 0 },
+                      'dinner':    { 'hr': 19, 'mn': 0, 'sec': 0 },
+                      'evening':   { 'hr': 18, 'mn': 0, 'sec': 0 },
+                      'midnight':  { 'hr':  0, 'mn': 0, 'sec': 0 },
+                      'night':     { 'hr': 21, 'mn': 0, 'sec': 0 },
+                      'tonight':   { 'hr': 21, 'mn': 0, 'sec': 0 },
+                    }
+
+
+class pdtLocale_au:
+    """
+    en_AU Locale constants
+
+    This class will be used to initialize C{Constants} if PyICU is not located.
+
+    Defined as class variables are the lists and strings needed by parsedatetime
+    to evaluate strings for Australia
+    """
+
+    localeID      = 'en_AU'   # don't use a unicode string
+    dateSep       = [ u'-', u'/' ]
+    timeSep       = [ u':' ]
+    meridian      = [ u'AM', u'PM' ]
+    usesMeridian  = True
+    uses24        = False
+
+    Weekdays      = [ u'monday', u'tuesday', u'wednesday',
+                      u'thursday', u'friday', u'saturday', u'sunday',
+                    ]
+    shortWeekdays = [ u'mon', u'tues', u'wed',
+                      u'thu', u'fri', u'sat', u'sun',
+                    ]
+    Months        = [ u'january', u'february', u'march',
+                      u'april',   u'may',      u'june',
+                      u'july',    u'august',   u'september',
+                      u'october', u'november', u'december',
+                    ]
+    shortMonths   = [ u'jan', u'feb', u'mar',
+                      u'apr', u'may', u'jun',
+                      u'jul', u'aug', u'sep',
+                      u'oct', u'nov', u'dec',
+                    ]
+    dateFormats   = { 'full':   'EEEE, d MMMM yyyy',
+                      'long':   'd MMMM yyyy',
+                      'medium': 'dd/MM/yyyy',
+                      'short':  'd/MM/yy',
+                    }
+    timeFormats   = { 'full':   'h:mm:ss a z',
+                      'long':   'h:mm:ss a',
+                      'medium': 'h:mm:ss a',
+                      'short':  'h:mm a',
+                    }
+
+    dp_order = [ u'd', u'm', u'y' ]
 
       # this will be added to re_consts later
     units = { 'seconds': [ 'second', 'sec' ],
@@ -146,8 +250,8 @@ class pdtLocale_es:
     """
 
     localeID      = 'es'   # don't use a unicode string
-    dateSep       = u'/'
-    timeSep       = u':'
+    dateSep       = [ u'/' ]
+    timeSep       = [ u':' ]
     meridian      = []
     usesMeridian  = False
     uses24        = True
@@ -178,6 +282,8 @@ class pdtLocale_es:
                       'medium': "HH:mm:ss",
                       'short':  "HH:mm",
                     }
+
+    dp_order = [ u'd', u'm', u'y' ]
 
       # this will be added to re_consts later
     units = { 'seconds': [ 'second', 'sec' ],
@@ -236,6 +342,7 @@ class pdtLocale_es:
 
 
 pdtLocales = { 'en_US': pdtLocale_en,
+               'en_AU': pdtLocale_au,
                'es':    pdtLocale_es,
              }
 
@@ -303,7 +410,6 @@ def _initLocale(ptc):
         ptc.dateFormats   = ptc.locale.dateFormats
         ptc.timeFormats   = ptc.locale.timeFormats
 
-
       # these values are used to setup the various bits 
       # of the regex values used to parse
       #
@@ -347,16 +453,17 @@ def _initSymbols(ptc):
     Helper function to initialize the single character constants
     and other symbols needed.
     """
-    ptc.timeSep  = u':'
-    ptc.dateSep  = u'/'
+    ptc.timeSep  = [ u':' ]
+    ptc.dateSep  = [ u'/' ]
     ptc.meridian = [ u'AM', u'PM' ]
 
     ptc.usesMeridian = True
     ptc.uses24       = False
 
-    if pyicu:
+    if pyicu and ptc.usePyICU:
         am = u''
         pm = u''
+        ts = ''
 
           # ICU doesn't seem to provide directly the
           # date or time seperator - so we have to
@@ -364,7 +471,6 @@ def _initSymbols(ptc):
 
         p = pyicu.FieldPosition(pyicu.DateFormat.AM_PM_FIELD)
         o = ptc.icu_tf['short']
-
         s = ptc.timeFormats['short']
 
         ptc.usesMeridian = u'a' in s
@@ -375,7 +481,7 @@ def _initSymbols(ptc):
         s = s.replace('11', '').replace('45', '')                   # ': AM' or ':'
 
         if len(s) > 0:
-            ptc.timeSep = s[0]
+            ts = s[0]
 
         if ptc.usesMeridian:
             am = s[1:].strip()                                      # 'AM'
@@ -387,16 +493,38 @@ def _initSymbols(ptc):
             else:
                 s = s.replace('11', '')
 
-            pm = s.replace('45', '').replace(ptc.timeSep, '').strip()  # 'PM' or ''
+            pm = s.replace('45', '').replace(ts, '').strip()  # 'PM' or ''
 
+        ptc.timeSep  = [ ts ]
         ptc.meridian = [ am, pm ]
 
+        o = ptc.icu_df['short']
+        s = o.format(datetime.datetime(2003, 10, 30, 11, 45))
+        s = s.replace('10', '').replace('30', '').replace('03', '').replace('2003', '')
+
+        if len(s) > 0:
+            ds = s[0]
+        else:
+            ds = '/'
+
+        ptc.dateSep = [ ds ]
+
+        s        = ptc.dateFormats['short']
+        l        = s.lower().split(ds)
+        dp_order = []
+
+        for s in l:
+            if len(s) > 0:
+                dp_order.append(s[:1])
+
+        ptc.dp_order = dp_order
     else:
         ptc.timeSep      = ptc.locale.timeSep
         ptc.dateSep      = ptc.locale.dateSep
         ptc.meridian     = ptc.locale.meridian
         ptc.usesMeridian = ptc.locale.usesMeridian
         ptc.uses24       = ptc.locale.uses24
+        ptc.dp_order     = ptc.locale.dp_order
 
       # build am and pm lists to contain
       # original case, lowercase and first-char
@@ -453,8 +581,10 @@ def _initPatterns(ptc):
     if 'meridian' in ptc.re_values:
         ptc.RE_TIMEHMS2 += r'\s?(?P<meridian>(%(meridian)s))' % ptc.re_values
 
-    ptc.RE_DATE      = r'(?P<date>\d+([/.\\]\d+)+)'
-    ptc.RE_DATE2     = r'[/.\\]'
+    dateSeps = ''.join(ptc.dateSep) + '.'
+
+    ptc.RE_DATE      = r'(?P<date>\d+([%s]\d+)+)' % dateSeps
+    ptc.RE_DATE2     = r'[%s]' % dateSeps
     ptc.RE_DAY       = r'(?P<day>(today|tomorrow|yesterday))' % ptc.re_values
     ptc.RE_TIME      = r'\s*(?P<time>(morning|breakfast|noon|lunch|evening|midnight|tonight|dinner|night|now))' % ptc.re_values
     ptc.RE_REMAINING = r'\s+'
@@ -468,7 +598,7 @@ def _initPatterns(ptc):
     if 'meridian' in ptc.re_values:
         ptc.RE_RTIMEHMS2 += r'\s?(%(meridian)s)' % ptc.re_values
 
-    ptc.RE_RDATE     = r'(\d+([/.\\]\d+)+)'
+    ptc.RE_RDATE     = r'(\d+([%s]\d+)+)' % dateSeps
     ptc.RE_RDATE3    = r'((((%(months)s))\s?((\d\d?)(\s|%(daysuffix)s|,|$)+)?(\d\d\d\d)?))' % ptc.re_values
     ptc.DATERNG1     = ptc.RE_RDATE     + r'\s?-\s?' + ptc.RE_RDATE     # "06/07/06 - 08/09/06"
     ptc.DATERNG2     = ptc.RE_RDATE3    + r'\s?-\s?' + ptc.RE_RDATE3    # "march 31 - june 1st, 2006"
