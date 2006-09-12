@@ -64,6 +64,15 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.evalRanges("08/29/06 - 09/02/06", start), (targetStart, targetEnd, False)))
 
 
+    #def testSubRanges(self):
+    #    start = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()
+
+    #    targetStart = datetime.datetime(2006, 8, 1, 9, 0, 0).timetuple()
+    #    targetEnd   = datetime.datetime(2006, 8, 15, 9, 0, 0).timetuple()
+
+    #    self.assertTrue(_compareResults(self.cal.evalRanges("August 1-15, 2006", start), (targetStart, targetEnd, False)))
+
+
 if __name__ == "__main__":
     unittest.main()
 

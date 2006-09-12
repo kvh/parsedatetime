@@ -1,3 +1,31 @@
+11 Sep 2006 - bear
+
+    Fixed a subtle dictionary reference bug in buildSources() that was causing
+    any source related modifier to not honor the day, month or year.  It only
+    started being seen as I was working on adding "eod" support as a 'true'
+    modifier instead.
+
+    Found another subtle bug in evalModifier() if the modifier was followed
+    by the day of the week - the offset math was not consistent with the
+    other day-of-week offset calculations.
+
+    Worked on converting "eod" support from the special case modifier to work
+    as a true modifier.
+
+    The following is now supported:
+        eod tomorrow
+        tomorrow eod
+        monday eod
+        eod monday
+        meeting eod
+        eod meeting
+
+10 Sep 2006 - bear
+
+    Added a sub-range test in response to Issue #6 http://code.google.com/p/parsedatetime/issues/detail?id=6
+
+    Not that it works, just wanted to start the process.
+
 6 Sep 2006 - bear
 
     Alan Green filed Issue #5 http://code.google.com/p/parsedatetime/issues/detail?id=5

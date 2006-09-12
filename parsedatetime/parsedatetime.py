@@ -712,15 +712,22 @@ class Calendar:
                 wkdy = m.group()
                 wkdy = self.ptc.WeekdayOffsets[wkdy]
 
+                if wkdy > wd:
+                    diff = wkdy - wd
+                else:
+                    diff = 6 - wd + wkdy + 1
+
                 if offset == 0:
-                    diff       = wkdy - wd
                     start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
                     target     = start + datetime.timedelta(days=diff)
                     sourceTime = target.timetuple()
+
+                    sources = self.ptc.buildSources(sourceTime)
+                    if modifier in sources:
+                        sourceTime = sources[modifier]
                 else:
-                    diff       = wkdy - wd
                     start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
-                    target     = start + datetime.timedelta(days=diff + 7 * offset)
+                    target     = start + datetime.timedelta(days=diff)
                     sourceTime = target.timetuple()
 
                 flag = True
@@ -735,6 +742,22 @@ class Calendar:
 
                 flag              = True
                 self.modifierFlag = False
+            else:
+                self.modifierFlag = False
+
+                  # check if the remaining text is parsable
+                  # and if so, use it as the base time for the
+                  # modifier source time
+                t, flag2 = self.parse('%s %s' % (chunk1, unit), sourceTime)
+
+                if not flag2:
+                    sourceTime = t
+
+                sources = self.ptc.buildSources(sourceTime)
+
+                if modifier in sources:
+                    sourceTime = sources[modifier]
+                    flag       = True
 
         # if the word after next is a number, the string is likely
         # to be something like "next 4 hrs" for which we have to
@@ -748,8 +771,8 @@ class Calendar:
 
         self.modifierFlag = False
 
-        return '%s %s' % (chunk1, chunk2), sourceTime
-
+        #return '%s %s' % (chunk1, chunk2), sourceTime
+        return '%s' % chunk2, sourceTime
 
     def _evalModifier2(self, modifier, chunk1 , chunk2, sourceTime):
         """
@@ -796,7 +819,7 @@ class Calendar:
                 chunk2 = '%d%s' % (qty, chunk2)
 
         sourceTime, flag1 = self.parse(chunk2, sourceTime)
-        flag2 = False
+        flag2             = False
 
         if chunk1 != '':
             if offset < 0:

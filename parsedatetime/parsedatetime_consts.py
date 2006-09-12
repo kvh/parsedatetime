@@ -111,7 +111,7 @@ class pdtLocale_en:
                   'previous':  -1,
                   'in a':       2,
                   'end of':     0,
-                  'eo':         0,
+                  'eod':        0,
                 }
 
     dayoffsets = { 'tomorrow':   1,
@@ -132,6 +132,7 @@ class pdtLocale_en:
                       'midnight':  { 'hr':  0, 'mn': 0, 'sec': 0 },
                       'night':     { 'hr': 21, 'mn': 0, 'sec': 0 },
                       'tonight':   { 'hr': 21, 'mn': 0, 'sec': 0 },
+                      'eod':       { 'hr': 17, 'mn': 0, 'sec': 0 },
                     }
 
 
@@ -234,6 +235,7 @@ class pdtLocale_au:
                       'midnight':  { 'hr':  0, 'mn': 0, 'sec': 0 },
                       'night':     { 'hr': 21, 'mn': 0, 'sec': 0 },
                       'tonight':   { 'hr': 21, 'mn': 0, 'sec': 0 },
+                      'eod':       { 'hr': 17, 'mn': 0, 'sec': 0 },
                     }
 
 
@@ -338,6 +340,7 @@ class pdtLocale_es:
                       'midnight':  { 'hr':  0, 'mn': 0, 'sec': 0 },
                       'night':     { 'hr': 21, 'mn': 0, 'sec': 0 },
                       'tonight':   { 'hr': 21, 'mn': 0, 'sec': 0 },
+                      'eod':       { 'hr': 17, 'mn': 0, 'sec': 0 },
                     }
 
 
@@ -572,7 +575,7 @@ def _initPatterns(ptc):
     ptc.RE_SPECIAL   = r'(?P<special>^[%(specials)s]+)\s+' % ptc.re_values
     ptc.RE_UNITS     = r'(?P<qty>(-?\d+\s*(?P<units>((%(units)s)s?))))' % ptc.re_values
     ptc.RE_QUNITS    = r'(?P<qty>(-?\d+\s?(?P<qunits>%(qunits)s)(\s|,|$)))' % ptc.re_values
-    ptc.RE_MODIFIER  = r'(?P<modifier>(previous|prev|last|next|this|eo|(end\sof)|(in\sa)))' % ptc.re_values
+    ptc.RE_MODIFIER  = r'(?P<modifier>(previous|prev|last|next|this|eod|(end\sof)|(in\sa)))' % ptc.re_values
     ptc.RE_MODIFIER2 = r'(?P<modifier>(from|before|after|ago|prior))' % ptc.re_values
     ptc.RE_TIMEHMS   = r'(?P<hours>\d\d?)(?P<tsep>%(timeseperator)s|)(?P<minutes>\d\d)(?:(?P=tsep)(?P<seconds>\d\d(?:[.,]\d+)?))?' % ptc.re_values
 
@@ -699,10 +702,13 @@ class Constants:
                      'hr': hr, 'mn':  mn,  'sec': sec, }
 
         for item in self.re_sources:
-            values = self.re_sources[item]
+            values = {}
+            source = self.re_sources[item]
 
             for key in defaults.keys():
-                if not key in values:
+                if key in source:
+                    values[key] = source[key]
+                else:
                     values[key] = defaults[key]
 
             sources[item] = ( values['yr'], values['mth'], values['dy'],
