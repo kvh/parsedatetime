@@ -4,7 +4,10 @@
 Parse human-readable date/time text.
 """
 
-__license__ = """Copyright (c) 2004-2006 Mike Taylor, All rights reserved.
+__license__ = """
+Copyright (c) 2004-2006 Mike Taylor
+Copyright (c) 2006 Darshana Chhajed
+All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,9 +21,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-__author__       = 'Mike Taylor <http://code-bear.com>'
-__contributors__ = ['Darshana Chhajed <mailto://darshana@osafoundation.org>',
-                   ]
 
 _debug = False
 
@@ -632,7 +632,8 @@ class Calendar:
         flag = False
 
         if unit == 'month' or \
-           unit == 'mth':
+           unit == 'mth' or \
+           unit == 'm':
             if offset == 0:
                 dy         = self.ptc.DaysInMonthList[mth - 1]
                 sourceTime = (yr, mth, dy, 9, 0, 0, wd, yd, isdst)

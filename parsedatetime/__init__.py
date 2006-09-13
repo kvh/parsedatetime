@@ -1,6 +1,9 @@
 version = '0.7.3'
-author  = 'Mike Taylor <http://code-bear.com>'
-license = """Copyright (c) 2004-2006 Mike Taylor, All rights reserved.
+author  = 'Mike Taylor and Darshana Chhajed'
+license = """
+Copyright (c) 2004-2006 Mike Taylor
+Copyright (c) 2006 Darshana Chhajed
+All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

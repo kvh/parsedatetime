@@ -4,7 +4,10 @@
 The Constants class defines all constants used by parsedatetime.py.
 """
 
-__license__ = """Copyright (c) 2004-2006 Mike Taylor, All rights reserved.
+__license__ = """
+Copyright (c) 2004-2006 Mike Taylor
+Copyright (c) 2006 Darshana Chhajed
+All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -18,10 +21,6 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 """
-__author__       = 'Mike Taylor <http://code-bear.com>'
-__contributors__ = [ 'Darshana Chhajed <mailto://darshana@osafoundation.org>',
-                   ]
-
 
 try:
     import PyICU as pyicu
@@ -112,6 +111,7 @@ class pdtLocale_en:
                   'in a':       2,
                   'end of':     0,
                   'eod':        0,
+                  'eo':         0
                 }
 
     dayoffsets = { 'tomorrow':   1,
@@ -575,7 +575,7 @@ def _initPatterns(ptc):
     ptc.RE_SPECIAL   = r'(?P<special>^[%(specials)s]+)\s+' % ptc.re_values
     ptc.RE_UNITS     = r'(?P<qty>(-?\d+\s*(?P<units>((%(units)s)s?))))' % ptc.re_values
     ptc.RE_QUNITS    = r'(?P<qty>(-?\d+\s?(?P<qunits>%(qunits)s)(\s|,|$)))' % ptc.re_values
-    ptc.RE_MODIFIER  = r'(?P<modifier>(previous|prev|last|next|this|eod|(end\sof)|(in\sa)))' % ptc.re_values
+    ptc.RE_MODIFIER  = r'(?P<modifier>(previous|prev|last|next|this|eod|eo|(end\sof)|(in\sa)))' % ptc.re_values
     ptc.RE_MODIFIER2 = r'(?P<modifier>(from|before|after|ago|prior))' % ptc.re_values
     ptc.RE_TIMEHMS   = r'(?P<hours>\d\d?)(?P<tsep>%(timeseperator)s|)(?P<minutes>\d\d)(?:(?P=tsep)(?P<seconds>\d\d(?:[.,]\d+)?))?' % ptc.re_values
 

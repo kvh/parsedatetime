@@ -1,3 +1,7 @@
+13 Sep 2006 - bear
+
+    Added Darshana as an author and updated the copyright text
+
 11 Sep 2006 - bear
 
     Fixed a subtle dictionary reference bug in buildSources() that was causing

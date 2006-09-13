@@ -42,3 +42,11 @@ of parsedatetime_consts.CalendarConstants()
 This code is under some serious refactoring as now it appears
 it will have more than one user.  Up until now I've been the
 only person to even look at the code so bear with me please :)
+
+Contact Information
+-------------------
+
+    Mike Taylor         mailto://bear@code-bear.com
+                        http://code-bear.com
+    Darshana Chhajed    mailto://darshana@osafoundation.org
+
