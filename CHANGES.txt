@@ -1,3 +1,7 @@
+25 Sep 2006 - bear
+
+    0.7.3 release
+
 13 Sep 2006 - bear
 
     Added Darshana as an author and updated the copyright text
