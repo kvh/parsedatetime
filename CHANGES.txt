@@ -1,6 +1,7 @@
 13 Sep 2006 - bear
 
     Added Darshana as an author and updated the copyright text
+    Added "eom" and "eoy" tests
 
 11 Sep 2006 - bear
 

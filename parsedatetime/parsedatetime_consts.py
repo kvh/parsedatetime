@@ -362,7 +362,7 @@ def _initLocale(ptc):
         if not ptc.icuLocale:
             ptc.icuLocale = pyicu.Locale('en_US')
 
-        ptc.icuSymbols    = pyicu.DateFormatSymbols(ptc.icuLocale)
+        ptc.icuSymbols = pyicu.DateFormatSymbols(ptc.icuLocale)
 
           # grab ICU list of weekdays, skipping first entry which is always blank
         wd  = map(string.lower, ptc.icuSymbols.getWeekdays()[1:])
@@ -376,29 +376,27 @@ def _initLocale(ptc):
 
           # not quite sure how to init this so for now
           # set it to none so it will be set to the en_US defaults for now
-        ptc.re_consts     = None
-
-        ptc.icu_df        = { 'full':   pyicu.DateFormat.createDateInstance(pyicu.DateFormat.kFull,   ptc.icuLocale),
-                              'long':   pyicu.DateFormat.createDateInstance(pyicu.DateFormat.kLong,   ptc.icuLocale),
-                              'medium': pyicu.DateFormat.createDateInstance(pyicu.DateFormat.kMedium, ptc.icuLocale),
-                              'short':  pyicu.DateFormat.createDateInstance(pyicu.DateFormat.kShort,  ptc.icuLocale),
-                            }
-        ptc.icu_tf        = { 'full':   pyicu.DateFormat.createTimeInstance(pyicu.DateFormat.kFull,   ptc.icuLocale),
-                              'long':   pyicu.DateFormat.createTimeInstance(pyicu.DateFormat.kLong,   ptc.icuLocale),
-                              'medium': pyicu.DateFormat.createTimeInstance(pyicu.DateFormat.kMedium, ptc.icuLocale),
-                              'short':  pyicu.DateFormat.createTimeInstance(pyicu.DateFormat.kShort,  ptc.icuLocale),
-                            }
-
-        ptc.dateFormats   = { 'full':   ptc.icu_df['full'].toPattern(),
-                              'long':   ptc.icu_df['long'].toPattern(),
-                              'medium': ptc.icu_df['medium'].toPattern(),
-                              'short':  ptc.icu_df['short'].toPattern(),
-                            }
-        ptc.timeFormats   = { 'full':   ptc.icu_tf['full'].toPattern(),
-                              'long':   ptc.icu_tf['long'].toPattern(),
-                              'medium': ptc.icu_tf['medium'].toPattern(),
-                              'short':  ptc.icu_tf['short'].toPattern(),
-                            }
+        ptc.re_consts   = None
+        ptc.icu_df      = { 'full':   pyicu.DateFormat.createDateInstance(pyicu.DateFormat.kFull,   ptc.icuLocale),
+                            'long':   pyicu.DateFormat.createDateInstance(pyicu.DateFormat.kLong,   ptc.icuLocale),
+                            'medium': pyicu.DateFormat.createDateInstance(pyicu.DateFormat.kMedium, ptc.icuLocale),
+                            'short':  pyicu.DateFormat.createDateInstance(pyicu.DateFormat.kShort,  ptc.icuLocale),
+                          }
+        ptc.icu_tf      = { 'full':   pyicu.DateFormat.createTimeInstance(pyicu.DateFormat.kFull,   ptc.icuLocale),
+                            'long':   pyicu.DateFormat.createTimeInstance(pyicu.DateFormat.kLong,   ptc.icuLocale),
+                            'medium': pyicu.DateFormat.createTimeInstance(pyicu.DateFormat.kMedium, ptc.icuLocale),
+                            'short':  pyicu.DateFormat.createTimeInstance(pyicu.DateFormat.kShort,  ptc.icuLocale),
+                          }
+        ptc.dateFormats = { 'full':   ptc.icu_df['full'].toPattern(),
+                            'long':   ptc.icu_df['long'].toPattern(),
+                            'medium': ptc.icu_df['medium'].toPattern(),
+                            'short':  ptc.icu_df['short'].toPattern(),
+                          }
+        ptc.timeFormats = { 'full':   ptc.icu_tf['full'].toPattern(),
+                            'long':   ptc.icu_tf['long'].toPattern(),
+                            'medium': ptc.icu_tf['medium'].toPattern(),
+                            'short':  ptc.icu_tf['short'].toPattern(),
+                          }
     else:
         if not ptc.localeID in pdtLocales:
             ptc.localeID = 'en_US'

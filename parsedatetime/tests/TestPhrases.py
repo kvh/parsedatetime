@@ -80,3 +80,31 @@ class test(unittest.TestCase):
 
         self.assertTrue(_compareResults(self.cal.parse('eod %s' % day, start), (target, False)))
 
+
+    def testEndOfPhrases(self):
+        s = datetime.datetime.now()
+
+          # find out what month we are currently on
+          # set the day to 1 and then go back a day
+          # to get the end of the current month
+        (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = s.timetuple()
+
+        mth += 1
+        if mth > 12:
+            mth = 1
+
+        t = datetime.datetime(yr, mth, 1, 9, 0, 0) + datetime.timedelta(days=-1)
+
+        start  = s.timetuple()
+        target = t.timetuple()
+
+        self.assertTrue(_compareResults(self.cal.parse('eom',         start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('meeting eom', start), (target, False)))
+
+        t = datetime.datetime(yr, 12, 31, hr, mn, sec)
+
+        target = t.timetuple()
+
+        self.assertTrue(_compareResults(self.cal.parse('eoy',         start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('meeting eoy', start), (target, False)))
+
