@@ -369,11 +369,16 @@ class Calendar:
             c = self.ptc.dp_order[i]
             if n >= 0:
                 d[c] = n
+                
+        # if the year is not specified and the date has already passed, increment the year
+        if v3 == -1 and ((mth > d['m']) or (mth == d['m'] and dy > d['d'])):
+            yr = d['y'] + 1
+        else:
+            yr  = d['y']
 
         mth = d['m']
         dy  = d['d']
-        yr  = d['y']
-
+        
         # TODO should this have a birthday epoch constraint?
         if yr < 99:
             yr += 2000
@@ -711,25 +716,32 @@ class Calendar:
             m = self.CRE_WEEKDAY.match(unit)
             if m is not None:
                 wkdy = m.group()
-                wkdy = self.ptc.WeekdayOffsets[wkdy]
-
-                if wkdy > wd:
-                    diff = wkdy - wd
-                else:
-                    diff = 6 - wd + wkdy + 1
-
-                if offset == 0:
-                    start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
-                    target     = start + datetime.timedelta(days=diff)
-                    sourceTime = target.timetuple()
-
+                if modifier == 'eod':
+                    # Calculate the  upcoming weekday
+                    self.modifierFlag = False
+                    (sourceTime, eodFlag) = self.parse(wkdy,sourceTime)
                     sources = self.ptc.buildSources(sourceTime)
                     if modifier in sources:
                         sourceTime = sources[modifier]
+                    
                 else:
-                    start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
-                    target     = start + datetime.timedelta(days=diff)
-                    sourceTime = target.timetuple()
+                    wkdy = self.ptc.WeekdayOffsets[wkdy]
+    
+                    if offset == 0:
+                        start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
+                        diff       = wkdy - wd
+                        target     = start + datetime.timedelta(days=diff)
+                        sourceTime = target.timetuple()
+                    elif offset == 1:
+                        diff       = 6 - wd + wkdy + 1
+                        start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
+                        target     = start + datetime.timedelta(days=diff)
+                        sourceTime = target.timetuple()
+                    elif offset == -1:
+                        diff       = wd - wkdy + 7
+                        start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
+                        target     = start + datetime.timedelta(days=-diff)
+                        sourceTime = target.timetuple() 
 
                 flag = True
 
@@ -812,25 +824,30 @@ class Calendar:
         # parsing the string.
         # This is not required for strings not starting with digits
         # since the string is enough to calculate the sourceTime
-        if offset < 0:
-            m = re.match(digit, string.strip(chunk2))
-            if m is not None:
-                qty    = int(m.group()) * -1
-                chunk2 = chunk2[m.end():]
-                chunk2 = '%d%s' % (qty, chunk2)
-
-        sourceTime, flag1 = self.parse(chunk2, sourceTime)
-        flag2             = False
+        if chunk2 != '':
+            if offset < 0:
+                m = re.match(digit, string.strip(chunk2))
+                if m is not None:
+                    qty    = int(m.group()) * -1
+                    chunk2 = chunk2[m.end():]
+                    chunk2 = '%d%s' % (qty, chunk2)
+    
+            sourceTime, flag1 = self.parse(chunk2, sourceTime)
+            flag2             = False
+        else:
+            flag1 = False
 
         if chunk1 != '':
             if offset < 0:
-                m = re.match(digit, string.strip(chunk1))
+                m = re.search(digit, string.strip(chunk1))
                 if m is not None:
                     qty    = int(m.group()) * -1
                     chunk1 = chunk1[m.end():]
                     chunk1 = '%d%s' % (qty, chunk1)
 
             sourceTime2, flag2 = self.parse(chunk1, sourceTime)
+        else:
+            return sourceTime, (flag1 and flag2)
 
         # if chunk1 is not a datetime and chunk2 is
         # then do not use datetime value returned by
@@ -968,7 +985,7 @@ class Calendar:
             if s in self.ptc.re_values['now']:
                 sourceTime = now
             else:
-                sources = self.ptc.buildSources(now)
+                sources = self.ptc.buildSources(sourceTime)
 
                 if s in sources:
                     sourceTime = sources[s]
@@ -1265,8 +1282,13 @@ class Calendar:
             if parseStr != '':
                 if self.modifierFlag == True:
                     t, totalTime = self._evalModifier(parseStr, chunk1, chunk2, totalTime)
-
-                    return self.parse(t, totalTime)
+                    # t is the unparsed part of the chunks. If it is not date/time, return current
+                    # totalTime as it is; else return the output after parsing t.
+                    (totalTime2, flag) = self.parse(t, totalTime)
+                    if flag == True and totalTime is not None:
+                        return (totalTime, False)
+                    else:
+                        return (totalTime2, flag)
 
                 elif self.modifier2Flag == True:
                     totalTime, self.invalidFlag = self._evalModifier2(parseStr, chunk1, chunk2, totalTime)

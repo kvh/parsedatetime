@@ -101,7 +101,7 @@ class pdtLocale_en:
     modifiers = { 'from':       1,
                   'before':    -1,
                   'after':      1,
-                  'ago':        1,
+                  'ago':       -1,
                   'prior':     -1,
                   'prev':      -1,
                   'last':      -1,
