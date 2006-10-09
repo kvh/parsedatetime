@@ -1,3 +1,16 @@
+9 Oct 2006 - bear
+
+    0.7.4 release
+
+5 Oct 2006 - darshana
+
+    Fixed "ago" bug -- Issue #7 http://code.google.com/p/parsedatetime/issues/detail?id=7
+    
+    Fixed bug where default year for dates that are in the future get next year, not 
+    current year -- Issue #8 http://code.google.com/p/parsedatetime/issues/detail?id=8
+
+    Fixed strings like "1 week ago", "lunch tomorrow"
+    
 25 Sep 2006 - bear
 
     0.7.3 release
