@@ -1,6 +1,7 @@
 9 Oct 2006 - bear
 
     0.7.4 release
+    Setting trunk to 0.7.5
 
 5 Oct 2006 - darshana
 
