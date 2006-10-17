@@ -1,3 +1,9 @@
+17 Oct 2006 - darshana
+
+    Added birthday epoch constraint
+    Fixed date parsing. 3-digit year not allowed now.
+    Fixed the unit tests too to either have yy or yyyy.
+
 9 Oct 2006 - bear
 
     0.7.4 release

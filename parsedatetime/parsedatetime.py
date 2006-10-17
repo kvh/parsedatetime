@@ -326,7 +326,7 @@ class Calendar:
 
     def parseDate(self, dateString):
         """
-        Parses strings like 05/28/200 or 04.21
+        Parses strings like 05/28/2006 or 04.21
 
         @type  dateString: string
         @param dateString: text to convert to a datetime
@@ -379,9 +379,11 @@ class Calendar:
         mth = d['m']
         dy  = d['d']
         
-        # TODO should this have a birthday epoch constraint?
-        if yr < 99:
+        # birthday epoch constraint
+        if yr < 50:
             yr += 2000
+        elif yr < 100:
+            yr += 1900
 
         if (mth > 0 and mth <= 12) and (dy > 0 and dy <= self.ptc.DaysInMonthList[mth - 1]):
             sourceTime = (yr, mth, dy, hr, mn, sec, wd, yd, isdst)
@@ -419,6 +421,13 @@ class Calendar:
 
         if m.group('year') !=  None:
             yr = int(m.group('year'))
+            
+            # birthday epoch constraint
+            if yr < 50:
+                yr += 2000
+            elif yr < 100:
+                yr += 1900
+                
         elif (mth < currentMth) or (mth == currentMth and dy < currentDy):
             # if that day and month have already passed in this year,
             # then increment the year by 1
