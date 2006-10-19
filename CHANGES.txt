@@ -1,7 +1,8 @@
 19 Oct 2006 - bear
 
     Changed birthday epoch to be a constant defined in parsedatetime_const
-    lots of little cosmetic code changes
+    Lots of little cosmetic code changes
+    Removed the individual files in the docs/ folder
 
 17 Oct 2006 - darshana
 
