@@ -3,6 +3,7 @@
     Changed birthday epoch to be a constant defined in parsedatetime_const
     Lots of little cosmetic code changes
     Removed the individual files in the docs/ folder
+    Added dist, build and parsedatetime-egg.info to svn:ignore
 
 17 Oct 2006 - darshana
 
