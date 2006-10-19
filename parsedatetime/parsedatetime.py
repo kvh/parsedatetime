@@ -336,12 +336,10 @@ class Calendar:
         """
         yr, mth, dy, hr, mn, sec, wd, yd, isdst = time.localtime()
 
-          # values pulled from regex's will be stored here
-          # and later assigned to mth, dy, yr based
-          # on information from the locale
-          # -1 is used as the marker value because we want
-          # zero values to be passed thru so they can be
-          # flagged as errors later
+        # values pulled from regex's will be stored here and later
+        # assigned to mth, dy, yr based on information from the locale
+        # -1 is used as the marker value because we want zero values
+        # to be passed thru so they can be flagged as errors later
         v1 = -1
         v2 = -1
         v3 = -1
@@ -369,7 +367,7 @@ class Calendar:
             c = self.ptc.dp_order[i]
             if n >= 0:
                 d[c] = n
-                
+
         # if the year is not specified and the date has already passed, increment the year
         if v3 == -1 and ((mth > d['m']) or (mth == d['m'] and dy > d['d'])):
             yr = d['y'] + 1
@@ -378,9 +376,9 @@ class Calendar:
 
         mth = d['m']
         dy  = d['d']
-        
+
         # birthday epoch constraint
-        if yr < 50:
+        if yr < self.ptc.BirthdayEpoch:
             yr += 2000
         elif yr < 100:
             yr += 1900
@@ -389,7 +387,7 @@ class Calendar:
             sourceTime = (yr, mth, dy, hr, mn, sec, wd, yd, isdst)
         else:
             self.invalidFlag = True
-            sourceTime       = time.localtime() #return current time if date string is invalid
+            sourceTime       = time.localtime() # return current time if date string is invalid
 
         return sourceTime
 
@@ -421,13 +419,13 @@ class Calendar:
 
         if m.group('year') !=  None:
             yr = int(m.group('year'))
-            
+
             # birthday epoch constraint
-            if yr < 50:
+            if yr < self.ptc.BirthdayEpoch:
                 yr += 2000
             elif yr < 100:
                 yr += 1900
-                
+
         elif (mth < currentMth) or (mth == currentMth and dy < currentDy):
             # if that day and month have already passed in this year,
             # then increment the year by 1
@@ -436,7 +434,7 @@ class Calendar:
         if dy > 0 and dy <= self.ptc.DaysInMonthList[mth - 1]:
             sourceTime = (yr, mth, dy, 9, 0, 0, wd, yd, isdst)
         else:
-              # Return current time if date string is invalid
+            # Return current time if date string is invalid
             self.invalidFlag = True
             sourceTime       = time.localtime()
 
@@ -725,17 +723,19 @@ class Calendar:
             m = self.CRE_WEEKDAY.match(unit)
             if m is not None:
                 wkdy = m.group()
+
                 if modifier == 'eod':
                     # Calculate the  upcoming weekday
-                    self.modifierFlag = False
-                    (sourceTime, eodFlag) = self.parse(wkdy,sourceTime)
-                    sources = self.ptc.buildSources(sourceTime)
+                    self.modifierFlag     = False
+                    (sourceTime, eodFlag) = self.parse(wkdy, sourceTime)
+                    sources               = self.ptc.buildSources(sourceTime)
+
                     if modifier in sources:
                         sourceTime = sources[modifier]
-                    
+
                 else:
                     wkdy = self.ptc.WeekdayOffsets[wkdy]
-    
+
                     if offset == 0:
                         start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
                         diff       = wkdy - wd
@@ -758,6 +758,7 @@ class Calendar:
             m = self.CRE_TIME.match(unit)
             if m is not None:
                 (yr, mth, dy, hr, mn, sec, wd, yd, isdst), self.invalidFlag = self.parse(unit)
+
                 start      = datetime.datetime(yr, mth, dy, hr, mn, sec)
                 target     = start + datetime.timedelta(days=offset)
                 sourceTime = target.timetuple()
@@ -767,9 +768,8 @@ class Calendar:
             else:
                 self.modifierFlag = False
 
-                  # check if the remaining text is parsable
-                  # and if so, use it as the base time for the
-                  # modifier source time
+                # check if the remaining text is parsable and if so,
+                # use it as the base time for the modifier source time
                 t, flag2 = self.parse('%s %s' % (chunk1, unit), sourceTime)
 
                 if not flag2:
@@ -781,9 +781,8 @@ class Calendar:
                     sourceTime = sources[modifier]
                     flag       = True
 
-        # if the word after next is a number, the string is likely
-        # to be something like "next 4 hrs" for which we have to
-        # combine the units with the rest of the string
+        # if the word after next is a number, the string is more than likely
+        # to be "next 4 hrs" which we will have to combine the units with the rest of the string
         if not flag:
             if offset < 0:
                 # if offset is negative, the unit has to be made negative
@@ -824,15 +823,14 @@ class Calendar:
 
         self.modifier2Flag = False
 
-        # If the string after the negative modifier starts with
-        # digits, then it is likely that the string is similar to
-        # " before 3 days" or 'evening prior to 3 days'.
-        # In this case, the total time is calculated by subtracting
-        # '3 days' from the current date.
-        # So, we have to identify the quantity and negate it before
-        # parsing the string.
-        # This is not required for strings not starting with digits
-        # since the string is enough to calculate the sourceTime
+        # If the string after the negative modifier starts with digits,
+        # then it is likely that the string is similar to ' before 3 days'
+        # or 'evening prior to 3 days'.
+        # In this case, the total time is calculated by subtracting '3 days'
+        # from the current date.
+        # So, we have to identify the quantity and negate it before parsing the string.
+        # This is not required for strings not starting with digits since the
+        # string is enough to calculate the sourceTime
         if chunk2 != '':
             if offset < 0:
                 m = re.match(digit, string.strip(chunk2))
@@ -840,7 +838,7 @@ class Calendar:
                     qty    = int(m.group()) * -1
                     chunk2 = chunk2[m.end():]
                     chunk2 = '%d%s' % (qty, chunk2)
-    
+
             sourceTime, flag1 = self.parse(chunk2, sourceTime)
             flag2             = False
         else:
@@ -858,9 +856,8 @@ class Calendar:
         else:
             return sourceTime, (flag1 and flag2)
 
-        # if chunk1 is not a datetime and chunk2 is
-        # then do not use datetime value returned by
-        # parsing chunk1
+        # if chunk1 is not a datetime and chunk2 is then do not use datetime
+        # value returned by parsing chunk1
         if not (flag1 == False and flag2 == True):
             sourceTime       = sourceTime2
             self.invalidFlag = False
@@ -889,18 +886,18 @@ class Calendar:
         s   = string.strip(datetimeString)
         now = time.localtime()
 
-          # Given string date is a RFC822 date
+        # Given string date is a RFC822 date
         if sourceTime is None:
             sourceTime = _parse_date_rfc822(s)
 
-          # Given string date is a W3CDTF date
+        # Given string date is a W3CDTF date
         if sourceTime is None:
             sourceTime = _parse_date_w3dtf(s)
 
         if sourceTime is None:
             s = s.lower()
 
-          # Given string is in the format HH:MM(:SS)(am/pm)
+        # Given string is in the format HH:MM(:SS)(am/pm)
         if self.meridianFlag:
             if sourceTime is None:
                 (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = now
@@ -960,17 +957,17 @@ class Calendar:
 
             self.timeFlag = False
 
-          # Given string is in the format 07/21/2006
+        # Given string is in the format 07/21/2006
         if self.dateStdFlag:
             sourceTime       = self.parseDate(s)
             self.dateStdFlag = False
 
-          # Given string is in the format  "May 23rd, 2005"
+        # Given string is in the format  "May 23rd, 2005"
         if self.dateStrFlag:
             sourceTime       = self.parseDateText(s)
             self.dateStrFlag = False
 
-          # Given string is a weekday
+        # Given string is a weekday
         if self.weekdyFlag:
             (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = now
 
@@ -1004,7 +1001,7 @@ class Calendar:
 
             self.timeStrFlag = False
 
-           # Given string is a natural language date string like today, tomorrow..
+        # Given string is a natural language date string like today, tomorrow..
         if self.dayStrFlag:
             if sourceTime is None:
                 sourceTime = now
@@ -1022,7 +1019,7 @@ class Calendar:
 
             self.dayStrFlag = False
 
-          # Given string is a time string with units like "5 hrs 30 min"
+        # Given string is a time string with units like "5 hrs 30 min"
         if self.unitsFlag:
             modifier = ''  # TODO
 
@@ -1037,7 +1034,7 @@ class Calendar:
             sourceTime     = self._buildTime(sourceTime, quantity, modifier, units)
             self.unitsFlag = False
 
-          # Given string is a time string with single char units like "5 h 30 m"
+        # Given string is a time string with single char units like "5 h 30 m"
         if self.qunitsFlag:
             modifier = ''  # TODO
 

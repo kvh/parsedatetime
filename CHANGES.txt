@@ -1,3 +1,8 @@
+19 Oct 2006 - bear
+
+    Changed birthday epoch to be a constant defined in parsedatetime_const
+    lots of little cosmetic code changes
+
 17 Oct 2006 - darshana
 
     Added birthday epoch constraint

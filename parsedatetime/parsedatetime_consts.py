@@ -675,6 +675,8 @@ class Constants:
 
         self.DaysInMonthList = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 
+        self.BirthdayEpoch = 50
+
         _initLocale(self)
         _initConstants(self)
         _initSymbols(self)
