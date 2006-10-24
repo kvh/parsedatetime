@@ -29,19 +29,19 @@ class test(unittest.TestCase):
         start  = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()
         target = datetime.datetime(self.yr, self.mth, self.dy, 16, 0, 0).timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('flight from SFO at 4pm', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('flight from SFO at 4pm', start), (target, 2)))
 
         target = datetime.datetime(self.yr, self.mth, self.dy, 17, 0, 0).timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('eod',         start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('meeting eod', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('eod meeting', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('eod',         start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('meeting eod', start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('eod meeting', start), (target, 2)))
 
         target = datetime.datetime(self.yr, self.mth, self.dy, 17, 0, 0) + datetime.timedelta(days=1)
         target = target.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('tomorrow eod', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('eod tomorrow', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('tomorrow eod', start), (target, 3)))
+        self.assertTrue(_compareResults(self.cal.parse('eod tomorrow', start), (target, 3)))
 
 
     def testPhraseWithDays(self):
@@ -62,7 +62,7 @@ class test(unittest.TestCase):
 
         day = self.cal.ptc.Weekdays[d]
 
-        self.assertTrue(_compareResults(self.cal.parse('eod %s' % day, start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('eod %s' % day, start), (target, 3)))
 
           # find out what day we are currently on
           # and determine what the previous day of week is
@@ -78,7 +78,7 @@ class test(unittest.TestCase):
 
         day = self.cal.ptc.Weekdays[d]
 
-        self.assertTrue(_compareResults(self.cal.parse('eod %s' % day, start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('eod %s' % day, start), (target, 3)))
 
 
     def testEndOfPhrases(self):
@@ -98,13 +98,13 @@ class test(unittest.TestCase):
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('eom',         start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('meeting eom', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('eom',         start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('meeting eom', start), (target, 1)))
 
         t = datetime.datetime(yr, 12, 31, hr, mn, sec)
 
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('eoy',         start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('meeting eoy', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('eoy',         start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('meeting eoy', start), (target, 1)))
 

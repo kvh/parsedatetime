@@ -1,3 +1,17 @@
+24 Oct 2006 - bear
+
+    Merged in changes from Darshana's change_parse_to_return_enum branch
+
+    This is a big change in that instead of a simple True/False that is
+    returned to show if the date is valid or not, Parse() now returns
+    a "masked" value that represents what is valid:
+
+        date = 1
+        time = 2
+
+    so a value of zero means nothing was parseable/valid and a value of
+    3 means both were parsed/valid.
+
 20 Oct 2006 - darshana
 
    Implemented the CalculateDOWDelta() method in parsedatetime.py

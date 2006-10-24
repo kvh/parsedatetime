@@ -35,18 +35,18 @@ class test(unittest.TestCase):
         targetStart = datetime.datetime(self.yr, self.mth, self.dy, 14, 0, 0).timetuple()
         targetEnd   = datetime.datetime(self.yr, self.mth, self.dy, 17, 30, 0).timetuple()
 
-        self.assertTrue(_compareResults(self.cal.evalRanges("2 pm - 5:30 pm",          start), (targetStart, targetEnd, False)))
-        self.assertTrue(_compareResults(self.cal.evalRanges("2pm - 5:30pm",            start), (targetStart, targetEnd, False)))
-        self.assertTrue(_compareResults(self.cal.evalRanges("2:00:00 pm - 5:30:00 pm", start), (targetStart, targetEnd, False)))
-        self.assertTrue(_compareResults(self.cal.evalRanges("2 - 5:30pm",              start), (targetStart, targetEnd, False)))
-        self.assertTrue(_compareResults(self.cal.evalRanges("14:00 - 17:30",           start), (targetStart, targetEnd, False)))
+        self.assertTrue(_compareResults(self.cal.evalRanges("2 pm - 5:30 pm",          start), (targetStart, targetEnd, 2)))
+        self.assertTrue(_compareResults(self.cal.evalRanges("2pm - 5:30pm",            start), (targetStart, targetEnd, 2)))
+        self.assertTrue(_compareResults(self.cal.evalRanges("2:00:00 pm - 5:30:00 pm", start), (targetStart, targetEnd, 2)))
+        self.assertTrue(_compareResults(self.cal.evalRanges("2 - 5:30pm",              start), (targetStart, targetEnd, 2)))
+        self.assertTrue(_compareResults(self.cal.evalRanges("14:00 - 17:30",           start), (targetStart, targetEnd, 2)))
 
         targetStart = datetime.datetime(self.yr, self.mth, self.dy, 10, 0, 0).timetuple()
         targetEnd   = datetime.datetime(self.yr, self.mth, self.dy, 13, 30, 0).timetuple()
 
-        self.assertTrue(_compareResults(self.cal.evalRanges("10AM - 1:30PM",            start), (targetStart, targetEnd, False)))
-        self.assertTrue(_compareResults(self.cal.evalRanges("10:00:00 am - 1:30:00 pm", start), (targetStart, targetEnd, False)))
-        self.assertTrue(_compareResults(self.cal.evalRanges("10:00 - 13:30",            start), (targetStart, targetEnd, False)))
+        self.assertTrue(_compareResults(self.cal.evalRanges("10AM - 1:30PM",            start), (targetStart, targetEnd, 2)))
+        self.assertTrue(_compareResults(self.cal.evalRanges("10:00:00 am - 1:30:00 pm", start), (targetStart, targetEnd, 2)))
+        self.assertTrue(_compareResults(self.cal.evalRanges("10:00 - 13:30",            start), (targetStart, targetEnd, 2)))
 
 
     def testDates(self):
@@ -55,13 +55,13 @@ class test(unittest.TestCase):
         targetStart = datetime.datetime(2006, 8, 29, 9, 0, 0).timetuple()
         targetEnd   = datetime.datetime(2006, 9, 2, 9, 0, 0).timetuple()
 
-        self.assertTrue(_compareResults(self.cal.evalRanges("August 29, 2006 - September 2, 2006", start), (targetStart, targetEnd, False)))
-        self.assertTrue(_compareResults(self.cal.evalRanges("August 29 - September 2, 2006",       start), (targetStart, targetEnd, False)))
+        self.assertTrue(_compareResults(self.cal.evalRanges("August 29, 2006 - September 2, 2006", start), (targetStart, targetEnd, 1)))
+        self.assertTrue(_compareResults(self.cal.evalRanges("August 29 - September 2, 2006",       start), (targetStart, targetEnd, 1)))
 
         targetStart = datetime.datetime(2006, 8, 29, self.hr, self.mn, self.sec).timetuple()
         targetEnd   = datetime.datetime(2006, 9, 2, self.hr, self.mn, self.sec).timetuple()
 
-        self.assertTrue(_compareResults(self.cal.evalRanges("08/29/06 - 09/02/06", start), (targetStart, targetEnd, False)))
+        self.assertTrue(_compareResults(self.cal.evalRanges("08/29/06 - 09/02/06", start), (targetStart, targetEnd, 1)))
 
 
     #def testSubRanges(self):
@@ -70,7 +70,7 @@ class test(unittest.TestCase):
     #    targetStart = datetime.datetime(2006, 8, 1, 9, 0, 0).timetuple()
     #    targetEnd   = datetime.datetime(2006, 8, 15, 9, 0, 0).timetuple()
 
-    #    self.assertTrue(_compareResults(self.cal.evalRanges("August 1-15, 2006", start), (targetStart, targetEnd, False)))
+    #    self.assertTrue(_compareResults(self.cal.evalRanges("August 1-15, 2006", start), (targetStart, targetEnd, 1)))
 
 
 if __name__ == "__main__":

@@ -33,57 +33,57 @@ class test(unittest.TestCase):
         start  = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()
         target = datetime.datetime(self.yr, self.mth, self.dy, 23, 0, 0).timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('11:00:00 PM', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('11:00 PM',    start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('11 PM',       start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('11PM',        start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('2300',        start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('23:00',       start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('11p',         start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('11pm',        start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('11:00:00 PM', start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('11:00 PM',    start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('11 PM',       start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('11PM',        start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('2300',        start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('23:00',       start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('11p',         start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('11pm',        start), (target, 2)))
 
         target = datetime.datetime(self.yr, self.mth, self.dy, 11, 0, 0).timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('11:00:00 AM', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('11:00 AM',    start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('11 AM',       start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('11AM',        start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1100',        start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('11:00',       start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('11a',         start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('11am',        start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('11:00:00 AM', start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('11:00 AM',    start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('11 AM',       start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('11AM',        start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('1100',        start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('11:00',       start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('11a',         start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('11am',        start), (target, 2)))
 
         target = datetime.datetime(self.yr, self.mth, self.dy, 7, 30, 0).timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('730',  start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('0730', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('730',  start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('0730', start), (target, 2)))
 
         target = datetime.datetime(self.yr, self.mth, self.dy, 17, 30, 0).timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('1730',   start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('173000', start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('1730',   start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('173000', start), (target, 2)))
 
 
     def testDates(self):
         start  = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()
         target = datetime.datetime(2006, 8, 25,  self.hr, self.mn, self.sec).timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('25-08-2006', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('25/08/2006', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('25.08.2006', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('25-8-06',     start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('25/8/06',     start), (target, False)))
-        
+        self.assertTrue(_compareResults(self.cal.parse('25-08-2006', start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('25/08/2006', start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('25.08.2006', start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('25-8-06',    start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('25/8/06',    start), (target, 1)))
+
         if self.mth > 8 or (self.mth == 8 and self.dy > 25):
             target = datetime.datetime(self.yr+1, 8, 25,  self.hr, self.mn, self.sec).timetuple()
         else:
             target = datetime.datetime(self.yr, 8, 25,  self.hr, self.mn, self.sec).timetuple()
             
-        self.assertTrue(_compareResults(self.cal.parse('25-8',       start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('25/8',       start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('25.8',       start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('25-08',      start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('25/08',      start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('25-8',       start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('25/8',       start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('25.8',       start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('25-08',      start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('25/08',      start), (target, 1)))
 
 
 if __name__ == "__main__":

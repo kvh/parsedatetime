@@ -32,12 +32,12 @@ class test(unittest.TestCase):
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('1 minute',  start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 minutes', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 min',     start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1min',      start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 m',       start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1m',        start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('1 minute',  start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('1 minutes', start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('1 min',     start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('1min',      start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('1 m',       start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('1m',        start), (target, 2)))
 
     def testHours(self):
         s = datetime.datetime.now()
@@ -46,9 +46,9 @@ class test(unittest.TestCase):
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('1 hour',  start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 hours', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 hr',    start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('1 hour',  start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('1 hours', start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('1 hr',    start), (target, 2)))
 
 
     def testDays(self):
@@ -58,11 +58,11 @@ class test(unittest.TestCase):
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('1 day',  start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 days', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1days',  start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 dy',   start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 d',    start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('1 day',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1 days', start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1days',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1 dy',   start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1 d',    start), (target, 1)))
 
 
     def testNegativeDays(self):
@@ -72,17 +72,17 @@ class test(unittest.TestCase):
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('-1 day',  start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('-1 days', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('-1days',  start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('-1 dy',   start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('-1 d',    start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('-1 day',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('-1 days', start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('-1days',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('-1 dy',   start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('-1 d',    start), (target, 1)))
 
-        self.assertTrue(_compareResults(self.cal.parse('- 1 day',  start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('- 1 days', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('- 1days',  start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('- 1 dy',   start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('- 1 d',    start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('- 1 day',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('- 1 days', start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('- 1days',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('- 1 dy',   start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('- 1 d',    start), (target, 1)))
 
 
     def testWeeks(self):
@@ -92,12 +92,12 @@ class test(unittest.TestCase):
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('1 week',  start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1week',   start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 weeks', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 wk',    start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 w',     start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1w',      start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('1 week',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1week',   start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1 weeks', start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1 wk',    start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1 w',     start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1w',      start), (target, 1)))
 
     def testMonths(self):
         s = datetime.datetime.now()
@@ -106,9 +106,9 @@ class test(unittest.TestCase):
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('1 month',  start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 months', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1month',   start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('1 month',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1 months', start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1month',   start), (target, 1)))
 
 
     def testYears(self):
@@ -118,11 +118,11 @@ class test(unittest.TestCase):
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('1 year',  start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 years', start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 yr',    start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1 y',     start), (target, False)))
-        self.assertTrue(_compareResults(self.cal.parse('1y',      start), (target, False)))
+        self.assertTrue(_compareResults(self.cal.parse('1 year',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1 years', start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1 yr',    start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1 y',     start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1y',      start), (target, 1)))
 
 
 if __name__ == "__main__":
