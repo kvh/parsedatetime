@@ -606,6 +606,60 @@ class Calendar:
             return (sourceTime, sourceTime, True)
 
 
+    def _CalculateDOWDelta(self, wd, wkdy, offset, style, currentDayStyle):
+        if offset == 1:
+            # modifier is indicating future week eg: "next".
+            # DOW is calculated as DOW of next week
+            diff = 7 - wd + wkdy
+
+        elif offset == -1:
+            # modifier is indicating past week eg: "last","previous"
+            # DOW is calculated as DOW of previous week
+            diff = wkdy - wd - 7
+
+        elif offset == 0:
+            # modifier is indiacting current week eg: "this"
+            # DOW is calculated as DOW of this week
+            diff = wkdy - wd
+
+        elif offset == 2:
+            # no modifier is present.
+            # i.e. string to be parsed is just DOW
+            if style == 1:
+                # next occurance of the DOW is calculated
+                if currentDayStyle == True:
+                    if wkdy >= wd:
+                        diff = wkdy - wd
+                    else:
+                        diff = 7 - wd + wkdy
+                else:
+                    if wkdy > wd:
+                        diff = wkdy - wd
+                    else:
+                        diff = 7 - wd + wkdy
+
+            elif style == -1:
+                # last occurance of the DOW is calculated
+                if currentDayStyle == True:
+                    if wkdy <= wd:
+                        diff = wkdy - wd
+                    else:
+                        diff = wkdy - wd - 7
+                else:
+                    if wkdy < wd:
+                        diff = wkdy - wd
+                    else:
+                        diff = wkdy - wd - 7
+            else:
+                # occurance of the DOW in the current week is calculated
+                diff = wkdy - wd
+
+        if _debug:
+            print "wd %s, wkdy %s, offset %d, style %d\n" % (wd, wkdy, offset, style)
+
+        return diff
+
+
     def _evalModifier(self, modifier, chunk1, chunk2, sourceTime):
         """
         Evaluate the modifier string and following text (passed in
@@ -734,23 +788,11 @@ class Calendar:
                         sourceTime = sources[modifier]
 
                 else:
-                    wkdy = self.ptc.WeekdayOffsets[wkdy]
-
-                    if offset == 0:
-                        start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
-                        diff       = wkdy - wd
-                        target     = start + datetime.timedelta(days=diff)
-                        sourceTime = target.timetuple()
-                    elif offset == 1:
-                        diff       = 6 - wd + wkdy + 1
-                        start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
-                        target     = start + datetime.timedelta(days=diff)
-                        sourceTime = target.timetuple()
-                    elif offset == -1:
-                        diff       = wd - wkdy + 7
-                        start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
-                        target     = start + datetime.timedelta(days=-diff)
-                        sourceTime = target.timetuple() 
+                    wkdy       = self.ptc.WeekdayOffsets[wkdy]
+                    diff       = self._CalculateDOWDelta(wd, wkdy, offset, self.ptc.DOWParseStyle, self.ptc.CurrentDOWParseStyle)
+                    start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
+                    target     = start + datetime.timedelta(days=diff)
+                    sourceTime = target.timetuple()
 
                 flag = True
 
@@ -972,16 +1014,15 @@ class Calendar:
             (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = now
 
             start = datetime.datetime(yr, mth, dy, hr, mn, sec)
-            wkDy  = self.ptc.WeekdayOffsets[s]
+            wkdy  = self.ptc.WeekdayOffsets[s]
 
-            if wkDy > wd:
-                qty    = wkDy - wd
-                target = start + datetime.timedelta(days=qty)
-                wd     = wkDy
+            if wkdy > wd:
+                qty = self._CalculateDOWDelta(wd, wkdy, 2, self.ptc.DOWParseStyle,self.ptc.CurrentDOWParseStyle)
             else:
-                qty    = 6 - wd + wkDy + 1
-                target = start + datetime.timedelta(days=qty)
-                wd     = wkDy
+                qty = self._CalculateDOWDelta(wd, wkdy, 2, self.ptc.DOWParseStyle,self.ptc.CurrentDOWParseStyle)
+
+            target = start + datetime.timedelta(days=qty)
+            wd     = wkdy
 
             sourceTime      = target.timetuple()
             self.weekdyFlag = False

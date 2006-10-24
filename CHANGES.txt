@@ -1,3 +1,8 @@
+20 Oct 2006 - darshana
+
+   Implemented the CalculateDOWDelta() method in parsedatetime.py
+   Added a new flag CurrentDOWParseStyle in parsedatetime_consts.py for the current DOW.
+
 19 Oct 2006 - bear
 
     Changed birthday epoch to be a constant defined in parsedatetime_const
