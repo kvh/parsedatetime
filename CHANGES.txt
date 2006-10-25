@@ -1,6 +1,7 @@
 24 Oct 2006 - bear
 
     0.8.0 release
+    Setting trunk to 0.8.1
 
     Merged in changes from Darshana's change_parse_to_return_enum branch
 
