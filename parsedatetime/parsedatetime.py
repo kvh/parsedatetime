@@ -615,6 +615,24 @@ class Calendar:
 
 
     def _CalculateDOWDelta(self, wd, wkdy, offset, style, currentDayStyle):
+        """
+        Based on the L{style} and L{currentDayStyle} determine what
+        day-of-week value is to be returned.
+
+        @type  wd:     integer
+        @param wd:     day-of-week value for the current day
+        @type  wkdy:   integer
+        @param wkdy:   day-of-week value for the parsed day
+        @type  offset: integer
+        @param offset: offset direction for any modifiers (-1, 0, 1)
+        @type  style:  integer
+        @param style:  Normally the value set in ptc.DOWParseStyle
+        @type  style:  integer
+        @param style:  Normally the value set in ptc.CurrentDOWParseStyle
+
+        @rtype:  integer
+        @return: calculated day-of-week
+        """
         if offset == 1:
             # modifier is indicating future week eg: "next".
             # DOW is calculated as DOW of next week
@@ -1136,10 +1154,19 @@ class Calendar:
     def parse(self, datetimeString, sourceTime=None):
         """
         Splits the L{datetimeString} into tokens, finds the regex patters
-        that match and then calculates a datetime value from the chunks
+        that match and then calculates a datetime value from the chunks.
 
-        if L{sourceTime} is given then the datetime value will be calcualted
+        If L{sourceTime} is given then the datetime value will be calculated
         from that datetime, otherwise from the current datetime.
+
+        If the L{datetimeString} is parsed, the second item of the return tuple
+        will be a flag to let you know what kind of datetime value is being
+        returned::
+
+            0 = L{datetimeString} was not parsed at all
+            1 = L{datetimeString} was parsed as a date
+            2 = L{datetimeString} was parsed as a time
+            3 = L{datetimeString} was parsed as a datetime
 
         @type  datetimeString: string
         @param datetimeString: datetime text to evaluate
@@ -1147,7 +1174,7 @@ class Calendar:
         @param sourceTime:     datetime value to use as the base
 
         @rtype:  tuple
-        @return: tuple of any remaining text and the modified sourceTime
+        @return: tuple of the modified sourceTime and the result flag
         """
         s         = string.strip(datetimeString.lower())
         dateStr   = ''
