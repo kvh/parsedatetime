@@ -619,16 +619,16 @@ class Calendar:
         Based on the L{style} and L{currentDayStyle} determine what
         day-of-week value is to be returned.
 
-        @type  wd:     integer
-        @param wd:     day-of-week value for the current day
-        @type  wkdy:   integer
-        @param wkdy:   day-of-week value for the parsed day
-        @type  offset: integer
-        @param offset: offset direction for any modifiers (-1, 0, 1)
-        @type  style:  integer
-        @param style:  Normally the value set in ptc.DOWParseStyle
-        @type  style:  integer
-        @param style:  Normally the value set in ptc.CurrentDOWParseStyle
+        @type  wd:              integer
+        @param wd:              day-of-week value for the current day
+        @type  wkdy:            integer
+        @param wkdy:            day-of-week value for the parsed day
+        @type  offset:          integer
+        @param offset:          offset direction for any modifiers (-1, 0, 1)
+        @type  style:           integer
+        @param style:           Normally the value set in ptc.DOWParseStyle
+        @type  currentDayStyle: integer
+        @param currentDayStyle: Normally the value set in ptc.CurrentDOWParseStyle
 
         @rtype:  integer
         @return: calculated day-of-week
