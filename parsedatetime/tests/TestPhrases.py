@@ -44,7 +44,7 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('eod tomorrow', start), (target, 3)))
 
 
-    def testPhraseWithDays(self):
+    def testPhraseWithDays_DOWStyle_1_False(self):
         s = datetime.datetime.now()
 
           # find out what day we are currently on
