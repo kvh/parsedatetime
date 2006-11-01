@@ -1,3 +1,8 @@
+1 Nov 2006 - darshana
+  
+    Strings like "Thursday?" were not parsed. Changes made to the regex to
+    allow special characters to be parsed after weekday names and month names.
+
 24 Oct 2006 - bear
 
     0.8.0 release

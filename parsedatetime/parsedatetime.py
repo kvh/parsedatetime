@@ -1324,7 +1324,7 @@ class Calendar:
 
                     if (m.group('weekday') != s):
                         # capture remaining string
-                        parseStr = m.group()
+                        parseStr = m.group('weekday')
                         chunk1   = s[:m.start('weekday')]
                         chunk2   = s[m.end('weekday'):]
                         s        = '%s %s' % (chunk1, chunk2)
