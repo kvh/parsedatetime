@@ -95,9 +95,11 @@ class test(unittest.TestCase):
         start  = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()
         target = datetime.datetime(2006, 8, 25,  self.hr, self.mn, self.sec).timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('08/25/2006', start), (target, 1)))
-        self.assertTrue(_compareResults(self.cal.parse('08.25.2006', start), (target, 1)))
-        self.assertTrue(_compareResults(self.cal.parse('8/25/06',    start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('08/25/2006',     start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('08.25.2006',     start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('8/25/06',        start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('August 25, 2006',start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('Aug 25, 2006',   start), (target, 1)))
 
         if self.mth > 8 or (self.mth == 8 and self.dy > 25):
             target = datetime.datetime(self.yr + 1, 8, 25,  self.hr, self.mn, self.sec).timetuple()
@@ -106,6 +108,8 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('8/25',       start), (target, 1)))
         self.assertTrue(_compareResults(self.cal.parse('8.25',       start), (target, 1)))
         self.assertTrue(_compareResults(self.cal.parse('08/25',      start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('August 25',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('Aug 25',     start), (target, 1)))
 
 
     def testSpecialTimes(self):

@@ -52,8 +52,8 @@ class test(unittest.TestCase):
     def testDates(self):
         start = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()
 
-        targetStart = datetime.datetime(2006, 8, 29, 9, 0, 0).timetuple()
-        targetEnd   = datetime.datetime(2006, 9, 2, 9, 0, 0).timetuple()
+        targetStart = datetime.datetime(2006, 8, 29, self.hr, self.mn, self.sec).timetuple()
+        targetEnd   = datetime.datetime(2006, 9, 2,self.hr, self.mn, self.sec).timetuple()
 
         self.assertTrue(_compareResults(self.cal.evalRanges("August 29, 2006 - September 2, 2006", start), (targetStart, targetEnd, 1)))
         self.assertTrue(_compareResults(self.cal.evalRanges("August 29 - September 2, 2006",       start), (targetStart, targetEnd, 1)))

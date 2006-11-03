@@ -1,3 +1,8 @@
+3 Nov 2006 - darshana
+
+    Fixed issue#13 (Nov 4 5pm parses as just 5pm).
+    Also fixed "1-8pm" and other ranges which were not working if there were no spaces before and after the '-'.
+
 1 Nov 2006 - darshana
   
     Strings like "Thursday?" were not parsed. Changes made to the regex to

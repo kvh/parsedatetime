@@ -439,7 +439,7 @@ class Calendar:
             yr += 1
 
         if dy > 0 and dy <= self.ptc.DaysInMonthList[mth - 1]:
-            sourceTime = (yr, mth, dy, 9, 0, 0, wd, yd, isdst)
+            sourceTime = (yr, mth, dy, hr, mn, sec, wd, yd, isdst)
         else:
             # Return current time if date string is invalid
             self.dateFlag = 0
@@ -574,12 +574,12 @@ class Calendar:
             # does not have year information and the end date does.
             # eg : "Aug 21 - Sep 4, 2007"
             if endYear is not None:
-                startDate = parseStr[:m.start()]
+                startDate = (parseStr[:m.start()]).strip()
                 date      = self.CRE_DATE3.search(startDate)
                 startYear = date.group('year')
 
                 if startYear is None:
-                    startDate += endYear
+                    startDate = startDate + ', ' + endYear
             else:
                 startDate = parseStr[:m.start()]
 
@@ -975,8 +975,11 @@ class Calendar:
         if sourceTime is None:
             sourceTime = _parse_date_rfc822(s)
             if sourceTime is not None:
+                (yr, mth, dy, hr, mn, sec, wd, yd, isdst, tz) = sourceTime
                 self.dateFlag = 1
-                self.timeFlag = 2
+                if (hr != 0) and (mn != 0) and (sec != 0):
+                    self.timeFlag = 2
+                sourceTime = (yr, mth, dy, hr, mn, sec, wd, yd, isdst)
 
         # Given string date is a W3CDTF date
         if sourceTime is None:

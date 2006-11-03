@@ -566,16 +566,16 @@ def _initPatterns(ptc):
     # TODO add code to parse the date formats and build the regexes up from sub-parts
     # TODO find all hard-coded uses of date/time seperators
 
-    ptc.RE_DATE3     = r'(?P<date>((?P<mthname>(%(months)s|%(shortmonths)s))\s?((?P<day>\d\d?)(\s|%(daysuffix)s|,|$)+)?(?P<year>\d\d(\d\d)?)?))(\s|$|[^0-9a-zA-Z])' % ptc.re_values
-    ptc.RE_MONTH     = r'(\s|^)(?P<month>((?P<mthname>(%(months)s|%(shortmonths)s))(\s?(?P<year>(\d\d\d\d)))?))(\s|$|[^0-9a-zA-Z])' % ptc.re_values
-    ptc.RE_WEEKDAY   = r'(\s|^)(?P<weekday>(%(days)s|%(shortdays)s))(\s|$|[^0-9a-zA-Z])' % ptc.re_values
+    ptc.RE_DATE3     = r'(?P<date>((?P<mthname>(%(months)s|%(shortmonths)s))\s?((?P<day>\d\d?)(\s?|%(daysuffix)s|$)+)?(,\s?(?P<year>\d\d(\d\d)?))?))(\s?|$|[^0-9a-zA-Z])' % ptc.re_values
+    ptc.RE_MONTH     = r'(\s?|^)(?P<month>((?P<mthname>(%(months)s|%(shortmonths)s))(\s?(?P<year>(\d\d\d\d)))?))(\s?|$|[^0-9a-zA-Z])' % ptc.re_values
+    ptc.RE_WEEKDAY   = r'(\s?|^)(?P<weekday>(%(days)s|%(shortdays)s))(\s?|$|[^0-9a-zA-Z])' % ptc.re_values
 
     ptc.RE_SPECIAL   = r'(?P<special>^[%(specials)s]+)\s+' % ptc.re_values
     ptc.RE_UNITS     = r'(?P<qty>(-?\d+\s*(?P<units>((%(units)s)s?))))' % ptc.re_values
-    ptc.RE_QUNITS    = r'(?P<qty>(-?\d+\s?(?P<qunits>%(qunits)s)(\s|,|$)))' % ptc.re_values
-    ptc.RE_MODIFIER  = r'(\s|^)(?P<modifier>(previous|prev|last|next|this|eod|eo|(end\sof)|(in\sa)))' % ptc.re_values
-    ptc.RE_MODIFIER2 = r'(\s|^)(?P<modifier>(from|before|after|ago|prior))(\s|$|[^0-9a-zA-Z])' % ptc.re_values
-    ptc.RE_TIMEHMS   = r'(\s|^)(?P<hours>\d\d?)(?P<tsep>%(timeseperator)s|)(?P<minutes>\d\d)(?:(?P=tsep)(?P<seconds>\d\d(?:[.,]\d+)?))?' % ptc.re_values
+    ptc.RE_QUNITS    = r'(?P<qty>(-?\d+\s?(?P<qunits>%(qunits)s)(\s?|,|$)))' % ptc.re_values
+    ptc.RE_MODIFIER  = r'(\s?|^)(?P<modifier>(previous|prev|last|next|this|eod|eo|(end\sof)|(in\sa)))' % ptc.re_values
+    ptc.RE_MODIFIER2 = r'(\s?|^)(?P<modifier>(from|before|after|ago|prior))(\s?|$|[^0-9a-zA-Z])' % ptc.re_values
+    ptc.RE_TIMEHMS   = r'(\s?|^)(?P<hours>\d\d?)(?P<tsep>%(timeseperator)s|)(?P<minutes>\d\d)(?:(?P=tsep)(?P<seconds>\d\d(?:[.,]\d+)?))?' % ptc.re_values
 
     ptc.RE_TIMEHMS2  = r'(?P<hours>(\d\d?))((?P<tsep>%(timeseperator)s|)(?P<minutes>(\d\d?))(?:(?P=tsep)(?P<seconds>\d\d?(?:[.,]\d+)?))?)?' % ptc.re_values
 
@@ -584,23 +584,23 @@ def _initPatterns(ptc):
 
     dateSeps = ''.join(ptc.dateSep) + '.'
 
-    ptc.RE_DATE      = r'(\s|^)(?P<date>(\d\d?[%s]\d\d?([%s]\d\d(\d\d)?)?))(\s|$|[^0-9a-zA-Z])' % (dateSeps, dateSeps)
+    ptc.RE_DATE      = r'(\s?|^)(?P<date>(\d\d?[%s]\d\d?([%s]\d\d(\d\d)?)?))(\s?|$|[^0-9a-zA-Z])' % (dateSeps, dateSeps)
     ptc.RE_DATE2     = r'[%s]' % dateSeps
-    ptc.RE_DAY       = r'(\s|^)(?P<day>(today|tomorrow|yesterday))(\s|$|[^0-9a-zA-Z])' % ptc.re_values
-    ptc.RE_TIME      = r'(\s|^)(?P<time>(morning|breakfast|noon|lunch|evening|midnight|tonight|dinner|night|now))(\s|$|[^0-9a-zA-Z])' % ptc.re_values
+    ptc.RE_DAY       = r'(\s?|^)(?P<day>(today|tomorrow|yesterday))(\s?|$|[^0-9a-zA-Z])' % ptc.re_values
+    ptc.RE_TIME      = r'(\s?|^)(?P<time>(morning|breakfast|noon|lunch|evening|midnight|tonight|dinner|night|now))(\s?|$|[^0-9a-zA-Z])' % ptc.re_values
     ptc.RE_REMAINING = r'\s+'
 
       # Regex for date/time ranges
 
-    ptc.RE_RTIMEHMS  = r'(\s|^)(\d\d?)%(timeseperator)s(\d\d)(%(timeseperator)s(\d\d))?(\s|$)' % ptc.re_values
+    ptc.RE_RTIMEHMS  = r'(\s?|^)(\d\d?)%(timeseperator)s(\d\d)(%(timeseperator)s(\d\d))?(\s?|$)' % ptc.re_values
 
-    ptc.RE_RTIMEHMS2 = r'(\s|^)(\d\d?)(%(timeseperator)s(\d\d?))?(%(timeseperator)s(\d\d?))?' % ptc.re_values
+    ptc.RE_RTIMEHMS2 = r'(\s?|^)(\d\d?)(%(timeseperator)s(\d\d?))?(%(timeseperator)s(\d\d?))?' % ptc.re_values
 
     if 'meridian' in ptc.re_values:
         ptc.RE_RTIMEHMS2 += r'\s?(%(meridian)s)' % ptc.re_values
 
     ptc.RE_RDATE     = r'(\d+([%s]\d+)+)' % dateSeps
-    ptc.RE_RDATE3    = r'((((%(months)s))\s?((\d\d?)(\s|%(daysuffix)s|,|$)+)?(\d\d\d\d)?))' % ptc.re_values
+    ptc.RE_RDATE3    = r'((((%(months)s))\s?((\d\d?)(\s?|%(daysuffix)s|$)+)?(,\s?\d\d\d\d)?))' % ptc.re_values
     ptc.DATERNG1     = ptc.RE_RDATE     + r'\s?-\s?' + ptc.RE_RDATE     # "06/07/06 - 08/09/06"
     ptc.DATERNG2     = ptc.RE_RDATE3    + r'\s?-\s?' + ptc.RE_RDATE3    # "march 31 - june 1st, 2006"
     ptc.DATERNG3     = ptc.RE_RDATE3    + r'\s?' + r'-' + r'\s?(\d\d?)\s?(rd|st|nd|th)?' % ptc.re_values # "march 1rd -13th"
