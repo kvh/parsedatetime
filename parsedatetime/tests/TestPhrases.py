@@ -7,15 +7,20 @@ Test parsing of strings that are phrases
 import unittest, time, datetime
 import parsedatetime.parsedatetime as pt
 
-
   # a special compare function is used to allow us to ignore the seconds as
   # the running of the test could cross a minute boundary
-def _compareResults(result, check):
+def _compareResults(result, check, debug=False):
     target, t_flag = result
     value,  v_flag = check
 
     t_yr, t_mth, t_dy, t_hr, t_min, t_sec, t_wd, t_yd, t_isdst = target
     v_yr, v_mth, v_dy, v_hr, v_min, v_sec, v_wd, v_yd, v_isdst = value
+
+    if debug:
+        print target, t_flag
+        print t_yr, t_mth, t_dy, t_hr, t_min, t_sec, t_wd, t_yd, t_isdst, t_flag
+        print value, v_flag
+        print v_yr, v_mth, v_dy, v_hr, v_min, v_sec, v_wd, v_yd, v_isdst, v_flag
 
     return ((t_yr == v_yr) and (t_mth == v_mth) and (t_dy == v_dy) and
             (t_hr == v_hr) and (t_min == v_min)) and (t_flag == v_flag)
@@ -92,6 +97,7 @@ class test(unittest.TestCase):
         mth += 1
         if mth > 12:
             mth = 1
+            yr += 1
 
         t = datetime.datetime(yr, mth, 1, 9, 0, 0) + datetime.timedelta(days=-1)
 
@@ -101,8 +107,13 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('eom',         start), (target, 1)))
         self.assertTrue(_compareResults(self.cal.parse('meeting eom', start), (target, 1)))
 
+        s = datetime.datetime.now()
+
+        (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = s.timetuple()
+
         t = datetime.datetime(yr, 12, 31, hr, mn, sec)
 
+        start  = s.timetuple()
         target = t.timetuple()
 
         self.assertTrue(_compareResults(self.cal.parse('eoy',         start), (target, 1)))

@@ -269,8 +269,8 @@ class Calendar:
         @type  units:    string
         @param units:    unit of the quantity (i.e. hours, days, months, etc)
 
-        @rtype:  timetuple
-        @return: timetuple of the calculated time
+        @rtype:  struct_time
+        @return: struct_time of the calculated time
         """
         if _debug:
             print '_buildTime: [%s][%s][%s]' % (quantity, modifier, units)
@@ -337,8 +337,8 @@ class Calendar:
         @type  dateString: string
         @param dateString: text to convert to a datetime
 
-        @rtype:  datetime
-        @return: calculated datetime value of dateString
+        @rtype:  struct_time
+        @return: calculated struct_time value of dateString
         """
         yr, mth, dy, hr, mn, sec, wd, yd, isdst = time.localtime()
 
@@ -406,8 +406,8 @@ class Calendar:
         @type  dateString: string
         @param dateString: text to convert to a datetime
 
-        @rtype:  datetime
-        @return: calculated datetime value of dateString
+        @rtype:  struct_time
+        @return: calculated struct_time value of dateString
         """
         yr, mth, dy, hr, mn, sec, wd, yd, isdst = time.localtime()
 
@@ -455,8 +455,8 @@ class Calendar:
 
         @type  datetimeString: string
         @param datetimeString: datetime text to evaluate
-        @type  sourceTime:     datetime
-        @param sourceTime:     datetime value to use as the base
+        @type  sourceTime:     struct_time
+        @param sourceTime:     value to use as the base
 
         @rtype:  tuple
         @return: tuple of the start datetime, end datetime and the invalid flag
@@ -698,8 +698,8 @@ class Calendar:
         @param chunk1:     first text chunk that followed modifier (if any)
         @type  chunk2:     string
         @param chunk2:     second text chunk that followed modifier (if any)
-        @type  sourceTime: datetime
-        @param sourceTime: datetime value to use as the base
+        @type  sourceTime: struct_time
+        @param sourceTime: value to use as the base
 
         @rtype:  tuple
         @return: tuple of any remaining text and the modified sourceTime
@@ -884,8 +884,8 @@ class Calendar:
         @param chunk1:     first text chunk that followed modifier (if any)
         @type  chunk2:     string
         @param chunk2:     second text chunk that followed modifier (if any)
-        @type  sourceTime: datetime
-        @param sourceTime: datetime value to use as the base
+        @type  sourceTime: struct_time
+        @param sourceTime: value to use as the base
 
         @rtype:  tuple
         @return: tuple of any remaining text and the modified sourceTime
@@ -962,11 +962,11 @@ class Calendar:
 
         @type  datetimeString: string
         @param datetimeString: text to try and parse as more "traditional" date/time text
-        @type  sourceTime:     datetime
-        @param sourceTime:     datetime value to use as the base
+        @type  sourceTime:     struct_time
+        @param sourceTime:     value to use as the base
 
         @rtype:  datetime
-        @return: calculated datetime value or current datetime if not parsed
+        @return: calculated struct_time value or current struct_time if not parsed
         """
         s   = string.strip(datetimeString)
         now = time.localtime()
@@ -1157,13 +1157,13 @@ class Calendar:
     def parse(self, datetimeString, sourceTime=None):
         """
         Splits the L{datetimeString} into tokens, finds the regex patters
-        that match and then calculates a datetime value from the chunks.
+        that match and then calculates a struct_time value from the chunks.
 
-        If L{sourceTime} is given then the datetime value will be calculated
+        If L{sourceTime} is given then the struct_time value will be calculated
         from that datetime, otherwise from the current datetime.
 
         If the L{datetimeString} is parsed, the second item of the return tuple
-        will be a flag to let you know what kind of datetime value is being
+        will be a flag to let you know what kind of struct_time value is being
         returned::
 
             0 = L{datetimeString} was not parsed at all
@@ -1173,12 +1173,24 @@ class Calendar:
 
         @type  datetimeString: string
         @param datetimeString: datetime text to evaluate
-        @type  sourceTime:     datetime
-        @param sourceTime:     datetime value to use as the base
+        @type  sourceTime:     struct_time
+        @param sourceTime:     value to use as the base
 
         @rtype:  tuple
         @return: tuple of the modified sourceTime and the result flag
         """
+
+        if sourceTime:
+            if isinstance(sourceTime, datetime.datetime):
+                if _debug:
+                    print 'coercing datetime to timetuple'
+                sourceTime = sourceTime.timetuple()
+            else:
+                if not isinstance(sourceTime, time.struct_time) and not isinstance(sourceTime, tuple):
+                    print sourceTime
+                    print type(sourceTime)
+                    raise Exception('sourceTime parameter is not a struct_time')
+
         s         = string.strip(datetimeString.lower())
         dateStr   = ''
         parseStr  = ''
@@ -1451,8 +1463,8 @@ class Calendar:
         This routine is needed because the timedelta() routine does
         not allow for month or year increments.
 
-        @type  source: datetime
-        @param source: datetime value to increment
+        @type  source: struct_time
+        @param source: value to increment
         @type  month:  integer
         @param month:  optional number of months to increment
         @type  year:   integer

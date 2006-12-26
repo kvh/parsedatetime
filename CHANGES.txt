@@ -1,3 +1,13 @@
+26 Dec 2006 - bear
+
+    Fixed the 'eom' part of testEndOfPhrases.  It was not adjusting the year
+    when checking for month rollover to the new year.
+
+    Changed API docs to reflect that it's a struct_time type (or a time tuple) that
+    we accept and return instead of a datetime value.  I believe this lead to Issue #14
+    being reported.  Also added some error handling to change a datetime value into a
+    struct_time value if passed to parse().
+
 3 Nov 2006 - darshana
 
     Fixed issue#13 (Nov 4 5pm parses as just 5pm).
