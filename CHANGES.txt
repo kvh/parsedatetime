@@ -1,5 +1,8 @@
 26 Dec 2006 - bear
 
+    0.8.1 release
+    Setting trunk to 0.8.2
+
     Fixed the 'eom' part of testEndOfPhrases.  It was not adjusting the year
     when checking for month rollover to the new year.
 

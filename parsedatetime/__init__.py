@@ -1,4 +1,4 @@
-version = '0.8.1'
+version = '0.8.2'
 author  = 'Mike Taylor and Darshana Chhajed'
 license = """
 Copyright (c) 2004-2006 Mike Taylor
