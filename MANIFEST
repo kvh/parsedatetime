@@ -1,5 +1,10 @@
 README.txt
 LICENSE.txt
+INSTALL.txt
+AUTHORS.txt
+CHANGES.txt
+THANKS.txt
+PKG_INFO
 setup.py
 ez_setup.py
 epydoc.conf

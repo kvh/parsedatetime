@@ -1,3 +1,9 @@
+27 Dec 2006 - bear
+
+    Added some support files to try and increase our cheesecake index :)
+
+    Removed local copy of ez_setup.py and will list setuptools as a dependency.
+
 26 Dec 2006 - bear
 
     0.8.1 release

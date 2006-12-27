@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
-from ez_setup import use_setuptools
+#from ez_setup import use_setuptools
 
-use_setuptools()
+#use_setuptools()
 
 import setuptools
 

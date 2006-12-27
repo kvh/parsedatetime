@@ -1,0 +1,15 @@
+parsedatetime uses a standard setup.py install method:
+
+    python setup.py install
+    
+This will install parsedatetime into your python's site-packages
+location and make it available for import'ing
+
+parsedatetime is a pure python module so it does not require any
+compiler build step.
+
+parsedatetime does not depend on any external library/module but
+will use the following if available:
+
+    PyICU (which depends on ICU)
+
