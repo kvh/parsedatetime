@@ -176,13 +176,13 @@ class Calendar:
 
     def __init__(self, constants=None):
         """
-        Default constructor for the Calendar class.
+        Default constructor for the L{Calendar} class.
 
         @type  constants: object
         @param constants: Instance of the class L{parsedatetime_consts.Constants}
 
         @rtype:  object
-        @return: Calendar instance
+        @return: L{Calendar} instance
         """
           # if a constants reference is not included, use default
         if constants is None:
@@ -246,7 +246,7 @@ class Calendar:
         Two thousand twenty five = 2025
 
         @type  unitText: string
-        @param unitText: number string
+        @param unitText: number text to convert
 
         @rtype:  integer
         @return: numerical value of unitText
@@ -257,8 +257,8 @@ class Calendar:
 
     def _buildTime(self, source, quantity, modifier, units):
         """
-        Take quantity, modifier and unit strings and convert them into values.
-        Then calcuate the time and return the adjusted sourceTime
+        Take C{quantity}, C{modifier} and C{unit} strings and convert them into values.
+        After converting, calcuate the time and return the adjusted sourceTime.
 
         @type  source:   time
         @param source:   time to use as the base (or source)
@@ -270,7 +270,7 @@ class Calendar:
         @param units:    unit of the quantity (i.e. hours, days, months, etc)
 
         @rtype:  struct_time
-        @return: struct_time of the calculated time
+        @return: C{struct_time} of the calculated time
         """
         if _debug:
             print '_buildTime: [%s][%s][%s]' % (quantity, modifier, units)
@@ -332,13 +332,15 @@ class Calendar:
 
     def parseDate(self, dateString):
         """
-        Parses strings like 05/28/2006 or 04.21
+        Parse short-form date strings::
+
+            '05/28/2006' or '04.21'
 
         @type  dateString: string
-        @param dateString: text to convert to a datetime
+        @param dateString: text to convert to a C{datetime}
 
         @rtype:  struct_time
-        @return: calculated struct_time value of dateString
+        @return: calculated C{struct_time} value of dateString
         """
         yr, mth, dy, hr, mn, sec, wd, yd, isdst = time.localtime()
 
@@ -401,13 +403,17 @@ class Calendar:
 
     def parseDateText(self, dateString):
         """
-        Parses strings like "May 31st, 2006" or "Jan 1st" or "July 2006"
+        Parse long-form date strings::
+
+            'May 31st, 2006'
+            'Jan 1st'
+            'July 2006'
 
         @type  dateString: string
         @param dateString: text to convert to a datetime
 
         @rtype:  struct_time
-        @return: calculated struct_time value of dateString
+        @return: calculated C{struct_time} value of dateString
         """
         yr, mth, dy, hr, mn, sec, wd, yd, isdst = time.localtime()
 
@@ -451,15 +457,16 @@ class Calendar:
 
     def evalRanges(self, datetimeString, sourceTime=None):
         """
-        Evaluates the strings with time or date ranges
+        Evaluate the C{datetimeString} text and determine if
+        it represents a date or time range.
 
         @type  datetimeString: string
         @param datetimeString: datetime text to evaluate
         @type  sourceTime:     struct_time
-        @param sourceTime:     value to use as the base
+        @param sourceTime:     C{struct_time} value to use as the base
 
         @rtype:  tuple
-        @return: tuple of the start datetime, end datetime and the invalid flag
+        @return: tuple of: start datetime, end datetime and the invalid flag
         """
         startTime = ''
         endTime   = ''
@@ -616,7 +623,7 @@ class Calendar:
 
     def _CalculateDOWDelta(self, wd, wkdy, offset, style, currentDayStyle):
         """
-        Based on the style and currentDayStyle determine what
+        Based on the C{style} and C{currentDayStyle} determine what
         day-of-week value is to be returned.
 
         @type  wd:              integer
@@ -626,9 +633,9 @@ class Calendar:
         @type  offset:          integer
         @param offset:          offset direction for any modifiers (-1, 0, 1)
         @type  style:           integer
-        @param style:           Normally the value set in ptc.DOWParseStyle
+        @param style:           normally the value set in C{Constants.DOWParseStyle}
         @type  currentDayStyle: integer
-        @param currentDayStyle: Normally the value set in ptc.CurrentDOWParseStyle
+        @param currentDayStyle: normally the value set in C{Constants.CurrentDOWParseStyle}
 
         @rtype:  integer
         @return: calculated day-of-week
@@ -688,9 +695,9 @@ class Calendar:
 
     def _evalModifier(self, modifier, chunk1, chunk2, sourceTime):
         """
-        Evaluate the modifier string and following text (passed in
-        as chunk1 and chunk2) and if they match any known modifiers
-        calculate the delta and apply it to sourceTime
+        Evaluate the C{modifier} string and following text (passed in
+        as C{chunk1} and C{chunk2}) and if they match any known modifiers
+        calculate the delta and apply it to C{sourceTime}.
 
         @type  modifier:   string
         @param modifier:   modifier text to apply to sourceTime
@@ -699,10 +706,10 @@ class Calendar:
         @type  chunk2:     string
         @param chunk2:     second text chunk that followed modifier (if any)
         @type  sourceTime: struct_time
-        @param sourceTime: value to use as the base
+        @param sourceTime: C{struct_time} value to use as the base
 
         @rtype:  tuple
-        @return: tuple of any remaining text and the modified sourceTime
+        @return: tuple of: remaining text and the modified sourceTime
         """
         offset = self.ptc.Modifiers[modifier]
 
@@ -874,21 +881,21 @@ class Calendar:
 
     def _evalModifier2(self, modifier, chunk1 , chunk2, sourceTime):
         """
-        Evaluate the modifier string and following text (passed in
-        as chunk1 and chunk2) and if they match any known modifiers
-        calculate the delta and apply it to sourceTime
+        Evaluate the C{modifier} string and following text (passed in
+        as C{chunk1} and C{chunk2}) and if they match any known modifiers
+        calculate the delta and apply it to C{sourceTime}.
 
         @type  modifier:   string
-        @param modifier:   modifier text to apply to sourceTime
+        @param modifier:   modifier text to apply to C{sourceTime}
         @type  chunk1:     string
         @param chunk1:     first text chunk that followed modifier (if any)
         @type  chunk2:     string
         @param chunk2:     second text chunk that followed modifier (if any)
         @type  sourceTime: struct_time
-        @param sourceTime: value to use as the base
+        @param sourceTime: C{struct_time} value to use as the base
 
         @rtype:  tuple
-        @return: tuple of any remaining text and the modified sourceTime
+        @return: tuple of: remaining text and the modified sourceTime
         """
         offset = self.ptc.Modifiers[modifier]
         digit  = r'\d+'
@@ -963,10 +970,10 @@ class Calendar:
         @type  datetimeString: string
         @param datetimeString: text to try and parse as more "traditional" date/time text
         @type  sourceTime:     struct_time
-        @param sourceTime:     value to use as the base
+        @param sourceTime:     C{struct_time} value to use as the base
 
         @rtype:  datetime
-        @return: calculated struct_time value or current struct_time if not parsed
+        @return: calculated C{struct_time} value or current C{struct_time} if not parsed
         """
         s   = string.strip(datetimeString)
         now = time.localtime()
@@ -1156,29 +1163,29 @@ class Calendar:
 
     def parse(self, datetimeString, sourceTime=None):
         """
-        Splits the datetimeString parameter into tokens, finds the regex
-        patterns that match and then calculates a struct_time value from
+        Splits the given C{datetimeString} into tokens, finds the regex
+        patterns that match and then calculates a C{struct_time} value from
         the chunks.
 
-        If sourceTime is given then the struct_time value will be calculated
-        from that datetime, otherwise from the current datetime.
+        If C{sourceTime} is given then the C{struct_time} value will be calculated
+        from that value, otherwise from the current date/time.
 
-        If the datetimeString is parsed, the second item of the return tuple
-        will be a flag to let you know what kind of struct_time value is being
-        returned::
+        If the C{datetimeString} is parsed and date/time value found then the second
+        item of the returned tuple will be a flag to let you know what kind of
+        C{struct_time} value is being returned::
 
             0 = not parsed at all
-            1 = parsed as a date
-            2 = parsed as a time
-            3 = parsed as a datetime
+            1 = parsed as a C{date}
+            2 = parsed as a C{time}
+            3 = parsed as a C{datetime}
 
         @type  datetimeString: string
-        @param datetimeString: datetime text to evaluate
+        @param datetimeString: date/time text to evaluate
         @type  sourceTime:     struct_time
-        @param sourceTime:     value to use as the base
+        @param sourceTime:     C{struct_time} value to use as the base
 
         @rtype:  tuple
-        @return: tuple of the modified sourceTime and the result flag
+        @return: tuple of: modified C{sourceTime} and the result flag
         """
 
         if sourceTime:
@@ -1457,22 +1464,21 @@ class Calendar:
 
     def inc(self, source, month=None, year=None):
         """
-        Takes the given date, or current date if none is passed, and
-        increments it according to the values passed in by month
-        and/or year.
+        Takes the given C{source} date, or current date if none is passed, and
+        increments it according to the values passed in by month and/or year.
 
-        This routine is needed because the timedelta() routine does
+        This routine is needed because Python's C{timedelta()} function does
         not allow for month or year increments.
 
         @type  source: struct_time
-        @param source: value to increment
+        @param source: C{struct_time} value to increment
         @type  month:  integer
         @param month:  optional number of months to increment
         @type  year:   integer
         @param year:   optional number of years to increment
 
         @rtype:  datetime
-        @return: source incremented by the number of months and/or years
+        @return: C{source} incremented by the number of months and/or years
         """
         yr  = source.year
         mth = source.month

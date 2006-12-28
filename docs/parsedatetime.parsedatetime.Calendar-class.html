@@ -89,7 +89,9 @@ A collection of routines to input, parse and manipulate date and
   </td><td class="summary">
     <span class="summary-sig"><a href="parsedatetime.parsedatetime.Calendar-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">constants</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Default constructor for the Calendar class.
+      Default constructor for the <a 
+      href="parsedatetime.parsedatetime.Calendar-class.html" 
+      class="link">Calendar</a> class.
   </td>
 </tr>
 <tr class="private">
@@ -110,8 +112,8 @@ A collection of routines to input, parse and manipulate date and
         <span class="summary-sig-arg">quantity</span>,
         <span class="summary-sig-arg">modifier</span>,
         <span class="summary-sig-arg">units</span>)</span><br />
-      Take quantity, modifier and unit strings and convert them into 
-      values.
+      Take <code>quantity</code>, <code>modifier</code> and 
+      <code>unit</code> strings and convert them into values.
   </td>
 </tr>
 <tr>
@@ -120,7 +122,7 @@ A collection of routines to input, parse and manipulate date and
   </td><td class="summary">
     <span class="summary-sig"><a href="parsedatetime.parsedatetime.Calendar-class.html#parseDate" class="summary-sig-name">parseDate</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">dateString</span>)</span><br />
-      Parses strings like 05/28/2006 or 04.21
+      Parse short-form date strings:
   </td>
 </tr>
 <tr>
@@ -129,8 +131,7 @@ A collection of routines to input, parse and manipulate date and
   </td><td class="summary">
     <span class="summary-sig"><a href="parsedatetime.parsedatetime.Calendar-class.html#parseDateText" class="summary-sig-name">parseDateText</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">dateString</span>)</span><br />
-      Parses strings like &quot;May 31st, 2006&quot; or &quot;Jan 
-      1st&quot; or &quot;July 2006&quot;
+      Parse long-form date strings:
   </td>
 </tr>
 <tr>
@@ -140,7 +141,8 @@ A collection of routines to input, parse and manipulate date and
     <span class="summary-sig"><a href="parsedatetime.parsedatetime.Calendar-class.html#evalRanges" class="summary-sig-name">evalRanges</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">datetimeString</span>,
         <span class="summary-sig-arg">sourceTime</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Evaluates the strings with time or date ranges
+      Evaluate the <code>datetimeString</code> text and determine if it 
+      represents a date or time range.
   </td>
 </tr>
 <tr class="private">
@@ -153,8 +155,8 @@ A collection of routines to input, parse and manipulate date and
         <span class="summary-sig-arg">offset</span>,
         <span class="summary-sig-arg">style</span>,
         <span class="summary-sig-arg">currentDayStyle</span>)</span><br />
-      Based on the style and currentDayStyle determine what day-of-week 
-      value is to be returned.
+      Based on the <code>style</code> and <code>currentDayStyle</code> 
+      determine what day-of-week value is to be returned.
   </td>
 </tr>
 <tr class="private">
@@ -166,9 +168,10 @@ A collection of routines to input, parse and manipulate date and
         <span class="summary-sig-arg">chunk1</span>,
         <span class="summary-sig-arg">chunk2</span>,
         <span class="summary-sig-arg">sourceTime</span>)</span><br />
-      Evaluate the modifier string and following text (passed in as 
-      chunk1 and chunk2) and if they match any known modifiers calculate 
-      the delta and apply it to sourceTime
+      Evaluate the <code>modifier</code> string and following text 
+      (passed in as <code>chunk1</code> and <code>chunk2</code>) and if 
+      they match any known modifiers calculate the delta and apply it to 
+      <code>sourceTime</code>.
   </td>
 </tr>
 <tr class="private">
@@ -180,9 +183,10 @@ A collection of routines to input, parse and manipulate date and
         <span class="summary-sig-arg">chunk1</span>,
         <span class="summary-sig-arg">chunk2</span>,
         <span class="summary-sig-arg">sourceTime</span>)</span><br />
-      Evaluate the modifier string and following text (passed in as 
-      chunk1 and chunk2) and if they match any known modifiers calculate 
-      the delta and apply it to sourceTime
+      Evaluate the <code>modifier</code> string and following text 
+      (passed in as <code>chunk1</code> and <code>chunk2</code>) and if 
+      they match any known modifiers calculate the delta and apply it to 
+      <code>sourceTime</code>.
   </td>
 </tr>
 <tr class="private">
@@ -204,9 +208,9 @@ A collection of routines to input, parse and manipulate date and
     <span class="summary-sig"><a href="parsedatetime.parsedatetime.Calendar-class.html#parse" class="summary-sig-name">parse</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">datetimeString</span>,
         <span class="summary-sig-arg">sourceTime</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Splits the datetimeString parameter into tokens, finds the regex 
-      patterns that match and then calculates a struct_time value from the 
-      chunks.
+      Splits the given <code>datetimeString</code> into tokens, finds 
+      the regex patterns that match and then calculates a 
+      <code>struct_time</code> value from the chunks.
   </td>
 </tr>
 <tr>
@@ -217,9 +221,9 @@ A collection of routines to input, parse and manipulate date and
         <span class="summary-sig-arg">source</span>,
         <span class="summary-sig-arg">month</span>=<span class="summary-sig-default">None</span>,
         <span class="summary-sig-arg">year</span>=<span class="summary-sig-default">None</span>)</span><br />
-      Takes the given date, or current date if none is passed, and 
-      increments it according to the values passed in by month and/or 
-      year.
+      Takes the given <code>source</code> date, or current date if none 
+      is passed, and increments it according to the values passed in by 
+      month and/or year.
   </td>
 </tr>
 </table>
@@ -259,7 +263,9 @@ A collection of routines to input, parse and manipulate date and
     ></td>
   </table>
   
-  Default constructor for the Calendar class.
+  Default constructor for the <a 
+  href="parsedatetime.parsedatetime.Calendar-class.html" 
+  class="link">Calendar</a> class.
   <dl><dt></dt><dd>
     <dl><dt>Parameters:</dt></dl>
     <ul class="nomargin">
@@ -268,7 +274,8 @@ A collection of routines to input, parse and manipulate date and
           class="link">parsedatetime_consts.Constants</a></li>
     </ul>
     <dl><dt>Returns: <code>object</code></dt>
-        <dd>Calendar instance</dd></dl>
+        <dd><a href="parsedatetime.parsedatetime.Calendar-class.html" 
+          class="link">Calendar</a> instance</dd></dl>
   </dd></dl>
 </td></tr></table>
 </div>
@@ -293,7 +300,7 @@ A collection of routines to input, parse and manipulate date and
   <dl><dt></dt><dd>
     <dl><dt>Parameters:</dt></dl>
     <ul class="nomargin">
-        <li><strong class="pname"><code>unitText</code></strong> (<code>string</code>) - number string</li>
+        <li><strong class="pname"><code>unitText</code></strong> (<code>string</code>) - number text to convert</li>
     </ul>
     <dl><dt>Returns: <code>integer</code></dt>
         <dd>numerical value of unitText</dd></dl>
@@ -318,8 +325,9 @@ A collection of routines to input, parse and manipulate date and
     ></td>
   </table>
   
-  Take quantity, modifier and unit strings and convert them into values.
-  Then calcuate the time and return the adjusted sourceTime
+  Take <code>quantity</code>, <code>modifier</code> and 
+  <code>unit</code> strings and convert them into values. After converting,
+  calcuate the time and return the adjusted sourceTime.
   <dl><dt></dt><dd>
     <dl><dt>Parameters:</dt></dl>
     <ul class="nomargin">
@@ -329,7 +337,7 @@ A collection of routines to input, parse and manipulate date and
         <li><strong class="pname"><code>units</code></strong> (<code>string</code>) - unit of the quantity (i.e. hours, days, months, etc)</li>
     </ul>
     <dl><dt>Returns: <code>struct_time</code></dt>
-        <dd>struct_time of the calculated time</dd></dl>
+        <dd><code>struct_time</code> of the calculated time</dd></dl>
   </dd></dl>
 </td></tr></table>
 </div>
@@ -348,14 +356,17 @@ A collection of routines to input, parse and manipulate date and
     ></td>
   </table>
   
-  Parses strings like 05/28/2006 or 04.21
+  Parse short-form date strings:
+<pre class="literalblock">
+   '05/28/2006' or '04.21'
+</pre>
   <dl><dt></dt><dd>
     <dl><dt>Parameters:</dt></dl>
     <ul class="nomargin">
-        <li><strong class="pname"><code>dateString</code></strong> (<code>string</code>) - text to convert to a datetime</li>
+        <li><strong class="pname"><code>dateString</code></strong> (<code>string</code>) - text to convert to a <code>datetime</code></li>
     </ul>
     <dl><dt>Returns: <code>struct_time</code></dt>
-        <dd>calculated struct_time value of dateString</dd></dl>
+        <dd>calculated <code>struct_time</code> value of dateString</dd></dl>
   </dd></dl>
 </td></tr></table>
 </div>
@@ -374,15 +385,19 @@ A collection of routines to input, parse and manipulate date and
     ></td>
   </table>
   
-  Parses strings like &quot;May 31st, 2006&quot; or &quot;Jan 1st&quot; 
-  or &quot;July 2006&quot;
+  Parse long-form date strings:
+<pre class="literalblock">
+   'May 31st, 2006'
+   'Jan 1st'
+   'July 2006'
+</pre>
   <dl><dt></dt><dd>
     <dl><dt>Parameters:</dt></dl>
     <ul class="nomargin">
         <li><strong class="pname"><code>dateString</code></strong> (<code>string</code>) - text to convert to a datetime</li>
     </ul>
     <dl><dt>Returns: <code>struct_time</code></dt>
-        <dd>calculated struct_time value of dateString</dd></dl>
+        <dd>calculated <code>struct_time</code> value of dateString</dd></dl>
   </dd></dl>
 </td></tr></table>
 </div>
@@ -402,15 +417,16 @@ A collection of routines to input, parse and manipulate date and
     ></td>
   </table>
   
-  Evaluates the strings with time or date ranges
+  Evaluate the <code>datetimeString</code> text and determine if it 
+  represents a date or time range.
   <dl><dt></dt><dd>
     <dl><dt>Parameters:</dt></dl>
     <ul class="nomargin">
         <li><strong class="pname"><code>datetimeString</code></strong> (<code>string</code>) - datetime text to evaluate</li>
-        <li><strong class="pname"><code>sourceTime</code></strong> (<code>struct_time</code>) - value to use as the base</li>
+        <li><strong class="pname"><code>sourceTime</code></strong> (<code>struct_time</code>) - <code>struct_time</code> value to use as the base</li>
     </ul>
     <dl><dt>Returns: <code>tuple</code></dt>
-        <dd>tuple of the start datetime, end datetime and the invalid 
+        <dd>tuple of: start datetime, end datetime and the invalid 
           flag</dd></dl>
   </dd></dl>
 </td></tr></table>
@@ -434,16 +450,18 @@ A collection of routines to input, parse and manipulate date and
     ></td>
   </table>
   
-  Based on the style and currentDayStyle determine what day-of-week 
-  value is to be returned.
+  Based on the <code>style</code> and <code>currentDayStyle</code> 
+  determine what day-of-week value is to be returned.
   <dl><dt></dt><dd>
     <dl><dt>Parameters:</dt></dl>
     <ul class="nomargin">
         <li><strong class="pname"><code>wd</code></strong> (<code>integer</code>) - day-of-week value for the current day</li>
         <li><strong class="pname"><code>wkdy</code></strong> (<code>integer</code>) - day-of-week value for the parsed day</li>
         <li><strong class="pname"><code>offset</code></strong> (<code>integer</code>) - offset direction for any modifiers (-1, 0, 1)</li>
-        <li><strong class="pname"><code>style</code></strong> (<code>integer</code>) - Normally the value set in ptc.DOWParseStyle</li>
-        <li><strong class="pname"><code>currentDayStyle</code></strong> (<code>integer</code>) - Normally the value set in ptc.CurrentDOWParseStyle</li>
+        <li><strong class="pname"><code>style</code></strong> (<code>integer</code>) - normally the value set in 
+          <code>Constants.DOWParseStyle</code></li>
+        <li><strong class="pname"><code>currentDayStyle</code></strong> (<code>integer</code>) - normally the value set in 
+          <code>Constants.CurrentDOWParseStyle</code></li>
     </ul>
     <dl><dt>Returns: <code>integer</code></dt>
         <dd>calculated day-of-week</dd></dl>
@@ -468,19 +486,20 @@ A collection of routines to input, parse and manipulate date and
     ></td>
   </table>
   
-  Evaluate the modifier string and following text (passed in as chunk1 
-  and chunk2) and if they match any known modifiers calculate the delta and
-  apply it to sourceTime
+  Evaluate the <code>modifier</code> string and following text (passed 
+  in as <code>chunk1</code> and <code>chunk2</code>) and if they match any 
+  known modifiers calculate the delta and apply it to 
+  <code>sourceTime</code>.
   <dl><dt></dt><dd>
     <dl><dt>Parameters:</dt></dl>
     <ul class="nomargin">
         <li><strong class="pname"><code>modifier</code></strong> (<code>string</code>) - modifier text to apply to sourceTime</li>
         <li><strong class="pname"><code>chunk1</code></strong> (<code>string</code>) - first text chunk that followed modifier (if any)</li>
         <li><strong class="pname"><code>chunk2</code></strong> (<code>string</code>) - second text chunk that followed modifier (if any)</li>
-        <li><strong class="pname"><code>sourceTime</code></strong> (<code>struct_time</code>) - value to use as the base</li>
+        <li><strong class="pname"><code>sourceTime</code></strong> (<code>struct_time</code>) - <code>struct_time</code> value to use as the base</li>
     </ul>
     <dl><dt>Returns: <code>tuple</code></dt>
-        <dd>tuple of any remaining text and the modified sourceTime</dd></dl>
+        <dd>tuple of: remaining text and the modified sourceTime</dd></dl>
   </dd></dl>
 </td></tr></table>
 </div>
@@ -502,19 +521,20 @@ A collection of routines to input, parse and manipulate date and
     ></td>
   </table>
   
-  Evaluate the modifier string and following text (passed in as chunk1 
-  and chunk2) and if they match any known modifiers calculate the delta and
-  apply it to sourceTime
+  Evaluate the <code>modifier</code> string and following text (passed 
+  in as <code>chunk1</code> and <code>chunk2</code>) and if they match any 
+  known modifiers calculate the delta and apply it to 
+  <code>sourceTime</code>.
   <dl><dt></dt><dd>
     <dl><dt>Parameters:</dt></dl>
     <ul class="nomargin">
-        <li><strong class="pname"><code>modifier</code></strong> (<code>string</code>) - modifier text to apply to sourceTime</li>
+        <li><strong class="pname"><code>modifier</code></strong> (<code>string</code>) - modifier text to apply to <code>sourceTime</code></li>
         <li><strong class="pname"><code>chunk1</code></strong> (<code>string</code>) - first text chunk that followed modifier (if any)</li>
         <li><strong class="pname"><code>chunk2</code></strong> (<code>string</code>) - second text chunk that followed modifier (if any)</li>
-        <li><strong class="pname"><code>sourceTime</code></strong> (<code>struct_time</code>) - value to use as the base</li>
+        <li><strong class="pname"><code>sourceTime</code></strong> (<code>struct_time</code>) - <code>struct_time</code> value to use as the base</li>
     </ul>
     <dl><dt>Returns: <code>tuple</code></dt>
-        <dd>tuple of any remaining text and the modified sourceTime</dd></dl>
+        <dd>tuple of: remaining text and the modified sourceTime</dd></dl>
   </dd></dl>
 </td></tr></table>
 </div>
@@ -549,11 +569,11 @@ A collection of routines to input, parse and manipulate date and
     <ul class="nomargin">
         <li><strong class="pname"><code>datetimeString</code></strong> (<code>string</code>) - text to try and parse as more &quot;traditional&quot; 
           date/time text</li>
-        <li><strong class="pname"><code>sourceTime</code></strong> (<code>struct_time</code>) - value to use as the base</li>
+        <li><strong class="pname"><code>sourceTime</code></strong> (<code>struct_time</code>) - <code>struct_time</code> value to use as the base</li>
     </ul>
     <dl><dt>Returns: <code>datetime</code></dt>
-        <dd>calculated struct_time value or current struct_time if not 
-          parsed</dd></dl>
+        <dd>calculated <code>struct_time</code> value or current 
+          <code>struct_time</code> if not parsed</dd></dl>
   </dd></dl>
 </td></tr></table>
 </div>
@@ -573,28 +593,30 @@ A collection of routines to input, parse and manipulate date and
     ></td>
   </table>
   
-  <p>Splits the datetimeString parameter into tokens, finds the regex 
-  patterns that match and then calculates a struct_time value from the 
-  chunks.</p>
-  <p>If sourceTime is given then the struct_time value will be calculated 
-  from that datetime, otherwise from the current datetime.</p>
-  If the datetimeString is parsed, the second item of the return tuple 
-  will be a flag to let you know what kind of struct_time value is being 
-  returned:
+  <p>Splits the given <code>datetimeString</code> into tokens, finds the 
+  regex patterns that match and then calculates a <code>struct_time</code> 
+  value from the chunks.</p>
+  <p>If <code>sourceTime</code> is given then the <code>struct_time</code> 
+  value will be calculated from that value, otherwise from the current 
+  date/time.</p>
+  If the <code>datetimeString</code> is parsed and date/time value found
+  then the second item of the returned tuple will be a flag to let you know
+  what kind of <code>struct_time</code> value is being returned:
 <pre class="literalblock">
    0 = not parsed at all
-   1 = parsed as a date
-   2 = parsed as a time
-   3 = parsed as a datetime
+   1 = parsed as a C{date}
+   2 = parsed as a C{time}
+   3 = parsed as a C{datetime}
 </pre>
   <dl><dt></dt><dd>
     <dl><dt>Parameters:</dt></dl>
     <ul class="nomargin">
-        <li><strong class="pname"><code>datetimeString</code></strong> (<code>string</code>) - datetime text to evaluate</li>
-        <li><strong class="pname"><code>sourceTime</code></strong> (<code>struct_time</code>) - value to use as the base</li>
+        <li><strong class="pname"><code>datetimeString</code></strong> (<code>string</code>) - date/time text to evaluate</li>
+        <li><strong class="pname"><code>sourceTime</code></strong> (<code>struct_time</code>) - <code>struct_time</code> value to use as the base</li>
     </ul>
     <dl><dt>Returns: <code>tuple</code></dt>
-        <dd>tuple of the modified sourceTime and the result flag</dd></dl>
+        <dd>tuple of: modified <code>sourceTime</code> and the result 
+          flag</dd></dl>
   </dd></dl>
 </td></tr></table>
 </div>
@@ -615,19 +637,21 @@ A collection of routines to input, parse and manipulate date and
     ></td>
   </table>
   
-  <p>Takes the given date, or current date if none is passed, and 
-  increments it according to the values passed in by month and/or year.</p>
-  This routine is needed because the timedelta() routine does not allow 
-  for month or year increments.
+  <p>Takes the given <code>source</code> date, or current date if none is 
+  passed, and increments it according to the values passed in by month 
+  and/or year.</p>
+  This routine is needed because Python's <code>timedelta()</code> 
+  function does not allow for month or year increments.
   <dl><dt></dt><dd>
     <dl><dt>Parameters:</dt></dl>
     <ul class="nomargin">
-        <li><strong class="pname"><code>source</code></strong> (<code>struct_time</code>) - value to increment</li>
+        <li><strong class="pname"><code>source</code></strong> (<code>struct_time</code>) - <code>struct_time</code> value to increment</li>
         <li><strong class="pname"><code>month</code></strong> (<code>integer</code>) - optional number of months to increment</li>
         <li><strong class="pname"><code>year</code></strong> (<code>integer</code>) - optional number of years to increment</li>
     </ul>
     <dl><dt>Returns: <code>datetime</code></dt>
-        <dd>source incremented by the number of months and/or years</dd></dl>
+        <dd><code>source</code> incremented by the number of months and/or
+          years</dd></dl>
   </dd></dl>
 </td></tr></table>
 </div>
@@ -663,7 +687,7 @@ A collection of routines to input, parse and manipulate date and
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">Generated by Epydoc
-        3.0alpha3 on Wed Dec 27 19:22:40 2006</td>
+        3.0alpha3 on Wed Dec 27 20:11:40 2006</td>
     <td align="right" class="footer">
       <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
     </td>

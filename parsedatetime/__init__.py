@@ -1,3 +1,11 @@
+"""
+parsedatetime.py contains the C{Calendar} class where the C{parse()}
+method can be found.
+
+parsedatetime_consts.py contains the C{Constants} class that builds the
+various regex values using locale information if available.
+"""
+
 version = '0.8.2'
 author  = 'Mike Taylor and Darshana Chhajed'
 license = """

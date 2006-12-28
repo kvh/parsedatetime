@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 
 """
-The Constants class defines all constants used by parsedatetime.py.
+parsedatetime constants and helper functions to determine
+regex values from Locale information if present.
+
+Also contains the internal Locale classes to give some sane
+defaults if PyICU is not found.
 """
 
 __license__ = """
@@ -36,7 +40,7 @@ class pdtLocale_en:
     """
     en_US Locale constants
 
-    This class will be used to initialize C{Constants} if PyICU is not located.
+    This class will be used to initialize L{Constants} if PyICU is not located.
 
     Defined as class variables are the lists and strings needed by parsedatetime
     to evaluate strings for USA
@@ -140,7 +144,7 @@ class pdtLocale_au:
     """
     en_AU Locale constants
 
-    This class will be used to initialize C{Constants} if PyICU is not located.
+    This class will be used to initialize L{Constants} if PyICU is not located.
 
     Defined as class variables are the lists and strings needed by parsedatetime
     to evaluate strings for Australia
@@ -243,7 +247,7 @@ class pdtLocale_es:
     """
     es Locale constants
 
-    This class will be used to initialize C{Constants} if PyICU is not located.
+    This class will be used to initialize L{Constants} if PyICU is not located.
 
     Defined as class variables are the lists and strings needed by parsedatetime
     to evaluate strings in Spanish
@@ -353,7 +357,7 @@ pdtLocales = { 'en_US': pdtLocale_en,
 def _initLocale(ptc):
     """
     Helper function to initialize the different lists and strings
-    from either PyICU or one of the locale pdt Locales and store
+    from either PyICU or one of the internal pdt Locales and store
     them into ptc.
     """
     if pyicu and ptc.usePyICU:
@@ -652,7 +656,7 @@ class Constants:
 
     If PyICU is not present then the class will initialize itself to
     en_US locale or if C{localeID} is passed in and the value matches one
-    of the defined pdtLocales then that will be used.
+    of the defined C{pdtLocales} then that will be used.
     """
     def __init__(self, localeID=None, usePyICU=True):
         if localeID is None:
@@ -767,4 +771,3 @@ class Constants:
 
         return sources
 
-        
