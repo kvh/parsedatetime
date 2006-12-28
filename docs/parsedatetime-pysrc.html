@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="ascii"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+          "DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+  <title>parsedatetime</title>
+  <link rel="stylesheet" href="epydoc.css" type="text/css" />
+  <script type="text/javascript" src="epydoc.js"></script>
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="#204080"
+      alink="#204080">
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://code-bear.com/code/parsedatetime">parsedatetime</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table width="100%" cellpadding="0" cellspacing="0">
+  <tr valign="top">
+    <td width="100%">
+      <span class="breadcrumbs">
+        Package&nbsp;parsedatetime
+      </span>
+    </td>
+    <td>
+      <table cellpadding="0" cellspacing="0">
+        <!-- hide/show private -->
+        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
+    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options"
+            >[<a href="frames.html" target="_top">frames</a
+            >]&nbsp;|&nbsp;<a href="parsedatetime-pysrc.html"
+            target="_top">no&nbsp;frames</a>]</span></td></tr>
+      </table>
+    </td>
+  </tr>
+</table>
+<h1 class="epydoc">Source Code for <a href="parsedatetime-module.html">Package parsedatetime</a></h1>
+<pre class="py-src">
+<span class="py-lineno"> 1</span>  <span class="py-line"><span id="link-0" class="py-name"><a title="parsedatetime.version" class="py-name" href="#" onclick="doclink('link-0', 'version', 'Variable parsedatetime.version=parsedatetime-module.html#version'); return false;">version</a></span></span> <span class="py-op">=</span> <span class="py-docstring">'0.8.2'</span> </span>
+<span class="py-lineno"> 2</span>  <span class="py-line"><span id="link-1" class="py-name"><a title="parsedatetime.author" class="py-name" href="#" onclick="doclink('link-1', 'author', 'Variable parsedatetime.author=parsedatetime-module.html#author'); return false;">author</a></span></span>  <span class="py-op">=</span> <span class="py-string">'Mike Taylor and Darshana Chhajed'</span> </span>
+<span class="py-lineno"> 3</span>  <span class="py-line"><span id="link-2" class="py-name"><a title="parsedatetime.license" class="py-name" href="#" onclick="doclink('link-2', 'license', 'Variable parsedatetime.license=parsedatetime-module.html#license'); return false;">license</a></span></span> <span class="py-op">=</span> <span class="py-string">"""</span> </span>
+<span class="py-lineno"> 4</span>  <span class="py-line"><span class="py-string">Copyright (c) 2004-2006 Mike Taylor</span> </span>
+<span class="py-lineno"> 5</span>  <span class="py-line"><span class="py-string">Copyright (c) 2006 Darshana Chhajed</span> </span>
+<span class="py-lineno"> 6</span>  <span class="py-line"><span class="py-string">All rights reserved.</span> </span>
+<span class="py-lineno"> 7</span>  <span class="py-line"><span class="py-string"></span> </span>
+<span class="py-lineno"> 8</span>  <span class="py-line"><span class="py-string">Licensed under the Apache License, Version 2.0 (the "License");</span> </span>
+<span class="py-lineno"> 9</span>  <span class="py-line"><span class="py-string">you may not use this file except in compliance with the License.</span> </span>
+<span class="py-lineno">10</span>  <span class="py-line"><span class="py-string">You may obtain a copy of the License at</span> </span>
+<span class="py-lineno">11</span>  <span class="py-line"><span class="py-string"></span> </span>
+<span class="py-lineno">12</span>  <span class="py-line"><span class="py-string">   http://www.apache.org/licenses/LICENSE-2.0</span> </span>
+<span class="py-lineno">13</span>  <span class="py-line"><span class="py-string"></span> </span>
+<span class="py-lineno">14</span>  <span class="py-line"><span class="py-string">Unless required by applicable law or agreed to in writing, software</span> </span>
+<span class="py-lineno">15</span>  <span class="py-line"><span class="py-string">distributed under the License is distributed on an "AS IS" BASIS,</span> </span>
+<span class="py-lineno">16</span>  <span class="py-line"><span class="py-string">WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span> </span>
+<span class="py-lineno">17</span>  <span class="py-line"><span class="py-string">See the License for the specific language governing permissions and</span> </span>
+<span class="py-lineno">18</span>  <span class="py-line"><span class="py-string">limitations under the License.</span> </span>
+<span class="py-lineno">19</span>  <span class="py-line"><span class="py-string">"""</span> </span>
+<span class="py-lineno">20</span>  <span class="py-line"> </span><script type="text/javascript">
+<!--
+expandto(location.href);
+// -->
+</script>
+</pre>
+<br />
+<!-- ==================== NAVIGATION BAR ==================== -->
+<table class="navbar" border="0" width="100%" cellpadding="0"
+       bgcolor="#a0c0ff" cellspacing="0">
+  <tr valign="middle">
+  <!-- Home link -->
+      <th bgcolor="#70b0f0" class="navbar-select"
+          >&nbsp;&nbsp;&nbsp;Home&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Tree link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="module-tree.html">Trees</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Index link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="identifier-index.html">Indices</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Help link -->
+      <th>&nbsp;&nbsp;&nbsp;<a
+        href="help.html">Help</a>&nbsp;&nbsp;&nbsp;</th>
+
+  <!-- Project homepage -->
+      <th class="navbar" align="right" width="100%">
+        <table border="0" cellpadding="0" cellspacing="0">
+          <tr><th class="navbar" align="center"
+            ><a class="navbar" target="_top" href="http://code-bear.com/code/parsedatetime">parsedatetime</a></th>
+          </tr></table></th>
+  </tr>
+</table>
+<table border="0" cellpadding="0" cellspacing="0" width="100%%">
+  <tr>
+    <td align="left" class="footer">Generated by Epydoc
+        3.0alpha3 on Wed Dec 27 19:22:41 2006</td>
+    <td align="right" class="footer">
+      <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
+    </td>
+  </tr>
+</table>
+
+<script type="text/javascript">
+  <!--
+  // Private objects are initially displayed (because if
+  // javascript is turned off then we want them to be
+  // visible); but by default, we want to hide them.  So hide
+  // them unless we have a cookie that says to show them.
+  checkCookie()
+  // -->
+</script>
+  
+</body>
+</html>

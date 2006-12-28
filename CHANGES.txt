@@ -2,7 +2,10 @@
 
     Added some support files to try and increase our cheesecake index :)
 
-    Removed local copy of ez_setup.py and will list setuptools as a dependency.
+    Created an examples directory and added back the docs/* content so the
+    source distribution will contain the generated docs
+
+    Changed how setup.py works to allow for a doc command
 
 26 Dec 2006 - bear
 

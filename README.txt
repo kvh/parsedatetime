@@ -14,21 +14,29 @@ In the source tree do the following:
 Using parsedatetime
 -------------------
 
-import parsedatetime.parsedatetime as pdt
+The simple example of how to use parsedatetime is:
 
-cal = pdt.Calendar()
+    import parsedatetime.parsedatetime as pdt
 
-cal.parse("tomorrow")
+    cal = pdt.Calendar()
+
+    cal.parse("tomorrow")
+
+More detailed examples can be found in the examples/
 
 
 Documentation
 -------------
 
-Epydoc generated documentation can be found in the docs/
-directory.
+The generated documentation is included by default in the docs/
+directory and can also be viewed online at
 
-Generated using:
+    http://code-bear.com/code/parsedatetime/docs/index.html
 
+The docs can be generated (into the docs/ directory) using either
+of the two commands:
+
+    python setup.py doc
     epydoc --html --config epydoc.conf
 
 

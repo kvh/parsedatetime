@@ -179,7 +179,7 @@ class Calendar:
         Default constructor for the Calendar class.
 
         @type  constants: object
-        @param constants: Instance of the class L{CalendarConstants}
+        @param constants: Instance of the class L{parsedatetime_consts.Constants}
 
         @rtype:  object
         @return: Calendar instance
@@ -616,7 +616,7 @@ class Calendar:
 
     def _CalculateDOWDelta(self, wd, wkdy, offset, style, currentDayStyle):
         """
-        Based on the L{style} and L{currentDayStyle} determine what
+        Based on the style and currentDayStyle determine what
         day-of-week value is to be returned.
 
         @type  wd:              integer
@@ -1156,20 +1156,21 @@ class Calendar:
 
     def parse(self, datetimeString, sourceTime=None):
         """
-        Splits the L{datetimeString} into tokens, finds the regex patters
-        that match and then calculates a struct_time value from the chunks.
+        Splits the datetimeString parameter into tokens, finds the regex
+        patterns that match and then calculates a struct_time value from
+        the chunks.
 
-        If L{sourceTime} is given then the struct_time value will be calculated
+        If sourceTime is given then the struct_time value will be calculated
         from that datetime, otherwise from the current datetime.
 
-        If the L{datetimeString} is parsed, the second item of the return tuple
+        If the datetimeString is parsed, the second item of the return tuple
         will be a flag to let you know what kind of struct_time value is being
         returned::
 
-            0 = L{datetimeString} was not parsed at all
-            1 = L{datetimeString} was parsed as a date
-            2 = L{datetimeString} was parsed as a time
-            3 = L{datetimeString} was parsed as a datetime
+            0 = not parsed at all
+            1 = parsed as a date
+            2 = parsed as a time
+            3 = parsed as a datetime
 
         @type  datetimeString: string
         @param datetimeString: datetime text to evaluate
@@ -1471,7 +1472,7 @@ class Calendar:
         @param year:   optional number of years to increment
 
         @rtype:  datetime
-        @return: L{source} incremented by the number of months and/or years
+        @return: source incremented by the number of months and/or years
         """
         yr  = source.year
         mth = source.month
