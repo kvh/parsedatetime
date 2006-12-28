@@ -32,7 +32,6 @@ except:
     pyicu = None
 
 
-import string
 import datetime, time
 
 
@@ -93,12 +92,13 @@ class pdtLocale_en:
             }
 
       # text constants to be used by regex's later
-    re_consts     = { 'specials':      'in|on|of|at',
-                      'timeseperator': ':',
-                      'daysuffix':     'rd|st|nd|th',
-                      'meridian':      'am|pm|a.m.|p.m.|a|p',
-                      'qunits':        'h|m|s|d|w|m|y',
-                      'now':           [ 'now' ],
+    re_consts     = { 'specials':       'in|on|of|at',
+                      'timeseperator':  ':',
+                      'rangeseperator': '-',
+                      'daysuffix':      'rd|st|nd|th',
+                      'meridian':       'am|pm|a.m.|p.m.|a|p',
+                      'qunits':         'h|m|s|d|w|m|y',
+                      'now':            [ 'now' ],
                     }
 
       # Used to adjust the returned date before/after the source
@@ -197,12 +197,13 @@ class pdtLocale_au:
             }
 
       # text constants to be used by regex's later
-    re_consts     = { 'specials':      'in|on|of|at',
-                      'timeseperator': ':',
-                      'daysuffix':     'rd|st|nd|th',
-                      'meridian':      'am|pm|a.m.|p.m.|a|p',
-                      'qunits':        'h|m|s|d|w|m|y',
-                      'now':           [ 'now' ],
+    re_consts     = { 'specials':       'in|on|of|at',
+                      'timeseperator':  ':',
+                      'rangeseperator': '-',
+                      'daysuffix':      'rd|st|nd|th',
+                      'meridian':       'am|pm|a.m.|p.m.|a|p',
+                      'qunits':         'h|m|s|d|w|m|y',
+                      'now':            [ 'now' ],
                     }
 
       # Used to adjust the returned date before/after the source
@@ -302,12 +303,13 @@ class pdtLocale_es:
             }
 
       # text constants to be used by regex's later
-    re_consts     = { 'specials':      'in|on|of|at',
-                      'timeseperator': timeSep,
-                      'dateseperator': dateSep,
-                      'daysuffix':     'rd|st|nd|th',
-                      'qunits':        'h|m|s|d|w|m|y',
-                      'now':           [ 'now' ],
+    re_consts     = { 'specials':       'in|on|of|at',
+                      'timeseperator':  timeSep,
+                      'dateseperator':  dateSep,
+                      'rangeseperator': '-',
+                      'daysuffix':      'rd|st|nd|th',
+                      'qunits':         'h|m|s|d|w|m|y',
+                      'now':            [ 'now' ],
                     }
 
       # Used to adjust the returned date before/after the source
@@ -360,6 +362,10 @@ def _initLocale(ptc):
     from either PyICU or one of the internal pdt Locales and store
     them into ptc.
     """
+    
+    def lcase(x):
+        return x.lower()
+
     if pyicu and ptc.usePyICU:
         ptc.icuLocale = pyicu.Locale(ptc.localeID)
 
@@ -368,15 +374,16 @@ def _initLocale(ptc):
 
         ptc.icuSymbols = pyicu.DateFormatSymbols(ptc.icuLocale)
 
-          # grab ICU list of weekdays, skipping first entry which is always blank
-        wd  = map(string.lower, ptc.icuSymbols.getWeekdays()[1:])
-        swd = map(string.lower, ptc.icuSymbols.getShortWeekdays()[1:])
+          # grab ICU list of weekdays, skipping first entry which
+          # is always blank
+        wd  = map(lcase, ptc.icuSymbols.getWeekdays()[1:])
+        swd = map(lcase, ptc.icuSymbols.getShortWeekdays()[1:])
 
           # store them in our list with Monday first (ICU puts Sunday first)
         ptc.Weekdays      = wd[1:] + wd[0:1]
         ptc.shortWeekdays = swd[1:] + swd[0:1]
-        ptc.Months        = map(string.lower, ptc.icuSymbols.getMonths())
-        ptc.shortMonths   = map(string.lower, ptc.icuSymbols.getShortMonths())
+        ptc.Months        = map(lcase, ptc.icuSymbols.getMonths())
+        ptc.shortMonths   = map(lcase, ptc.icuSymbols.getShortMonths())
 
           # not quite sure how to init this so for now
           # set it to none so it will be set to the en_US defaults for now
@@ -470,35 +477,36 @@ def _initSymbols(ptc):
         pm = u''
         ts = ''
 
-          # ICU doesn't seem to provide directly the
-          # date or time seperator - so we have to
-          # figure it out
-
-        p = pyicu.FieldPosition(pyicu.DateFormat.AM_PM_FIELD)
+        # ICU doesn't seem to provide directly the
+        # date or time seperator - so we have to
+        # figure it out
         o = ptc.icu_tf['short']
         s = ptc.timeFormats['short']
 
         ptc.usesMeridian = u'a' in s
         ptc.uses24       = u'H' in s
 
-        s = o.format(datetime.datetime(2003, 10, 30, 11, 45))       # '11:45 AM' or '11:45'
+        # '11:45 AM' or '11:45'
+        s = o.format(datetime.datetime(2003, 10, 30, 11, 45))
 
-        s = s.replace('11', '').replace('45', '')                   # ': AM' or ':'
+        # ': AM' or ':'
+        s = s.replace('11', '').replace('45', '')
 
         if len(s) > 0:
             ts = s[0]
 
         if ptc.usesMeridian:
-            am = s[1:].strip()                                      # 'AM'
-
-            s = o.format(datetime.datetime(2003, 10, 30, 23, 45))   # '23:45 AM' or '23:45'
+            # '23:45 AM' or '23:45'
+            am = s[1:].strip()
+            s  = o.format(datetime.datetime(2003, 10, 30, 23, 45))
 
             if ptc.uses24:
                 s = s.replace('23', '')
             else:
                 s = s.replace('11', '')
 
-            pm = s.replace('45', '').replace(ts, '').strip()  # 'PM' or ''
+            # 'PM' or ''
+            pm = s.replace('45', '').replace(ts, '').strip()
 
         ptc.timeSep  = [ ts ]
         ptc.meridian = [ am, pm ]
@@ -513,10 +521,9 @@ def _initSymbols(ptc):
             ds = '/'
 
         ptc.dateSep = [ ds ]
-
-        s        = ptc.dateFormats['short']
-        l        = s.lower().split(ds)
-        dp_order = []
+        s           = ptc.dateFormats['short']
+        l           = s.lower().split(ds)
+        dp_order    = []
 
         for s in l:
             if len(s) > 0:
@@ -570,47 +577,107 @@ def _initPatterns(ptc):
     # TODO add code to parse the date formats and build the regexes up from sub-parts
     # TODO find all hard-coded uses of date/time seperators
 
-    ptc.RE_DATE3     = r'(?P<date>((?P<mthname>(%(months)s|%(shortmonths)s))\s?((?P<day>\d\d?)(\s?|%(daysuffix)s|$)+)?(,\s?(?P<year>\d\d(\d\d)?))?))(\s?|$|[^0-9a-zA-Z])' % ptc.re_values
-    ptc.RE_MONTH     = r'(\s?|^)(?P<month>((?P<mthname>(%(months)s|%(shortmonths)s))(\s?(?P<year>(\d\d\d\d)))?))(\s?|$|[^0-9a-zA-Z])' % ptc.re_values
-    ptc.RE_WEEKDAY   = r'(\s?|^)(?P<weekday>(%(days)s|%(shortdays)s))(\s?|$|[^0-9a-zA-Z])' % ptc.re_values
+    ptc.RE_DATE3     = r'''(?P<date>((?P<mthname>(%(months)s|%(shortmonths)s))\s?
+                                     ((?P<day>\d\d?)(\s?|%(daysuffix)s|$)+)?
+                                     (,\s?(?P<year>\d\d(\d\d)?))?))
+                           (\s?|$|[^0-9a-zA-Z])''' % ptc.re_values
+    ptc.RE_MONTH     = r'''(\s?|^)
+                           (?P<month>(
+                                      (?P<mthname>(%(months)s|%(shortmonths)s))
+                                      (\s?(?P<year>(\d\d\d\d)))?
+                                     ))
+                           (\s?|$|[^0-9a-zA-Z])''' % ptc.re_values
+    ptc.RE_WEEKDAY   = r'''(\s?|^)
+                           (?P<weekday>(%(days)s|%(shortdays)s))
+                           (\s?|$|[^0-9a-zA-Z])''' % ptc.re_values
 
     ptc.RE_SPECIAL   = r'(?P<special>^[%(specials)s]+)\s+' % ptc.re_values
-    ptc.RE_UNITS     = r'(?P<qty>(-?\d+\s*(?P<units>((%(units)s)s?))))' % ptc.re_values
-    ptc.RE_QUNITS    = r'(?P<qty>(-?\d+\s?(?P<qunits>%(qunits)s)(\s?|,|$)))' % ptc.re_values
-    ptc.RE_MODIFIER  = r'(\s?|^)(?P<modifier>(previous|prev|last|next|this|eod|eo|(end\sof)|(in\sa)))' % ptc.re_values
-    ptc.RE_MODIFIER2 = r'(\s?|^)(?P<modifier>(from|before|after|ago|prior))(\s?|$|[^0-9a-zA-Z])' % ptc.re_values
-    ptc.RE_TIMEHMS   = r'(\s?|^)(?P<hours>\d\d?)(?P<tsep>%(timeseperator)s|)(?P<minutes>\d\d)(?:(?P=tsep)(?P<seconds>\d\d(?:[.,]\d+)?))?' % ptc.re_values
-
-    ptc.RE_TIMEHMS2  = r'(?P<hours>(\d\d?))((?P<tsep>%(timeseperator)s|)(?P<minutes>(\d\d?))(?:(?P=tsep)(?P<seconds>\d\d?(?:[.,]\d+)?))?)?' % ptc.re_values
+    ptc.RE_UNITS     = r'''(?P<qty>(-?\d+\s*
+                                    (?P<units>((%(units)s)s?))
+                                   ))''' % ptc.re_values
+    ptc.RE_QUNITS    = r'''(?P<qty>(-?\d+\s?
+                                    (?P<qunits>%(qunits)s)
+                                    (\s?|,|$)
+                                   ))''' % ptc.re_values
+    ptc.RE_MODIFIER  = r'''(\s?|^)
+                           (?P<modifier>
+                            (previous|prev|last|next|this|eod|eo|(end\sof)|(in\sa)))''' % ptc.re_values
+    ptc.RE_MODIFIER2 = r'''(\s?|^)
+                           (?P<modifier>
+                            (from|before|after|ago|prior))
+                           (\s?|$|[^0-9a-zA-Z])''' % ptc.re_values
+    ptc.RE_TIMEHMS   = r'''(\s?|^)
+                           (?P<hours>\d\d?)
+                           (?P<tsep>%(timeseperator)s|)
+                           (?P<minutes>\d\d)
+                           (?:(?P=tsep)(?P<seconds>\d\d(?:[.,]\d+)?))?''' % ptc.re_values
+    ptc.RE_TIMEHMS2  = r'''(?P<hours>(\d\d?))
+                           ((?P<tsep>%(timeseperator)s|)
+                            (?P<minutes>(\d\d?))
+                            (?:(?P=tsep)
+                               (?P<seconds>\d\d?
+                                (?:[.,]\d+)?))?)?''' % ptc.re_values
 
     if 'meridian' in ptc.re_values:
         ptc.RE_TIMEHMS2 += r'\s?(?P<meridian>(%(meridian)s))' % ptc.re_values
 
     dateSeps = ''.join(ptc.dateSep) + '.'
 
-    ptc.RE_DATE      = r'(\s?|^)(?P<date>(\d\d?[%s]\d\d?([%s]\d\d(\d\d)?)?))(\s?|$|[^0-9a-zA-Z])' % (dateSeps, dateSeps)
+    ptc.RE_DATE      = r'''(\s?|^)
+                           (?P<date>(\d\d?[%s]\d\d?([%s]\d\d(\d\d)?)?))
+                           (\s?|$|[^0-9a-zA-Z])''' % (dateSeps, dateSeps)
     ptc.RE_DATE2     = r'[%s]' % dateSeps
-    ptc.RE_DAY       = r'(\s?|^)(?P<day>(today|tomorrow|yesterday))(\s?|$|[^0-9a-zA-Z])' % ptc.re_values
-    ptc.RE_TIME      = r'(\s?|^)(?P<time>(morning|breakfast|noon|lunch|evening|midnight|tonight|dinner|night|now))(\s?|$|[^0-9a-zA-Z])' % ptc.re_values
+    ptc.RE_DAY       = r'''(\s?|^)
+                           (?P<day>(today|tomorrow|yesterday))
+                           (\s?|$|[^0-9a-zA-Z])''' % ptc.re_values
+    ptc.RE_TIME      = r'''(\s?|^)
+                           (?P<time>(morning|breakfast|noon|lunch|evening|midnight|tonight|dinner|night|now))
+                           (\s?|$|[^0-9a-zA-Z])''' % ptc.re_values
     ptc.RE_REMAINING = r'\s+'
 
-      # Regex for date/time ranges
-
-    ptc.RE_RTIMEHMS  = r'(\s?|^)(\d\d?)%(timeseperator)s(\d\d)(%(timeseperator)s(\d\d))?(\s?|$)' % ptc.re_values
-
-    ptc.RE_RTIMEHMS2 = r'(\s?|^)(\d\d?)(%(timeseperator)s(\d\d?))?(%(timeseperator)s(\d\d?))?' % ptc.re_values
+    # Regex for date/time ranges
+    ptc.RE_RTIMEHMS  = r'''(\s?|^)
+                           (\d\d?)%(timeseperator)s
+                           (\d\d)
+                           (%(timeseperator)s(\d\d))?
+                           (\s?|$)''' % ptc.re_values
+    ptc.RE_RTIMEHMS2 = r'''(\s?|^)
+                           (\d\d?)
+                           (%(timeseperator)s(\d\d?))?
+                           (%(timeseperator)s(\d\d?))?''' % ptc.re_values
 
     if 'meridian' in ptc.re_values:
         ptc.RE_RTIMEHMS2 += r'\s?(%(meridian)s)' % ptc.re_values
 
-    ptc.RE_RDATE     = r'(\d+([%s]\d+)+)' % dateSeps
-    ptc.RE_RDATE3    = r'((((%(months)s))\s?((\d\d?)(\s?|%(daysuffix)s|$)+)?(,\s?\d\d\d\d)?))' % ptc.re_values
-    ptc.DATERNG1     = ptc.RE_RDATE     + r'\s?-\s?' + ptc.RE_RDATE     # "06/07/06 - 08/09/06"
-    ptc.DATERNG2     = ptc.RE_RDATE3    + r'\s?-\s?' + ptc.RE_RDATE3    # "march 31 - june 1st, 2006"
-    ptc.DATERNG3     = ptc.RE_RDATE3    + r'\s?' + r'-' + r'\s?(\d\d?)\s?(rd|st|nd|th)?' % ptc.re_values # "march 1rd -13th"
-    ptc.TIMERNG1     = ptc.RE_RTIMEHMS2 + r'\s?-\s?'+ ptc.RE_RTIMEHMS2  # "4:00:55 pm - 5:90:44 am",'4p-5p'
-    ptc.TIMERNG2     = ptc.RE_RTIMEHMS  + r'\s?-\s?'+ ptc.RE_RTIMEHMS   # "4:00 - 5:90 ","4:55:55-3:44:55"
-    ptc.TIMERNG3     = r'\d\d?\s?-\s?'+ ptc.RE_RTIMEHMS2                # "4-5pm "
+    ptc.RE_RDATE  = r'(\d+([%s]\d+)+)' % dateSeps
+    ptc.RE_RDATE3 = r'''((((%(months)s))\s?
+                         ((\d\d?)
+                          (\s?|%(daysuffix)s|$)+)?
+                         (,\s?\d\d\d\d)?))''' % ptc.re_values
+
+    # "06/07/06 - 08/09/06"
+    ptc.DATERNG1 = ptc.RE_RDATE + r'\s?%(rangeseperator)s\s?' + ptc.RE_RDATE
+    ptc.DATERNG1 = ptc.DATERNG1 % ptc.re_values
+
+    # "march 31 - june 1st, 2006"
+    ptc.DATERNG2 = ptc.RE_RDATE3 + r'\s?%(rangeseperator)s\s?' + ptc.RE_RDATE3
+    ptc.DATERNG2 = ptc.DATERNG2 % ptc.re_values
+
+    # "march 1rd -13th"
+    ptc.DATERNG3 = ptc.RE_RDATE3 + r'\s?%(rangeseperator)s\s?(\d\d?)\s?(rd|st|nd|th)?'
+    ptc.DATERNG3 = ptc.DATERNG3 % ptc.re_values
+
+    # "4:00:55 pm - 5:90:44 am", '4p-5p'
+    ptc.TIMERNG1 = ptc.RE_RTIMEHMS2 + r'\s?%(rangeseperator)s\s?' + ptc.RE_RTIMEHMS2
+    ptc.TIMERNG1 = ptc.TIMERNG1 % ptc.re_values
+
+    # "4:00 - 5:90 ", "4:55:55-3:44:55"
+    ptc.TIMERNG2 = ptc.RE_RTIMEHMS + r'\s?%(rangeseperator)s\s?' + ptc.RE_RTIMEHMS
+    ptc.TIMERNG2 = ptc.TIMERNG2 % ptc.re_values
+
+    # "4-5pm "
+    ptc.TIMERNG3 = r'\d\d?\s?%(rangeseperator)s\s?' + ptc.RE_RTIMEHMS2
+    ptc.TIMERNG3 = ptc.TIMERNG3 % ptc.re_values
 
 
 def _initConstants(ptc):
@@ -677,6 +744,8 @@ class Constants:
         self.Month  =  30 * self.Day
         self.Year   = 365 * self.Day
 
+        self.rangeSep = u'-'
+
         self.DaysInMonthList = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 
         self.BirthdayEpoch = 50
@@ -731,6 +800,50 @@ class Constants:
         # week +1                       F
 
         self.CurrentDOWParseStyle = False
+
+        # initalize attributes to empty values to ensure
+        # they are defined
+        self.re_sources     = None
+        self.re_values      = None
+        self.Modifiers      = None
+        self.dayOffsets     = None
+        self.WeekdayOffsets = None
+        self.MonthOffsets   = None
+        self.DaysInMonth    = None
+        self.dateSep        = None
+        self.timeSep        = None
+        self.am             = None
+        self.pm             = None
+        self.meridian       = None
+        self.usesMeridian   = None
+        self.uses24         = None
+        self.dp_order       = None
+
+        self.RE_DATE3     = r''
+        self.RE_MONTH     = r''
+        self.RE_WEEKDAY   = r''
+        self.RE_SPECIAL   = r''
+        self.RE_UNITS     = r''
+        self.RE_QUNITS    = r''
+        self.RE_MODIFIER  = r''
+        self.RE_MODIFIER2 = r''
+        self.RE_TIMEHMS   = r''
+        self.RE_TIMEHMS2  = r''
+        self.RE_DATE      = r''
+        self.RE_DATE2     = r''
+        self.RE_DAY       = r''
+        self.RE_TIME      = r''
+        self.RE_REMAINING = r''
+        self.RE_RTIMEHMS  = r''
+        self.RE_RTIMEHMS2 = r''
+        self.RE_RDATE     = r''
+        self.RE_RDATE3    = r''
+        self.DATERNG1     = r''
+        self.DATERNG2     = r''
+        self.DATERNG3     = r''
+        self.TIMERNG1     = r''
+        self.TIMERNG2     = r''
+        self.TIMERNG3     = r''
 
         _initLocale(self)
         _initConstants(self)

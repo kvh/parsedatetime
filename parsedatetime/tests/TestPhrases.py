@@ -13,8 +13,8 @@ def _compareResults(result, check, debug=False):
     target, t_flag = result
     value,  v_flag = check
 
-    t_yr, t_mth, t_dy, t_hr, t_min, t_sec, t_wd, t_yd, t_isdst = target
-    v_yr, v_mth, v_dy, v_hr, v_min, v_sec, v_wd, v_yd, v_isdst = value
+    t_yr, t_mth, t_dy, t_hr, t_min, _, _, _, _ = target
+    v_yr, v_mth, v_dy, v_hr, v_min, _, _, _, _ = value
 
     if debug:
         print target, t_flag
@@ -57,7 +57,7 @@ class test(unittest.TestCase):
         t      = s + datetime.timedelta(days=1)
         start  = s.timetuple()
 
-        (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = t.timetuple()
+        (yr, mth, dy, _, _, _, wd, yd, isdst) = t.timetuple()
 
         target = (yr, mth, dy, 17, 0, 0, wd, yd, isdst)
 
@@ -92,7 +92,7 @@ class test(unittest.TestCase):
           # find out what month we are currently on
           # set the day to 1 and then go back a day
           # to get the end of the current month
-        (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = s.timetuple()
+        (yr, mth, _, hr, mn, sec, _, _, _) = s.timetuple()
 
         mth += 1
         if mth > 12:
