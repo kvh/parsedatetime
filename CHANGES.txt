@@ -1,3 +1,56 @@
+14 Feb 2007 - bear
+
+    Minor doc string changes and other typo fixes
+
+    Updated Copyright years
+
+    Added a fallbackLocales=[] parameter to parsedatetime_consts init routine
+    to control what locales are scanned if the default or given locale is not
+    found in PyICU.
+    Issue #9 http://code.google.com/p/parsedatetime/issues/detail?id=9
+
+    While working on the regex compile-on-demand issue below, I realized that
+    parsedatetime was storing the compiled regex's locally and that this would
+    cause prevent parsedatetime from switching locales easily.  I've always
+    wanted to make it so parsedatetime can be set to parse within a locale just
+    by changing a single reference - this is one step closer to that.
+
+    Made the regex compiles on-demand to help with performance
+    Requested by the Chandler folks
+    Issue #15 http://code.google.com/p/parsedatetime/issues/detail?id=15
+
+    To test the change I ran 100 times the following code:
+        for i in range(0, 100):
+            c = pdc.Constants()
+            p = pdt.Calendar(c)
+            p = None
+            c = None
+
+    and that was measured by hotshot:
+
+        24356 function calls (22630 primitive calls) in 0.188 CPU seconds
+
+    after the change:
+
+        5000 function calls in 0.140 CPU seconds
+
+    but that doesn't test the true time as it doesn't reference any regex's
+    so any time saved is deferred.  To test this I then ran before and after
+    tests where I parsed the major unit test bits:
+
+    before the change:
+
+        80290 function calls (75929 primitive calls) in 1.055 CPU seconds
+
+    after the change:
+
+        55803 function calls (52445 primitive calls) in 0.997 CPU seconds
+
+    This tells me while doing the lazy compile does save time, it's not a lot
+    over the normal usage.  I'll leave it in as it is saving time for the
+    simple use-cases.
+
+
 27 Dec 2006 - bear
 
     Added some support files to try and increase our cheesecake index :)

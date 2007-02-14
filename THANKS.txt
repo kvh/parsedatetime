@@ -5,8 +5,8 @@ following folks:
 
 Darshana Chhajed
 
-    As the first "real" user of the system Darshana pointed out
-    many of the intial flaws and bugs and then started fixing them!
+    As the first "real" user of the new python code, Darshana pointed
+    out many of the initial flaws and bugs and then started fixing them!
     Her aide was so helpful that I was happy to add her as co-author.
 
 Ted Leung
@@ -24,6 +24,6 @@ OSAF
 
     The folks at OSAF (Open Source Applications Foundation) helped a lot
     in shaping how the code works and in answering my "how do I do *this*"
-    questions - especially Jeffrey, Philippe, Grant, Alex and Katie.
+    questions - especially Jeffrey, Philippe, Grant, Andi, Alex and Katie.
 
     

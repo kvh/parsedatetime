@@ -9,8 +9,8 @@ defaults if PyICU is not found.
 """
 
 __license__ = """
-Copyright (c) 2004-2006 Mike Taylor
-Copyright (c) 2006 Darshana Chhajed
+Copyright (c) 2004-2007 Mike Taylor
+Copyright (c) 2006-2007 Darshana Chhajed
 All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -32,7 +32,9 @@ except:
     pyicu = None
 
 
-import datetime, time
+import datetime
+import time
+import re
 
 
 class pdtLocale_en:
@@ -362,15 +364,23 @@ def _initLocale(ptc):
     from either PyICU or one of the internal pdt Locales and store
     them into ptc.
     """
-    
+
     def lcase(x):
         return x.lower()
 
     if pyicu and ptc.usePyICU:
-        ptc.icuLocale = pyicu.Locale(ptc.localeID)
+        ptc.icuLocale = None
 
-        if not ptc.icuLocale:
-            ptc.icuLocale = pyicu.Locale('en_US')
+        if ptc.localeID is not None:
+            ptc.icuLocale = pyicu.Locale(ptc.localeID)
+
+        if ptc.icuLocale is None:
+            for id in range(0, len(ptc.fallbackLocales)):
+                ptc.localeID  = ptc.fallbackLocales[id]
+                ptc.icuLocale = pyicu.Locale(ptc.localeID)
+
+                if ptc.icuLocale is not None:
+                    break
 
         ptc.icuSymbols = pyicu.DateFormatSymbols(ptc.icuLocale)
 
@@ -410,7 +420,11 @@ def _initLocale(ptc):
                           }
     else:
         if not ptc.localeID in pdtLocales:
-            ptc.localeID = 'en_US'
+            for id in range(0, len(ptc.fallbackLocales)):
+                ptc.localeID  = ptc.fallbackLocales[id]
+
+                if ptc.localeID in pdtLocales:
+                    break
 
         ptc.locale   = pdtLocales[ptc.localeID]
         ptc.usePyICU = False
@@ -718,18 +732,23 @@ class Constants:
     """
     Default set of constants for parsedatetime.
 
-    If PyICU is present, then the class will initialize itself to
-    the current default locale or to the locale specified by C{localeID}.
+    If PyICU is present, then the class will first try to get PyICU
+    to return a locale specified by C{localeID}.  If either C{localeID} is
+    None or if the locale does not exist within PyICU, then each of the
+    locales defined in C{fallbackLocales} is tried in order.
 
-    If PyICU is not present then the class will initialize itself to
-    en_US locale or if C{localeID} is passed in and the value matches one
-    of the defined C{pdtLocales} then that will be used.
+    If PyICU is not present or none of the specified locales can be used,
+    then the class will initialize itself to the en_US locale.
+
+    if PyICU is not present or not requested, only the locales defined by
+    C{pdtLocales} will be searched.
     """
-    def __init__(self, localeID=None, usePyICU=True):
-        if localeID is None:
-            self.localeID = 'en_US'
-        else:
-            self.localeID = localeID
+    def __init__(self, localeID=None, usePyICU=True, fallbackLocales=['en_US']):
+        self.localeID        = localeID
+        self.fallbackLocales = fallbackLocales
+
+        if 'en_US' not in self.fallbackLocales:
+            self.fallbackLocales.append('en_US')
 
           # define non-locale specific constants
 
@@ -849,6 +868,44 @@ class Constants:
         _initConstants(self)
         _initSymbols(self)
         _initPatterns(self)
+
+        self.re_option = re.IGNORECASE + re.VERBOSE
+        self.cre_source = { 'CRE_SPECIAL':   self.RE_SPECIAL,
+                            'CRE_UNITS':     self.RE_UNITS,
+                            'CRE_QUNITS':    self.RE_QUNITS,
+                            'CRE_MODIFIER':  self.RE_MODIFIER,
+                            'CRE_MODIFIER2': self.RE_MODIFIER2,
+                            'CRE_TIMEHMS':   self.RE_TIMEHMS,
+                            'CRE_TIMEHMS2':  self.RE_TIMEHMS2,
+                            'CRE_DATE':      self.RE_DATE,
+                            'CRE_DATE2':     self.RE_DATE2,
+                            'CRE_DATE3':     self.RE_DATE3,
+                            'CRE_MONTH':     self.RE_MONTH,
+                            'CRE_WEEKDAY':   self.RE_WEEKDAY,
+                            'CRE_DAY':       self.RE_DAY,
+                            'CRE_TIME':      self.RE_TIME,
+                            'CRE_REMAINING': self.RE_REMAINING,
+                            'CRE_RTIMEHMS':  self.RE_RTIMEHMS,
+                            'CRE_RTIMEHMS2': self.RE_RTIMEHMS2,
+                            'CRE_RDATE':     self.RE_RDATE,
+                            'CRE_RDATE3':    self.RE_RDATE3,
+                            'CRE_TIMERNG1':  self.TIMERNG1,
+                            'CRE_TIMERNG2':  self.TIMERNG2,
+                            'CRE_TIMERNG3':  self.TIMERNG3,
+                            'CRE_DATERNG1':  self.DATERNG1,
+                            'CRE_DATERNG2':  self.DATERNG2,
+                            'CRE_DATERNG3':  self.DATERNG3,
+                          }
+        self.cre_keys = self.cre_source.keys()
+
+
+    def __getattr__(self, name):
+        if name in self.cre_keys:
+            value = re.compile(self.cre_source[name], self.re_option)
+            setattr(self, name, value)
+            return value
+        else:
+            raise AttributeError, name
 
 
     def buildSources(self, sourceTime=None):

@@ -5,8 +5,8 @@ Parse human-readable date/time text.
 """
 
 __license__ = """
-Copyright (c) 2004-2006 Mike Taylor
-Copyright (c) 2006 Darshana Chhajed
+Copyright (c) 2004-2007 Mike Taylor
+Copyright (c) 2007 Darshana Chhajed
 All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -25,8 +25,10 @@ limitations under the License.
 _debug = False
 
 
-import re, time
-import datetime, rfc822
+import re
+import time
+import datetime
+import rfc822
 import parsedatetime_consts
 
 
@@ -196,37 +198,6 @@ class Calendar:
         else:
             self.ptc = constants
 
-        re_option = re.IGNORECASE + re.VERBOSE
-
-        self.CRE_SPECIAL   = re.compile(self.ptc.RE_SPECIAL,   re_option)
-        self.CRE_UNITS     = re.compile(self.ptc.RE_UNITS,     re_option)
-        self.CRE_QUNITS    = re.compile(self.ptc.RE_QUNITS,    re_option)
-        self.CRE_MODIFIER  = re.compile(self.ptc.RE_MODIFIER,  re_option)
-        self.CRE_MODIFIER2 = re.compile(self.ptc.RE_MODIFIER2, re_option)
-        self.CRE_TIMEHMS   = re.compile(self.ptc.RE_TIMEHMS,   re_option)
-        self.CRE_TIMEHMS2  = re.compile(self.ptc.RE_TIMEHMS2,  re_option)
-        self.CRE_DATE      = re.compile(self.ptc.RE_DATE,      re_option)
-        self.CRE_DATE2     = re.compile(self.ptc.RE_DATE2,     re_option)
-        self.CRE_DATE3     = re.compile(self.ptc.RE_DATE3,     re_option)
-        self.CRE_MONTH     = re.compile(self.ptc.RE_MONTH,     re_option)
-        self.CRE_WEEKDAY   = re.compile(self.ptc.RE_WEEKDAY,   re_option)
-        self.CRE_DAY       = re.compile(self.ptc.RE_DAY,       re_option)
-        self.CRE_TIME      = re.compile(self.ptc.RE_TIME,      re_option)
-        self.CRE_REMAINING = re.compile(self.ptc.RE_REMAINING, re_option)
-
-        #regex for date/time ranges
-        self.CRE_RTIMEHMS  = re.compile(self.ptc.RE_RTIMEHMS,  re_option)
-        self.CRE_RTIMEHMS2 = re.compile(self.ptc.RE_RTIMEHMS2, re_option)
-        self.CRE_RDATE     = re.compile(self.ptc.RE_RDATE,     re_option)
-        self.CRE_RDATE3    = re.compile(self.ptc.RE_RDATE3,    re_option)
-
-        self.CRE_TIMERNG1  = re.compile(self.ptc.TIMERNG1, re_option)
-        self.CRE_TIMERNG2  = re.compile(self.ptc.TIMERNG2, re_option)
-        self.CRE_TIMERNG3  = re.compile(self.ptc.TIMERNG3, re_option)
-        self.CRE_DATERNG1  = re.compile(self.ptc.DATERNG1, re_option)
-        self.CRE_DATERNG2  = re.compile(self.ptc.DATERNG2, re_option)
-        self.CRE_DATERNG3  = re.compile(self.ptc.DATERNG3, re_option)
-
         self.weekdyFlag    = False  # monday/tuesday/...
         self.dateStdFlag   = False  # 07/21/06
         self.dateStrFlag   = False  # July 21st, 2006
@@ -361,13 +332,13 @@ class Calendar:
         v3 = -1
 
         s = dateString
-        m = self.CRE_DATE2.search(s)
+        m = self.ptc.CRE_DATE2.search(s)
         if m is not None:
             index = m.start()
             v1    = int(s[:index])
             s     = s[index + 1:]
 
-        m = self.CRE_DATE2.search(s)
+        m = self.ptc.CRE_DATE2.search(s)
         if m is not None:
             index = m.start()
             v2    = int(s[:index])
@@ -432,7 +403,7 @@ class Calendar:
         currentDy  = dy
 
         s   = dateString.lower()
-        m   = self.CRE_DATE3.search(s)
+        m   = self.ptc.CRE_DATE3.search(s)
         mth = m.group('mthname')
         mth = self.ptc.MonthOffsets[mth]
 
@@ -487,27 +458,27 @@ class Calendar:
 
         s = datetimeString.strip().lower()
 
-        m = self.CRE_TIMERNG1.search(s)
+        m = self.ptc.CRE_TIMERNG1.search(s)
         if m is not None:
             rangeFlag = 1
         else:
-            m = self.CRE_TIMERNG2.search(s)
+            m = self.ptc.CRE_TIMERNG2.search(s)
             if m is not None:
                 rangeFlag = 2
             else:
-                m = self.CRE_TIMERNG3.search(s)
+                m = self.ptc.CRE_TIMERNG3.search(s)
                 if m is not None:
                     rangeFlag = 3
                 else:
-                    m = self.CRE_DATERNG1.search(s)
+                    m = self.ptc.CRE_DATERNG1.search(s)
                     if m is not None:
                         rangeFlag = 4
                     else:
-                        m = self.CRE_DATERNG2.search(s)
+                        m = self.ptc.CRE_DATERNG2.search(s)
                         if m is not None:
                             rangeFlag = 5
                         else:
-                            m = self.CRE_DATERNG3.search(s)
+                            m = self.ptc.CRE_DATERNG3.search(s)
                             if m is not None:
                                 rangeFlag = 6
 
@@ -579,7 +550,7 @@ class Calendar:
             endDate = parseStr[(m.start() + 1):]
 
             # capturing the year from the end date
-            date    = self.CRE_DATE3.search(endDate)
+            date    = self.ptc.CRE_DATE3.search(endDate)
             endYear = date.group('year')
 
             # appending the year to the start date if the start date
@@ -587,7 +558,7 @@ class Calendar:
             # eg : "Aug 21 - Sep 4, 2007"
             if endYear is not None:
                 startDate = (parseStr[:m.start()]).strip()
-                date      = self.CRE_DATE3.search(startDate)
+                date      = self.ptc.CRE_DATE3.search(startDate)
                 startYear = date.group('year')
 
                 if startYear is None:
@@ -607,7 +578,7 @@ class Calendar:
             startDate = parseStr[:m.start()]
 
             # capturing the month from the start date
-            mth = self.CRE_DATE3.search(startDate)
+            mth = self.ptc.CRE_DATE3.search(startDate)
             mth = mth.group('mthname')
 
             # appending the month name to the end date
@@ -724,7 +695,7 @@ class Calendar:
 
         # capture the units after the modifier and the remaining
         # string after the unit
-        m = self.CRE_REMAINING.search(chunk2)
+        m = self.ptc.CRE_REMAINING.search(chunk2)
         if m is not None:
             index  = m.start() + 1
             unit   = chunk2[:m.start()]
@@ -819,7 +790,7 @@ class Calendar:
             self.dateFlag = 1
 
         if flag == False:
-            m = self.CRE_WEEKDAY.match(unit)
+            m = self.ptc.CRE_WEEKDAY.match(unit)
             if m is not None:
                 wkdy          = m.group()
                 self.dateFlag = 1
@@ -847,7 +818,7 @@ class Calendar:
                 self.dateFlag = 1
 
         if not flag:
-            m = self.CRE_TIME.match(unit)
+            m = self.ptc.CRE_TIME.match(unit)
             if m is not None:
                 self.modifierFlag = False
                 (yr, mth, dy, hr, mn, sec, wd, yd, isdst), _ = self.parse(unit)
@@ -1016,7 +987,7 @@ class Calendar:
             else:
                 (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = sourceTime
 
-            m = self.CRE_TIMEHMS2.search(s)
+            m = self.ptc.CRE_TIMEHMS2.search(s)
             if m is not None:
                 dt = s[:m.start('meridian')].strip()
                 if len(dt) <= 2:
@@ -1055,7 +1026,7 @@ class Calendar:
             else:
                 (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = sourceTime
 
-            m = self.CRE_TIMEHMS.search(s)
+            m = self.ptc.CRE_TIMEHMS.search(s)
             if m is not None:
                 hr, mn, sec = _extract_time(m)
             if hr == 24:
@@ -1145,7 +1116,7 @@ class Calendar:
             if sourceTime is None:
                 sourceTime = now
 
-            m = self.CRE_UNITS.search(s)
+            m = self.ptc.CRE_UNITS.search(s)
             if m is not None:
                 units    = m.group('units')
                 quantity = s[:m.start('units')]
@@ -1160,7 +1131,7 @@ class Calendar:
             if sourceTime is None:
                 sourceTime = now
 
-            m = self.CRE_QUNITS.search(s)
+            m = self.ptc.CRE_QUNITS.search(s)
             if m is not None:
                 units    = m.group('qunits')
                 quantity = s[:m.start('qunits')]
@@ -1237,7 +1208,7 @@ class Calendar:
 
             if parseStr == '':
                 # Modifier like next\prev..
-                m = self.CRE_MODIFIER.search(s)
+                m = self.ptc.CRE_MODIFIER.search(s)
                 if m is not None:
                     self.modifierFlag = True
                     if (m.group('modifier') != s):
@@ -1251,7 +1222,7 @@ class Calendar:
 
             if parseStr == '':
                 # Modifier like from\after\prior..
-                m = self.CRE_MODIFIER2.search(s)
+                m = self.ptc.CRE_MODIFIER2.search(s)
                 if m is not None:
                     self.modifier2Flag = True
                     if (m.group('modifier') != s):
@@ -1265,7 +1236,7 @@ class Calendar:
 
             if parseStr == '':
                 # String date format
-                m = self.CRE_DATE3.search(s)
+                m = self.ptc.CRE_DATE3.search(s)
                 if m is not None:
                     self.dateStrFlag = True
                     self.dateFlag    = 1
@@ -1281,7 +1252,7 @@ class Calendar:
 
             if parseStr == '':
                 # Standard date format
-                m = self.CRE_DATE.search(s)
+                m = self.ptc.CRE_DATE.search(s)
                 if m is not None:
                     self.dateStdFlag = True
                     self.dateFlag    = 1
@@ -1297,7 +1268,7 @@ class Calendar:
 
             if parseStr == '':
                 # Natural language day strings
-                m = self.CRE_DAY.search(s)
+                m = self.ptc.CRE_DAY.search(s)
                 if m is not None:
                     self.dayStrFlag = True
                     self.dateFlag   = 1
@@ -1313,7 +1284,7 @@ class Calendar:
 
             if parseStr == '':
                 # Quantity + Units
-                m = self.CRE_UNITS.search(s)
+                m = self.ptc.CRE_UNITS.search(s)
                 if m is not None:
                     self.unitsFlag = True
                     if (m.group('qty') != s):
@@ -1333,7 +1304,7 @@ class Calendar:
 
             if parseStr == '':
                 # Quantity + Units
-                m = self.CRE_QUNITS.search(s)
+                m = self.ptc.CRE_QUNITS.search(s)
                 if m is not None:
                     self.qunitsFlag = True
 
@@ -1354,7 +1325,7 @@ class Calendar:
 
             if parseStr == '':
                 # Weekday
-                m = self.CRE_WEEKDAY.search(s)
+                m = self.ptc.CRE_WEEKDAY.search(s)
                 if m is not None:
                     self.weekdyFlag = True
                     self.dateFlag   = 1
@@ -1370,7 +1341,7 @@ class Calendar:
 
             if parseStr == '':
                 # Natural language time strings
-                m = self.CRE_TIME.search(s)
+                m = self.ptc.CRE_TIME.search(s)
                 if m is not None:
                     self.timeStrFlag = True
                     self.timeFlag    = 2
@@ -1386,7 +1357,7 @@ class Calendar:
 
             if parseStr == '':
                 # HH:MM(:SS) am/pm time strings
-                m = self.CRE_TIMEHMS2.search(s)
+                m = self.ptc.CRE_TIMEHMS2.search(s)
                 if m is not None:
                     self.meridianFlag = True
                     self.timeFlag     = 2
@@ -1412,7 +1383,7 @@ class Calendar:
 
             if parseStr == '':
                 # HH:MM(:SS) time strings
-                m = self.CRE_TIMEHMS.search(s)
+                m = self.ptc.CRE_TIMEHMS.search(s)
                 if m is not None:
                     self.timeStdFlag = True
                     self.timeFlag    = 2

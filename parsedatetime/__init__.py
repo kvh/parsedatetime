@@ -9,8 +9,8 @@ various regex values using locale information if available.
 version = '0.8.2'
 author  = 'Mike Taylor and Darshana Chhajed'
 license = """
-Copyright (c) 2004-2006 Mike Taylor
-Copyright (c) 2006 Darshana Chhajed
+Copyright (c) 2004-2007 Mike Taylor
+Copyright (c) 2006-2007 Darshana Chhajed
 All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
