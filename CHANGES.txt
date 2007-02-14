@@ -1,5 +1,7 @@
 14 Feb 2007 - bear
 
+    0.8.3 release
+
     Minor doc string changes and other typo fixes
 
     Updated Copyright years
