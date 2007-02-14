@@ -62,28 +62,32 @@
 <h1 class="epydoc">Source Code for <a href="parsedatetime.tests-module.html">Package parsedatetime.tests</a></h1>
 <pre class="py-src">
 <span class="py-lineno"> 1</span>  <span class="py-line"><span class="py-docstring">"""</span> </span>
-<span class="py-lineno"> 2</span>  <span class="py-line"><span class="py-docstring">parsedatetime tests</span> </span>
-<span class="py-lineno"> 3</span>  <span class="py-line"><span class="py-docstring">"""</span> </span>
-<span class="py-lineno"> 4</span>  <span class="py-line"> </span>
-<span class="py-lineno"> 5</span>  <span class="py-line"><span id="link-0" class="py-name"><a title="parsedatetime.license
+<span class="py-lineno"> 2</span>  <span class="py-line"><span class="py-docstring">Unit tests for parsedatetime</span> </span>
+<span class="py-lineno"> 3</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="py-lineno"> 4</span>  <span class="py-line"><span class="py-docstring">The tests can be run as a C{suite} by running::</span> </span>
+<span class="py-lineno"> 5</span>  <span class="py-line"><span class="py-docstring"></span> </span>
+<span class="py-lineno"> 6</span>  <span class="py-line"><span class="py-docstring">    python run_tests.py parsedatetime</span> </span>
+<span class="py-lineno"> 7</span>  <span class="py-line"><span class="py-docstring">"""</span> </span>
+<span class="py-lineno"> 8</span>  <span class="py-line"> </span>
+<span class="py-lineno"> 9</span>  <span class="py-line"><span id="link-0" class="py-name"><a title="parsedatetime.license
 parsedatetime.tests.license" class="py-name" href="#" onclick="doclink('link-0', 'license', 'Variable parsedatetime.license=parsedatetime-module.html#license,Variable parsedatetime.tests.license=parsedatetime.tests-module.html#license'); return false;">license</a></span></span> <span class="py-op">=</span> <span class="py-string">"""</span> </span>
-<span class="py-lineno"> 6</span>  <span class="py-line"><span class="py-string">Copyright (c) 2004-2006 Mike Taylor</span> </span>
-<span class="py-lineno"> 7</span>  <span class="py-line"><span class="py-string">Copyright (c) 2006 Darshana Chhajed</span> </span>
-<span class="py-lineno"> 8</span>  <span class="py-line"><span class="py-string">All rights reserved.</span> </span>
-<span class="py-lineno"> 9</span>  <span class="py-line"><span class="py-string"></span> </span>
-<span class="py-lineno">10</span>  <span class="py-line"><span class="py-string">Licensed under the Apache License, Version 2.0 (the "License");</span> </span>
-<span class="py-lineno">11</span>  <span class="py-line"><span class="py-string">you may not use this file except in compliance with the License.</span> </span>
-<span class="py-lineno">12</span>  <span class="py-line"><span class="py-string">You may obtain a copy of the License at</span> </span>
+<span class="py-lineno">10</span>  <span class="py-line"><span class="py-string">Copyright (c) 2004-2007 Mike Taylor</span> </span>
+<span class="py-lineno">11</span>  <span class="py-line"><span class="py-string">Copyright (c) 2006-2007 Darshana Chhajed</span> </span>
+<span class="py-lineno">12</span>  <span class="py-line"><span class="py-string">All rights reserved.</span> </span>
 <span class="py-lineno">13</span>  <span class="py-line"><span class="py-string"></span> </span>
-<span class="py-lineno">14</span>  <span class="py-line"><span class="py-string">   http://www.apache.org/licenses/LICENSE-2.0</span> </span>
-<span class="py-lineno">15</span>  <span class="py-line"><span class="py-string"></span> </span>
-<span class="py-lineno">16</span>  <span class="py-line"><span class="py-string">Unless required by applicable law or agreed to in writing, software</span> </span>
-<span class="py-lineno">17</span>  <span class="py-line"><span class="py-string">distributed under the License is distributed on an "AS IS" BASIS,</span> </span>
-<span class="py-lineno">18</span>  <span class="py-line"><span class="py-string">WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span> </span>
-<span class="py-lineno">19</span>  <span class="py-line"><span class="py-string">See the License for the specific language governing permissions and</span> </span>
-<span class="py-lineno">20</span>  <span class="py-line"><span class="py-string">limitations under the License.</span> </span>
-<span class="py-lineno">21</span>  <span class="py-line"><span class="py-string">"""</span> </span>
-<span class="py-lineno">22</span>  <span class="py-line"> </span><script type="text/javascript">
+<span class="py-lineno">14</span>  <span class="py-line"><span class="py-string">Licensed under the Apache License, Version 2.0 (the "License");</span> </span>
+<span class="py-lineno">15</span>  <span class="py-line"><span class="py-string">you may not use this file except in compliance with the License.</span> </span>
+<span class="py-lineno">16</span>  <span class="py-line"><span class="py-string">You may obtain a copy of the License at</span> </span>
+<span class="py-lineno">17</span>  <span class="py-line"><span class="py-string"></span> </span>
+<span class="py-lineno">18</span>  <span class="py-line"><span class="py-string">   http://www.apache.org/licenses/LICENSE-2.0</span> </span>
+<span class="py-lineno">19</span>  <span class="py-line"><span class="py-string"></span> </span>
+<span class="py-lineno">20</span>  <span class="py-line"><span class="py-string">Unless required by applicable law or agreed to in writing, software</span> </span>
+<span class="py-lineno">21</span>  <span class="py-line"><span class="py-string">distributed under the License is distributed on an "AS IS" BASIS,</span> </span>
+<span class="py-lineno">22</span>  <span class="py-line"><span class="py-string">WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.</span> </span>
+<span class="py-lineno">23</span>  <span class="py-line"><span class="py-string">See the License for the specific language governing permissions and</span> </span>
+<span class="py-lineno">24</span>  <span class="py-line"><span class="py-string">limitations under the License.</span> </span>
+<span class="py-lineno">25</span>  <span class="py-line"><span class="py-string">"""</span> </span>
+<span class="py-lineno">26</span>  <span class="py-line"> </span><script type="text/javascript">
 <!--
 expandto(location.href);
 // -->
@@ -121,7 +125,7 @@ expandto(location.href);
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">Generated by Epydoc
-        3.0alpha3 on Wed Dec 27 20:11:41 2006</td>
+        3.0alpha3 on Wed Feb 14 03:12:53 2007</td>
     <td align="right" class="footer">
       <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
     </td>

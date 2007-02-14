@@ -60,9 +60,8 @@
 </table>
 <!-- ==================== PACKAGE DESCRIPTION ==================== -->
 <h1 class="epydoc">Package parsedatetime</h1><span class="codelink"><a href="parsedatetime-pysrc.html">source&nbsp;code</a></span><br /><br />
-<p>parsedatetime module</p>
-  <p>parsedatetime.py contains the <code>Calendar</code> class where the 
-  parse() method can be found.</p>
+<p>parsedatetime.py contains the <code>Calendar</code> class where the 
+  <code>parse()</code> method can be found.</p>
   parsedatetime_consts.py contains the <code>Constants</code> class that
   builds the various regex values using locale information if 
   available.<br /><br />
@@ -87,9 +86,9 @@
   <tr><td class="summary">
   <ul class="nomargin">
     <li> <strong class="uidlink"><a href="parsedatetime.parsedatetime-module.html">parsedatetime.parsedatetime</a></strong>: <em class="summary">Parse human-readable date/time text.</em></li>
-    <li> <strong class="uidlink"><a href="parsedatetime.parsedatetime_consts-module.html">parsedatetime.parsedatetime_consts</a></strong>: <em class="summary">The Constants class defines all constants used by 
-        parsedatetime.py.</em></li>
-    <li> <strong class="uidlink"><a href="parsedatetime.tests-module.html">parsedatetime.tests</a></strong>: <em class="summary">parsedatetime tests</em></li>
+    <li> <strong class="uidlink"><a href="parsedatetime.parsedatetime_consts-module.html">parsedatetime.parsedatetime_consts</a></strong>: <em class="summary">parsedatetime constants and helper functions to determine regex 
+        values from Locale information if present.</em></li>
+    <li> <strong class="uidlink"><a href="parsedatetime.tests-module.html">parsedatetime.tests</a></strong>: <em class="summary">Unit tests for parsedatetime</em></li>
     <ul>
     <li> <strong class="uidlink"><a href="parsedatetime.tests.TestAustralianLocale-module.html">parsedatetime.tests.TestAustralianLocale</a></strong>: <em class="summary">Test parsing of simple date and times using the Australian 
         locale</em></li>
@@ -129,7 +128,7 @@
   <td width="15%" align="right" valign="top" class="summary">
     <code class="summary-type">&nbsp;</code>
   </td><td class="summary">
-    <a href="parsedatetime-module.html#version">version</a> = <code title="'0.8.2'">'0.8.2'</code>
+    <a href="parsedatetime-module.html#version">version</a> = <code title="'0.8.3'">'0.8.3'</code>
   </td>
 </tr>
 <tr>
@@ -143,7 +142,7 @@
   <td width="15%" align="right" valign="top" class="summary">
     <code class="summary-type">&nbsp;</code>
   </td><td class="summary">
-    <a href="parsedatetime-module.html#license">license</a> = <code title="'\nCopyright (c) 2004-2006 Mike Taylor\nCopyright (c) 2006 Darshana Chhajed\nAll rights reserved.\n\nLicensed under the Apache License, Version 2.0 (the &quot;License&quot;);\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n   http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an &quot;AS IS&quot; BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions...">'\nCopyright (c) 2004-2006 Mike Taylor\nCopyright (c...</code>
+    <a href="parsedatetime-module.html#license">license</a> = <code title="'\nCopyright (c) 2004-2007 Mike Taylor\nCopyright (c) 2006-2007 Darshana Chhajed\nAll rights reserved.\n\nLicensed under the Apache License, Version 2.0 (the &quot;License&quot;);\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n   http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an &quot;AS IS&quot; BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permis...">'\nCopyright (c) 2004-2007 Mike Taylor\nCopyright (c...</code>
   </td>
 </tr>
 </table>
@@ -177,7 +176,7 @@
   <dl><dt></dt><dd>
     <dl><dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
-<span class="variable-quote">'</span>0.8.2<span class="variable-quote">'</span>                                                                
+<span class="variable-quote">'</span>0.8.3<span class="variable-quote">'</span>                                                                
       </pre></td></tr></table></dd>
     </dl>
   </dd></dl>
@@ -210,8 +209,8 @@
     <dl><dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
 <span class="variable-quote">'''</span>
-Copyright (c) 2004-2006 Mike Taylor
-Copyright (c) 2006 Darshana Chhajed
+Copyright (c) 2004-2007 Mike Taylor
+Copyright (c) 2006-2007 Darshana Chhajed
 All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
@@ -255,7 +254,7 @@ You may obtain a copy of the License at
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">Generated by Epydoc
-        3.0alpha3 on Wed Dec 27 20:11:40 2006</td>
+        3.0alpha3 on Wed Feb 14 03:12:52 2007</td>
     <td align="right" class="footer">
       <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
     </td>

@@ -61,8 +61,10 @@
 </table>
 <!-- ==================== MODULE DESCRIPTION ==================== -->
 <h1 class="epydoc">Module parsedatetime_consts</h1><span class="codelink"><a href="parsedatetime.parsedatetime_consts-pysrc.html">source&nbsp;code</a></span><br /><br />
-The Constants class defines all constants used by 
-  parsedatetime.py.<br /><br />
+<p>parsedatetime constants and helper functions to determine regex values
+  from Locale information if present.</p>
+  Also contains the internal Locale classes to give some sane defaults 
+  if PyICU is not found.<br /><br />
 
 <!-- ==================== CLASSES ==================== -->
 <a name="section-Classes"></a>
@@ -193,21 +195,14 @@ The Constants class defines all constants used by
   <td width="15%" align="right" valign="top" class="summary">
     <code class="summary-type">&nbsp;</code>
   </td><td class="summary">
-    <a href="parsedatetime.parsedatetime_consts-module.html#__license__">__license__</a> = <code title="'\nCopyright (c) 2004-2006 Mike Taylor\nCopyright (c) 2006 Darshana Chhajed\nAll rights reserved.\n\nLicensed under the Apache License, Version 2.0 (the &quot;License&quot;);\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n   http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an &quot;AS IS&quot; BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permissions...">'\nCopyright (c) 2004-2006 Mike Taylor\nCopyright (c...</code>
+    <a href="parsedatetime.parsedatetime_consts-module.html#__license__">__license__</a> = <code title="'\nCopyright (c) 2004-2007 Mike Taylor\nCopyright (c) 2006-2007 Darshana Chhajed\nAll rights reserved.\n\nLicensed under the Apache License, Version 2.0 (the &quot;License&quot;);\nyou may not use this file except in compliance with the License.\nYou may obtain a copy of the License at\n\n   http://www.apache.org/licenses/LICENSE-2.0\n\nUnless required by applicable law or agreed to in writing, software\ndistributed under the License is distributed on an &quot;AS IS&quot; BASIS,\nWITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\nSee the License for the specific language governing permis...">'\nCopyright (c) 2004-2007 Mike Taylor\nCopyright (c...</code>
   </td>
 </tr>
 <tr>
   <td width="15%" align="right" valign="top" class="summary">
     <code class="summary-type">&nbsp;</code>
   </td><td class="summary">
-    <a href="parsedatetime.parsedatetime_consts-module.html#pyicu">pyicu</a> = <code title="None">None</code>
-  </td>
-</tr>
-<tr>
-  <td width="15%" align="right" valign="top" class="summary">
-    <code class="summary-type">&nbsp;</code>
-  </td><td class="summary">
-    <a href="parsedatetime.parsedatetime_consts-module.html#pdtLocales">pdtLocales</a> = <code title="{'en_US': &lt;class parsedatetime.parsedatetime_consts.pdtLocale_en at 0x1043d80&gt;, 'es': &lt;class parsedatetime.parsedatetime_consts.pdtLocale_es at 0x1043de0&gt;, 'en_AU': &lt;class parsedatetime.parsedatetime_consts.pdtLocale_au at 0x1043db0&gt;}">{'en_US': &lt;class parsedatetime.parsedatetime_consts....</code>
+    <a href="parsedatetime.parsedatetime_consts-module.html#pdtLocales">pdtLocales</a> = <code title="{'en_US': &lt;class parsedatetime.parsedatetime_consts.pdtLocale_en at 0x143dde0&gt;, 'es': &lt;class parsedatetime.parsedatetime_consts.pdtLocale_es at 0x143de40&gt;, 'en_AU': &lt;class parsedatetime.parsedatetime_consts.pdtLocale_au at 0x143de10&gt;}">{'en_US': &lt;class parsedatetime.parsedatetime_consts....</code>
   </td>
 </tr>
 </table>
@@ -341,30 +336,14 @@ The Constants class defines all constants used by
     <dl><dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
 <span class="variable-quote">'''</span>
-Copyright (c) 2004-2006 Mike Taylor
-Copyright (c) 2006 Darshana Chhajed
+Copyright (c) 2004-2007 Mike Taylor
+Copyright (c) 2006-2007 Darshana Chhajed
 All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the &quot;License&quot;);
 you may not use this file except in compliance with the License.
 You may obtain a copy of the License at
 <span class="variable-ellipsis">...</span>                                                                    
-      </pre></td></tr></table></dd>
-    </dl>
-  </dd></dl>
-</td></tr></table>
-</div>
-<a name="pyicu"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <h3 class="epydoc">pyicu</h3>
-  None
-  <dl><dt></dt><dd>
-    <dl><dt>Value:</dt>
-      <dd><table><tr><td><pre class="variable">
-None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
       </pre></td></tr></table></dd>
     </dl>
   </dd></dl>
@@ -381,11 +360,11 @@ None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs
     <dl><dt>Value:</dt>
       <dd><table><tr><td><pre class="variable">
 {'en_AU': &lt;class parsedatetime.parsedatetime_consts.pdtLocale_au at 0x<span class="variable-linewrap"><img src="crarr.png" alt="" /></span>
-1043db0&gt;,
+143de10&gt;,
  'en_US': &lt;class parsedatetime.parsedatetime_consts.pdtLocale_en at 0x<span class="variable-linewrap"><img src="crarr.png" alt="" /></span>
-1043d80&gt;,
- 'es': &lt;class parsedatetime.parsedatetime_consts.pdtLocale_es at 0x104<span class="variable-linewrap"><img src="crarr.png" alt="" /></span>
-3de0&gt;}                                                                 
+143dde0&gt;,
+ 'es': &lt;class parsedatetime.parsedatetime_consts.pdtLocale_es at 0x143<span class="variable-linewrap"><img src="crarr.png" alt="" /></span>
+de40&gt;}                                                                 
       </pre></td></tr></table></dd>
     </dl>
   </dd></dl>
@@ -423,7 +402,7 @@ None&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbs
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
     <td align="left" class="footer">Generated by Epydoc
-        3.0alpha3 on Wed Dec 27 20:11:40 2006</td>
+        3.0alpha3 on Wed Feb 14 03:12:52 2007</td>
     <td align="right" class="footer">
       <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
     </td>
