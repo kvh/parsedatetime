@@ -6,7 +6,7 @@ parsedatetime_consts.py contains the C{Constants} class that builds the
 various regex values using locale information if available.
 """
 
-version = '0.8.3'
+version = '0.8.4'
 author  = 'Mike Taylor and Darshana Chhajed'
 license = """
 Copyright (c) 2004-2007 Mike Taylor
