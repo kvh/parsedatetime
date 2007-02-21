@@ -461,10 +461,16 @@ def _initLocale(ptc):
         ptc.dayOffsets = pdtLocales['en_US'].dayoffsets
         units          = pdtLocales['en_US'].units
 
-    ptc.re_values['months']      = '%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s' % tuple(ptc.Months)
-    ptc.re_values['shortmonths'] = '%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s' % tuple(ptc.shortMonths)
-    ptc.re_values['days']        = '%s|%s|%s|%s|%s|%s|%s' % tuple(ptc.Weekdays)
-    ptc.re_values['shortdays']   = '%s|%s|%s|%s|%s|%s|%s' % tuple(ptc.shortWeekdays)
+      # escape any regex special characters that may be found
+    wd   = tuple(map(re.escape, ptc.Weekdays))
+    swd  = tuple(map(re.escape, ptc.shortWeekdays))
+    mth  = tuple(map(re.escape, ptc.Months))
+    smth = tuple(map(re.escape, ptc.shortMonths))
+
+    ptc.re_values['months']      = '%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s' % mth
+    ptc.re_values['shortmonths'] = '%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s|%s' % smth
+    ptc.re_values['days']        = '%s|%s|%s|%s|%s|%s|%s' % wd
+    ptc.re_values['shortdays']   = '%s|%s|%s|%s|%s|%s|%s' % swd
 
     l = []
     for unit in units:

@@ -1,3 +1,20 @@
+21 Feb 2007 - bear
+
+    Fixed a bug Brian K. (one of the Chandler devs) found when parsing with
+    the locale set to fr_FR.  The phrase "same 3 folders" was causing a key
+    error inside the parser and it turns out that it's because short weekday
+    names in French have a trailing '.' so "sam." was being used in the
+    regular expression and the '.' was being treated as a regex symbol and
+    not as a period.
+
+    It turned out to be a simple fix - just needed to add some code to run
+    re.escape over the lists before adding them to the re_values dictionary.
+
+    Also added a TestFrenchLocale set of unit tests but made them only run
+    if PyICU is found until I can build an internal locale for fr_FR.
+    Issue #17 http://code.google.com/p/parsedatetime/issues/detail?id=17
+
+
 14 Feb 2007 - bear
 
     0.8.3 release
