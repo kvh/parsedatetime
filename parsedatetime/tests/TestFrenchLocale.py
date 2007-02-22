@@ -58,18 +58,21 @@ class test(unittest.TestCase):
     def testDates(self):
         if self.ptc.localeID == 'fr_FR':
             start  = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()
-            target = datetime.datetime(2006, 8, 25,  self.hr, self.mn, self.sec).timetuple()
+            target = datetime.datetime(2006, 8, 25, self.hr, self.mn, self.sec).timetuple()
 
-            self.assertTrue(_compareResults(self.cal.parse('25/08/2006', start), (target, 1)))
-            self.assertTrue(_compareResults(self.cal.parse('25/8/06',    start), (target, 1)))
+            self.assertTrue(_compareResults(self.cal.parse('25/08/2006',        start), (target, 1)))
+            self.assertTrue(_compareResults(self.cal.parse('25/8/06',           start), (target, 1)))
+            self.assertTrue(_compareResults(self.cal.parse(u'ao\xfbt 25, 2006', start), (target, 1)))
+            self.assertTrue(_compareResults(self.cal.parse(u'ao\xfbt 25 2006',  start), (target, 1)))
 
             if self.mth > 8 or (self.mth == 8 and self.dy > 25):
-                target = datetime.datetime(self.yr+1, 8, 25,  self.hr, self.mn, self.sec).timetuple()
+                target = datetime.datetime(self.yr+1, 8, 25, self.hr, self.mn, self.sec).timetuple()
             else:
                 target = datetime.datetime(self.yr, 8, 25,  self.hr, self.mn, self.sec).timetuple()
 
             self.assertTrue(_compareResults(self.cal.parse('25/8',  start), (target, 1)))
             self.assertTrue(_compareResults(self.cal.parse('25/08', start), (target, 1)))
+
 
     def testWeekDays(self):
         if self.ptc.localeID == 'fr_FR':

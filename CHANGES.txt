@@ -1,3 +1,16 @@
+22 Feb 2007 - bear
+
+    Fixed a bug reported via the code.google project page by Alexis where
+    parsedatetime was not parsing day suffixes properly.  For example, the
+    text "Aug 25th, 2008" would return the year as 2007 - the parser was
+    not 'seeing' 2008 as a part of the expression.
+
+    The fix was to enhance one of the "long date" regexes to handle that
+    situation but yet not break the current tests - always fun for sure!
+
+    Issue 16 http://code.google.com/p/parsedatetime/issues/detail?id=16
+
+
 21 Feb 2007 - bear
 
     Fixed a bug Brian K. (one of the Chandler devs) found when parsing with

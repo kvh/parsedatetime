@@ -597,10 +597,17 @@ def _initPatterns(ptc):
     # TODO add code to parse the date formats and build the regexes up from sub-parts
     # TODO find all hard-coded uses of date/time seperators
 
+    # I refactored DATE3 to fix Issue 16 http://code.google.com/p/parsedatetime/issues/detail?id=16
+    # I suspect the final line was for a trailing time - but testing shows it's not needed
+    # ptc.RE_DATE3     = r'''(?P<date>((?P<mthname>(%(months)s|%(shortmonths)s))\s?
+    #                                  ((?P<day>\d\d?)(\s?|%(daysuffix)s|$)+)?
+    #                                  (,\s?(?P<year>\d\d(\d\d)?))?))
+    #                        (\s?|$|[^0-9a-zA-Z])''' % ptc.re_values
     ptc.RE_DATE3     = r'''(?P<date>((?P<mthname>(%(months)s|%(shortmonths)s))\s?
-                                     ((?P<day>\d\d?)(\s?|%(daysuffix)s|$)+)?
-                                     (,\s?(?P<year>\d\d(\d\d)?))?))
-                           (\s?|$|[^0-9a-zA-Z])''' % ptc.re_values
+                                     ((?P<day>\d\d?)(?P<suffix>%(daysuffix)s)?)?
+                                     ((,)?(\s)?(?P<year>\d\d(\d\d)?))?
+                                    )
+                           )''' % ptc.re_values
     ptc.RE_MONTH     = r'''(\s?|^)
                            (?P<month>(
                                       (?P<mthname>(%(months)s|%(shortmonths)s))
