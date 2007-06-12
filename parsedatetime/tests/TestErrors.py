@@ -41,6 +41,8 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('174565', start), (start, 0)))
         self.assertTrue(_compareResults(self.cal.parse('177505', start), (start, 0)))
 
+        self.assertTrue(_compareResults(self.cal.parse('30/030/01/071/07', start), (start, 0)))
+
 
 if __name__ == "__main__":
     unittest.main()
