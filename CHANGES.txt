@@ -1,6 +1,7 @@
 12 Jun 2007 - bear
 
     0.8.4 release
+    bumping version to 0.8.5 in trunk
 
 
 22 Feb 2007 - bear
