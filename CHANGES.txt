@@ -1,5 +1,8 @@
 28 Nov 2007 - bear
 
+    0.8.5 release
+    bumping version to 0.8.6 in trunk
+
     Fixing two bugs found by Chandler QA
 
     Time range of "today 3:30-5pm" was actually causing a traceback.
