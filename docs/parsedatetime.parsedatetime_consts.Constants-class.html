@@ -50,8 +50,8 @@
     <td>
       <table cellpadding="0" cellspacing="0">
         <!-- hide/show private -->
-        <tr><td align="right"><span class="options">[<a href="javascript: void(0);" class="privatelink"
-    onclick="toggle_private();">hide private</a>]</span></td></tr>
+        <tr><td align="right"><span class="options">[<a href="javascript:void(0);" class="privatelink"
+    onclick="toggle_private();">hide&nbsp;private</a>]</span></td></tr>
         <tr><td align="right"><span class="options"
             >[<a href="frames.html" target="_top">frames</a
             >]&nbsp;|&nbsp;<a href="parsedatetime.parsedatetime_consts.Constants-class.html"
@@ -91,39 +91,84 @@
   </td>
 </tr>
 <tr>
-  <td width="15%" align="right" valign="top" class="summary">
-    <code class="summary-type">&nbsp;</code>
-  </td><td class="summary">
-    <span class="summary-sig"><a href="parsedatetime.parsedatetime_consts.Constants-class.html#__init__" class="summary-sig-name">__init__</a>(<span class="summary-sig-arg">self</span>,
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__init__"></a><span class="summary-sig-name">__init__</span>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">localeID</span>=<span class="summary-sig-default">None</span>,
         <span class="summary-sig-arg">usePyICU</span>=<span class="summary-sig-default">True</span>,
-        <span class="summary-sig-arg">fallbackLocales</span>=<span class="summary-sig-default">['en_US']</span>)</span>
-  </td>
-</tr>
+        <span class="summary-sig-arg">fallbackLocales</span>=<span class="summary-sig-default"><code class="variable-group">[</code><code class="variable-quote">'</code><code class="variable-string">en_US</code><code class="variable-quote">'</code><code class="variable-group">]</code></span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="parsedatetime.parsedatetime_consts-pysrc.html#Constants.__init__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
 <tr>
-  <td width="15%" align="right" valign="top" class="summary">
-    <code class="summary-type">&nbsp;</code>
-  </td><td class="summary">
-    <span class="summary-sig"><a href="parsedatetime.parsedatetime_consts.Constants-class.html#__getattr__" class="summary-sig-name">__getattr__</a>(<span class="summary-sig-arg">self</span>,
-        <span class="summary-sig-arg">name</span>)</span>
-  </td>
-</tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="__getattr__"></a><span class="summary-sig-name">__getattr__</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">name</span>)</span></td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="parsedatetime.parsedatetime_consts-pysrc.html#Constants.__getattr__">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
 <tr>
-  <td width="15%" align="right" valign="top" class="summary">
-    <code class="summary-type">&nbsp;</code>
-  </td><td class="summary">
-    <span class="summary-sig"><a href="parsedatetime.parsedatetime_consts.Constants-class.html#buildSources" class="summary-sig-name">buildSources</a>(<span class="summary-sig-arg">self</span>,
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a name="daysInMonth"></a><span class="summary-sig-name">daysInMonth</span>(<span class="summary-sig-arg">self</span>,
+        <span class="summary-sig-arg">month</span>,
+        <span class="summary-sig-arg">year</span>)</span><br />
+      Take the given month (1-12) and a given year (4 digit) return the 
+      number of days in the month adjusting for leap year as needed</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="parsedatetime.parsedatetime_consts-pysrc.html#Constants.daysInMonth">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
+<tr>
+    <td width="15%" align="right" valign="top" class="summary">
+      <span class="summary-type">&nbsp;</span>
+    </td><td class="summary">
+      <table width="100%" cellpadding="0" cellspacing="0" border="0">
+        <tr>
+          <td><span class="summary-sig"><a href="parsedatetime.parsedatetime_consts.Constants-class.html#buildSources" class="summary-sig-name">buildSources</a>(<span class="summary-sig-arg">self</span>,
         <span class="summary-sig-arg">sourceTime</span>=<span class="summary-sig-default">None</span>)</span><br />
       Return a dictionary of date/time tuples based on the keys found in
-      self.re_sources.
-  </td>
-</tr>
+      self.re_sources.</td>
+          <td align="right" valign="top">
+            <span class="codelink"><a href="parsedatetime.parsedatetime_consts-pysrc.html#Constants.buildSources">source&nbsp;code</a></span>
+            
+          </td>
+        </tr>
+      </table>
+      
+    </td>
+  </tr>
 </table>
-
-<br />
 <!-- ==================== METHOD DETAILS ==================== -->
 <a name="section-MethodDetails"></a>
-<table class="summary" border="1" cellpadding="3"
+<table class="details" border="1" cellpadding="3"
        cellspacing="0" width="100%" bgcolor="white">
 <tr bgcolor="#70b0f0" class="table-header">
   <td colspan="2" class="table-header">
@@ -139,50 +184,6 @@
   </td>
 </tr>
 </table>
-<a name="__init__"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">__init__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">localeID</span>=<span class="sig-default">None</span>,
-        <span class="sig-arg">usePyICU</span>=<span class="sig-default">True</span>,
-        <span class="sig-arg">fallbackLocales</span>=<span class="sig-default">['en_US']</span>)</span>
-    <br /><em class="fname">(Constructor)</em>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="parsedatetime.parsedatetime_consts-pysrc.html#Constants.__init__">source&nbsp;code</a></span>&nbsp;</span
-    ></td>
-  </table>
-  
-  None
-  <dl><dt></dt><dd>
-  </dd></dl>
-</td></tr></table>
-</div>
-<a name="__getattr__"></a>
-<div>
-<table class="details" border="1" cellpadding="3"
-       cellspacing="0" width="100%" bgcolor="white">
-<tr><td>
-  <table width="100%" cellpadding="0" cellspacing="0" border="0">
-  <tr valign="top"><td>
-  <h3 class="epydoc"><span class="sig"><span class="sig-name">__getattr__</span>(<span class="sig-arg">self</span>,
-        <span class="sig-arg">name</span>)</span>
-    <br /><em class="fname">(Qualification operator)</em>
-  </h3>
-  </td><td align="right" valign="top"
-    ><span class="codelink"><a href="parsedatetime.parsedatetime_consts-pysrc.html#Constants.__getattr__">source&nbsp;code</a></span>&nbsp;</span
-    ></td>
-  </table>
-  
-  None
-  <dl><dt></dt><dd>
-  </dd></dl>
-</td></tr></table>
-</div>
 <a name="buildSources"></a>
 <div>
 <table class="details" border="1" cellpadding="3"
@@ -194,8 +195,8 @@
         <span class="sig-arg">sourceTime</span>=<span class="sig-default">None</span>)</span>
   </h3>
   </td><td align="right" valign="top"
-    ><span class="codelink"><a href="parsedatetime.parsedatetime_consts-pysrc.html#Constants.buildSources">source&nbsp;code</a></span>&nbsp;</span
-    ></td>
+    ><span class="codelink"><a href="parsedatetime.parsedatetime_consts-pysrc.html#Constants.buildSources">source&nbsp;code</a></span>&nbsp;
+    </td>
   </table>
   
   <p>Return a dictionary of date/time tuples based on the keys found in 
@@ -203,8 +204,8 @@
   The current time is used as the default and any specified item found 
   in self.re_sources is inserted into the value and the generated 
   dictionary is returned.
-  <dl><dt></dt><dd>
-  </dd></dl>
+  <dl class="fields">
+  </dl>
 </td></tr></table>
 </div>
 <br />
@@ -238,8 +239,9 @@
 </table>
 <table border="0" cellpadding="0" cellspacing="0" width="100%%">
   <tr>
-    <td align="left" class="footer">Generated by Epydoc
-        3.0alpha3 on Tue Jun 12 17:26:57 2007</td>
+    <td align="left" class="footer">
+    Generated by Epydoc 3.0beta1 on Wed Nov 28 11:21:36 2007
+    </td>
     <td align="right" class="footer">
       <a href="http://epydoc.sourceforge.net">http://epydoc.sourceforge.net</a>
     </td>
