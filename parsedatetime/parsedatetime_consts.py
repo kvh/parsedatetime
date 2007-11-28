@@ -33,6 +33,7 @@ except:
 
 
 import datetime
+import calendar
 import time
 import re
 
@@ -706,6 +707,10 @@ def _initPatterns(ptc):
     ptc.TIMERNG3 = r'\d\d?\s?%(rangeseperator)s\s?' + ptc.RE_RTIMEHMS2
     ptc.TIMERNG3 = ptc.TIMERNG3 % ptc.re_values
 
+    # "4:30-5pm "
+    ptc.TIMERNG4 = ptc.RE_RTIMEHMS + r'\s?%(rangeseperator)s\s?' + ptc.RE_RTIMEHMS2
+    ptc.TIMERNG4 = ptc.TIMERNG4 % ptc.re_values
+
 
 def _initConstants(ptc):
     """
@@ -727,17 +732,14 @@ def _initConstants(ptc):
       # build month offsets - yes, it assumes the Months and shortMonths
       # lists are in the same order and Jan..Dec
     ptc.MonthOffsets = {}
-    ptc.DaysInMonth  = {}
 
     o = 1
     for key in ptc.Months:
         ptc.MonthOffsets[key] = o
-        ptc.DaysInMonth[key]  = ptc.DaysInMonthList[o - 1]
         o += 1
     o = 1
     for key in ptc.shortMonths:
         ptc.MonthOffsets[key] = o
-        ptc.DaysInMonth[key]  = ptc.DaysInMonthList[o - 1]
         o += 1
 
 
@@ -768,6 +770,15 @@ class Constants:
         self.locale   = None
         self.usePyICU = usePyICU
 
+        # starting cache of leap years
+        # daysInMonth will add to this if during
+        # runtime it gets a request for a year not found
+        self._leapYears = [ 1904, 1908, 1912, 1916, 1920, 1924, 1928, 1932, 1936, 1940, 1944,
+                            1948, 1952, 1956, 1960, 1964, 1968, 1972, 1976, 1980, 1984, 1988,
+                            1992, 1996, 2000, 2004, 2008, 2012, 2016, 2020, 2024, 2028, 2032,
+                            2036, 2040, 2044, 2048, 2052, 2056, 2060, 2064, 2068, 2072, 2076,
+                            2080, 2084, 2088, 2092, 2096 ]
+
         self.Second =   1
         self.Minute =  60 * self.Second
         self.Hour   =  60 * self.Minute
@@ -778,7 +789,7 @@ class Constants:
 
         self.rangeSep = u'-'
 
-        self.DaysInMonthList = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+        self._DaysInMonthList = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
 
         self.BirthdayEpoch = 50
 
@@ -841,7 +852,6 @@ class Constants:
         self.dayOffsets     = None
         self.WeekdayOffsets = None
         self.MonthOffsets   = None
-        self.DaysInMonth    = None
         self.dateSep        = None
         self.timeSep        = None
         self.am             = None
@@ -876,6 +886,7 @@ class Constants:
         self.TIMERNG1     = r''
         self.TIMERNG2     = r''
         self.TIMERNG3     = r''
+        self.TIMERNG4     = r''
 
         _initLocale(self)
         _initConstants(self)
@@ -905,6 +916,7 @@ class Constants:
                             'CRE_TIMERNG1':  self.TIMERNG1,
                             'CRE_TIMERNG2':  self.TIMERNG2,
                             'CRE_TIMERNG3':  self.TIMERNG3,
+                            'CRE_TIMERNG4':  self.TIMERNG4,
                             'CRE_DATERNG1':  self.DATERNG1,
                             'CRE_DATERNG2':  self.DATERNG2,
                             'CRE_DATERNG3':  self.DATERNG3,
@@ -920,6 +932,25 @@ class Constants:
         else:
             raise AttributeError, name
 
+    def daysInMonth(self, month, year):
+        """
+        Take the given month (1-12) and a given year (4 digit) return
+        the number of days in the month adjusting for leap year as needed
+        """
+        result = None
+
+        if month > 0 and month <= 12:
+            result = self._DaysInMonthList[month - 1]
+
+            if month == 2:
+                if year in self._leapYears:
+                    result += 1
+                else:
+                    if calendar.isleap(year):
+                        self._leapYears.append(year)
+                        result += 1
+
+        return result
 
     def buildSources(self, sourceTime=None):
         """

@@ -1,3 +1,20 @@
+28 Nov 2007 - bear
+
+    Fixing two bugs found by Chandler QA
+
+    Time range of "today 3:30-5pm" was actually causing a traceback.
+    Added a new regex to cover this range type and a new test.
+
+    OSAF 11299 https://bugzilla.osafoundation.org/show_bug.cgi?id=11299
+
+    A really embarrassing for a date/time library - was actually *not*
+    considering leap years when returning days in a month!
+    Added tests for Feb 29th of various known leap years and also added
+    a check for the daysInMonth() routine which was created to replace
+    the naively simple DaysInMonthList.
+
+    OSAF 11203 https://bugzilla.osafoundation.org/show_bug.cgi?id=11203
+
 12 Jun 2007 - bear
 
     0.8.4 release

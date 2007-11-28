@@ -48,6 +48,11 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.evalRanges("10:00:00 am - 1:30:00 pm", start), (targetStart, targetEnd, 2)))
         self.assertTrue(_compareResults(self.cal.evalRanges("10:00 - 13:30",            start), (targetStart, targetEnd, 2)))
 
+        targetStart = datetime.datetime(self.yr, self.mth, self.dy, 15, 30, 0).timetuple()
+        targetEnd   = datetime.datetime(self.yr, self.mth, self.dy, 17, 0, 0).timetuple()
+
+        self.assertTrue(_compareResults(self.cal.evalRanges("today 3:30-5PM", start), (targetStart, targetEnd, 2)))
+
 
     def testDates(self):
         start = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()

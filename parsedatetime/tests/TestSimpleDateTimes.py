@@ -116,6 +116,38 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('Aug 25',    start), (target, 1)))
 
 
+    def testLeapDays(self):
+        start  = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()
+        target = datetime.datetime(2000, 2, 29,  self.hr, self.mn, self.sec).timetuple()
+
+        self.assertTrue(_compareResults(self.cal.parse('02/29/2000', start), (target, 1)))
+
+        target = datetime.datetime(2004, 2, 29,  self.hr, self.mn, self.sec).timetuple()
+
+        self.assertTrue(_compareResults(self.cal.parse('02/29/2004', start), (target, 1)))
+
+        target = datetime.datetime(2008, 2, 29,  self.hr, self.mn, self.sec).timetuple()
+
+        self.assertTrue(_compareResults(self.cal.parse('02/29/2008', start), (target, 1)))
+
+        target = datetime.datetime(2012, 2, 29,  self.hr, self.mn, self.sec).timetuple()
+
+        self.assertTrue(_compareResults(self.cal.parse('02/29/2012', start), (target, 1)))
+
+        dNormal = (31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+        dLeap   = (31, 29, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31)
+
+        for i in range(1,12):
+            self.assertTrue(self.cal.ptc.daysInMonth(i, 1999), dNormal[i - 1])
+            self.assertTrue(self.cal.ptc.daysInMonth(i, 2000), dLeap[i - 1])
+            self.assertTrue(self.cal.ptc.daysInMonth(i, 2001), dNormal[i - 1])
+            self.assertTrue(self.cal.ptc.daysInMonth(i, 2002), dNormal[i - 1])
+            self.assertTrue(self.cal.ptc.daysInMonth(i, 2003), dNormal[i - 1])
+            self.assertTrue(self.cal.ptc.daysInMonth(i, 2004), dLeap[i - 1])
+            self.assertTrue(self.cal.ptc.daysInMonth(i, 2005), dNormal[i - 1])
+
+
+
     def testDaySuffixes(self):
         start  = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()
         target = datetime.datetime(2008, 8, 22,  self.hr, self.mn, self.sec).timetuple()

@@ -54,11 +54,11 @@ class test(unittest.TestCase):
         # to be past the last day of the new month
         # think Jan transition to Feb - 31 days to 28 days
         for m in range(1, 11):
-            d = self.cal.ptc.DaysInMonthList[m - 1]
+            d = self.cal.ptc.daysInMonth(m, 2006)
             s = datetime.datetime(2006, m, d, 12, 0, 0)
 
-            if d > self.cal.ptc.DaysInMonthList[m]:
-                d = self.cal.ptc.DaysInMonthList[m]
+            if d > self.cal.ptc.daysInMonth(m + 1, 2006):
+                d = self.cal.ptc.daysInMonth(m + 1, 2006)
 
             t = datetime.datetime(2006, m + 1, d, 12, 0, 0)
 

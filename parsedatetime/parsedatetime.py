@@ -22,7 +22,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-_debug = False
+_debug = True
 
 
 import re
@@ -371,8 +371,11 @@ class Calendar:
         elif yr < 100:
             yr += 1900
 
+        if _debug:
+            print 'parseDate: ', yr, mth, dy, self.ptc.daysInMonth(mth, yr)
+
         if (mth > 0 and mth <= 12) and \
-           (dy > 0 and dy <= self.ptc.DaysInMonthList[mth - 1]):
+           (dy > 0 and dy <= self.ptc.daysInMonth(mth, yr)):
             sourceTime = (yr, mth, dy, hr, mn, sec, wd, yd, isdst)
         else:
             self.dateFlag = 0
@@ -426,7 +429,7 @@ class Calendar:
             # then increment the year by 1
             yr += 1
 
-        if dy > 0 and dy <= self.ptc.DaysInMonthList[mth - 1]:
+        if dy > 0 and dy <= self.ptc.daysInMonth(mth, yr):
             sourceTime = (yr, mth, dy, hr, mn, sec, wd, yd, isdst)
         else:
             # Return current time if date string is invalid
@@ -458,6 +461,10 @@ class Calendar:
 
         s = datetimeString.strip().lower()
 
+        if self.ptc.rangeSep in s:
+            s = s.replace(self.ptc.rangeSep, ' %s ' % self.ptc.rangeSep)
+            s = s.replace('  ', ' ')
+
         m = self.ptc.CRE_TIMERNG1.search(s)
         if m is not None:
             rangeFlag = 1
@@ -466,21 +473,25 @@ class Calendar:
             if m is not None:
                 rangeFlag = 2
             else:
-                m = self.ptc.CRE_TIMERNG3.search(s)
+                m = self.ptc.CRE_TIMERNG4.search(s)
                 if m is not None:
-                    rangeFlag = 3
+                    rangeFlag = 7
                 else:
-                    m = self.ptc.CRE_DATERNG1.search(s)
+                    m = self.ptc.CRE_TIMERNG3.search(s)
                     if m is not None:
-                        rangeFlag = 4
+                        rangeFlag = 3
                     else:
-                        m = self.ptc.CRE_DATERNG2.search(s)
+                        m = self.ptc.CRE_DATERNG1.search(s)
                         if m is not None:
-                            rangeFlag = 5
+                            rangeFlag = 4
                         else:
-                            m = self.ptc.CRE_DATERNG3.search(s)
+                            m = self.ptc.CRE_DATERNG2.search(s)
                             if m is not None:
-                                rangeFlag = 6
+                                rangeFlag = 5
+                            else:
+                                m = self.ptc.CRE_DATERNG3.search(s)
+                                if m is not None:
+                                    rangeFlag = 6
 
         if _debug:
             print 'evalRanges: rangeFlag =', rangeFlag, '[%s]' % s
@@ -517,9 +528,8 @@ class Calendar:
             if (eflag != 0)  and (sflag != 0):
                 return (startTime, endTime, 2)
 
-        elif rangeFlag == 3:
+        elif rangeFlag == 3 or rangeFlag == 7:
             m = re.search(self.ptc.rangeSep, parseStr)
-
             # capturing the meridian from the end time
             if self.ptc.usesMeridian:
                 ampm = re.search(self.ptc.am[0], parseStr)
@@ -710,13 +720,13 @@ class Calendar:
            unit == 'mth' or \
            unit == 'm':
             if offset == 0:
-                dy         = self.ptc.DaysInMonthList[mth - 1]
+                dy         = self.ptc.daysInMonth(mth, yr)
                 sourceTime = (yr, mth, dy, 9, 0, 0, wd, yd, isdst)
             elif offset == 2:
                 # if day is the last day of the month, calculate the last day
                 # of the next month
-                if dy == self.ptc.DaysInMonthList[mth - 1]:
-                    dy = self.ptc.DaysInMonthList[mth]
+                if dy == self.ptc.daysInMonth(mth, yr):
+                    dy = self.ptc.daysInMonth(mth + 1, yr)
 
                 start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
                 target     = self.inc(start, month=1)
@@ -1511,8 +1521,8 @@ class Calendar:
 
             # if the day ends up past the last day of
             # the new month, set it to the last day
-            if dy > self.ptc.DaysInMonthList[mth - 1]:
-                dy = self.ptc.DaysInMonthList[mth - 1]
+            if dy > self.ptc.daysInMonth(mth, yr):
+                dy = self.ptc.daysInMonth(mth, yr)
 
         d = source.replace(year=yr, month=mth, day=dy)
 
