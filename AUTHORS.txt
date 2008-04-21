@@ -4,5 +4,5 @@ Darshana Chhajed    mailto://darshana@osafoundation.org
 
 Locale Patches:
 
-    Bernd Zeimetz <bzed@debian.org>
+    de_DE   Bernd Zeimetz <bzed@debian.org>
 

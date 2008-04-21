@@ -1,7 +1,7 @@
 parsedatetime uses a standard setup.py install method:
 
     python setup.py install
-    
+
 This will install parsedatetime into your python's site-packages
 location and make it available for import'ing
 
