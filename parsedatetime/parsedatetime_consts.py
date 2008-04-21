@@ -9,7 +9,7 @@ defaults if PyICU is not found.
 """
 
 __license__ = """
-Copyright (c) 2004-2007 Mike Taylor
+Copyright (c) 2004-2008 Mike Taylor
 Copyright (c) 2006-2007 Darshana Chhajed
 All rights reserved.
 

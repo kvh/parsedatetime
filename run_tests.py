@@ -38,5 +38,5 @@ class ScanningLoader(TestLoader):
 
 
 if __name__ == '__main__':
-    main(module=None, testLoader=ScanningLoader())
+    main(module='parsedatetime.tests.TestErrors', testLoader=ScanningLoader())
 

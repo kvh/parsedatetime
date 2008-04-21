@@ -1,4 +1,11 @@
+20 Apr 2008 - bear
+
+    Upating Copyright year info
+    Fixing defects from Google Project page
+
 28 Nov 2007 - bear
+
+    0.8.5.1 release - removed debug code
 
     0.8.5 release
     bumping version to 0.8.6 in trunk

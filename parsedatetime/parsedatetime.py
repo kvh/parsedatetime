@@ -5,7 +5,7 @@ Parse human-readable date/time text.
 """
 
 __license__ = """
-Copyright (c) 2004-2007 Mike Taylor
+Copyright (c) 2004-2008 Mike Taylor
 Copyright (c) 2007 Darshana Chhajed
 All rights reserved.
 
