@@ -38,5 +38,10 @@ class ScanningLoader(TestLoader):
 
 
 if __name__ == '__main__':
-    main(module='parsedatetime.tests.TestGermanLocale', testLoader=ScanningLoader())
+    if len(sys.argv) == 1:
+        testname = 'parsedatetime'
+    else:
+        testname = None
+
+    main(module=testname, testLoader=ScanningLoader())
 

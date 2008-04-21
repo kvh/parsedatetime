@@ -1337,17 +1337,19 @@ class Calendar:
                 # Weekday
                 m = self.ptc.CRE_WEEKDAY.search(s)
                 if m is not None:
-                    self.weekdyFlag = True
-                    self.dateFlag   = 1
-                    if (m.group('weekday') != s):
-                        # capture remaining string
-                        parseStr = m.group('weekday')
-                        chunk1   = s[:m.start('weekday')]
-                        chunk2   = s[m.end('weekday'):]
-                        s        = '%s %s' % (chunk1, chunk2)
-                        flag     = True
-                    else:
-                        parseStr = s
+                    gv = m.group('weekday')
+                    if s not in self.ptc.dayOffsets:
+                        self.weekdyFlag = True
+                        self.dateFlag   = 1
+                        if (gv != s):
+                            # capture remaining string
+                            parseStr = gv
+                            chunk1   = s[:m.start('weekday')]
+                            chunk2   = s[m.end('weekday'):]
+                            s        = '%s %s' % (chunk1, chunk2)
+                            flag     = True
+                        else:
+                            parseStr = s
 
             if parseStr == '':
                 # Natural language time strings

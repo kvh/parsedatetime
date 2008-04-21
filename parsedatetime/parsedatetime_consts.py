@@ -114,7 +114,6 @@ class pdtLocale_en:
                   'prev':      -1,
                   'last':      -1,
                   'next':       1,
-                  'this':       0,
                   'previous':  -1,
                   'in a':       2,
                   'end of':     0,
@@ -219,7 +218,6 @@ class pdtLocale_au:
                   'prev':      -1,
                   'last':      -1,
                   'next':       1,
-                  'this':       0,
                   'previous':  -1,
                   'in a':       2,
                   'end of':     0,
@@ -325,7 +323,6 @@ class pdtLocale_es:
                   'prev':     -1,
                   'last':     -1,
                   'next':      1,
-                  'this':      0,
                   'previous': -1,
                   'in a':      2,
                   'end of':    0,
@@ -447,7 +444,7 @@ class pdtLocale_de:
                    u'heute':         0,
                    u'gestern':      -1,
                    u'vorgestern':   -2,
-                   u'\xe4bermorgen': 2,
+                   u'\xfcbermorgen': 2,
                  }
 
       # special day and/or times, i.e. lunch, noon, evening
@@ -749,7 +746,7 @@ def _initPatterns(ptc):
                                    ))''' % ptc.re_values
     ptc.RE_MODIFIER  = r'''(\s?|^)
                            (?P<modifier>
-                            (previous|prev|last|next|this|eod|eo|(end\sof)|(in\sa)))''' % ptc.re_values
+                            (previous|prev|last|next|eod|eo|(end\sof)|(in\sa)))''' % ptc.re_values
     ptc.RE_MODIFIER2 = r'''(\s?|^)
                            (?P<modifier>
                             (from|before|after|ago|prior))
