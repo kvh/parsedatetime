@@ -6,7 +6,7 @@ Parse human-readable date/time text.
 
 __license__ = """
 Copyright (c) 2004-2008 Mike Taylor
-Copyright (c) 2007 Darshana Chhajed
+Copyright (c) 2006-2008 Darshana Chhajed
 All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -22,7 +22,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
-_debug = True
+_debug = False
 
 
 import re

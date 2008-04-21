@@ -3,6 +3,16 @@
     Upating Copyright year info
     Fixing defects from Google Project page
 
+    The comparison routine for the "failing" test was not accurate.
+    The test was being flagged as failing incorrectly
+    Issue 18 http://code.google.com/p/parsedatetime/issues/detail?id=18
+
+    Added patch from Bernd Zeimetz for the German localized constants!
+    http://svn.debian.org/viewsvn/*checkout*/python-modules/packages/parsedatetime/trunk/debian/patches/locale-de.dpatch
+    He identifies some issues with how unicode is handled and also some other
+    glitches - will have to work on them
+    Issue 20 http://code.google.com/p/parsedatetime/issues/detail?id=20
+
 28 Nov 2007 - bear
 
     0.8.5.1 release - removed debug code

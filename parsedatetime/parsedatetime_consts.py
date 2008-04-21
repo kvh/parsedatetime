@@ -10,7 +10,8 @@ defaults if PyICU is not found.
 
 __license__ = """
 Copyright (c) 2004-2008 Mike Taylor
-Copyright (c) 2006-2007 Darshana Chhajed
+Copyright (c) 2006-2008 Darshana Chhajed
+Copyright (c)      2007 Bernd Zeimetz <bzed@debian.org>
 All rights reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
@@ -353,9 +354,128 @@ class pdtLocale_es:
                     }
 
 
+class pdtLocale_de:
+    """
+    de_DE Locale constants
+
+    This class will be used to initialize L{Constants} if PyICU is not located.
+
+    Contributed by Debian parsedatetime package maintainer Bernd Zeimetz <bzed@debian.org>
+
+    Defined as class variables are the lists and strings needed by parsedatetime
+    to evaluate strings for German
+    """
+
+    localeID      = 'de_DE'   # don't use a unicode string
+    dateSep       = [ u'.' ]
+    timeSep       = [ u':' ]
+    meridian      = [ ]
+    usesMeridian  = False
+    uses24        = True
+
+    Weekdays      = [ u'montag', u'dienstag', u'mittwoch',
+                      u'donnerstag', u'freitag', u'samstag', u'sonntag',
+                    ]
+    shortWeekdays = [ u'mo', u'di', u'mi',
+                      u'do', u'fr', u'sa', u'so',
+                    ]
+    Months        = [ u'januar',  u'februar',  u'm\xe4rz',
+                      u'april',   u'mai',      u'juni',
+                      u'juli',    u'august',   u'september',
+                      u'oktober', u'november', u'dezember',
+                    ]
+    shortMonths   = [ u'jan', u'feb', u'mrz',
+                      u'apr', u'mai', u'jun',
+                      u'jul', u'aug', u'sep',
+                      u'okt', u'nov', u'dez',
+                    ]
+    dateFormats   = { 'full':   u'EEEE, d. MMMM yyyy',
+                      'long':   u'd. MMMM yyyy',
+                      'medium': u'dd.MM.yyyy',
+                      'short':  u'dd.MM.yy'
+                    }
+
+    timeFormats   = { 'full':   u'HH:mm:ss v',
+                      'long':   u'HH:mm:ss z',
+                      'medium': u'HH:mm:ss',
+                      'short':  u'HH:mm'
+                    }
+
+    dp_order = [ u'd', u'm', u'y' ]
+
+      # this will be added to re_consts later
+    units = { 'seconds': [ 'sekunden', 'sek',  's' ],
+              'minutes': [ 'minuten',  'min' , 'm' ],
+              'hours':   [ 'stunden',  'std',  'h' ],
+              'days':    [ 'tage',     't' ],
+              'weeks':   [ 'wochen',   'w' ],
+              'months':  [ 'monate' ], #the short version would be a capital M,
+                                       #as I understand it we can't distinguis
+                                       #between m for minutes and M for months.
+              'years':   [ 'jahre',    'j' ],
+            }
+
+      # text constants to be used by regex's later
+    re_consts     = { 'specials':       'am|dem|der|im|in|den|zum',
+                      'timeseperator':  ':',
+                      'rangeseperator': '-',
+                      'daysuffix':      '',
+                      'qunits':         'h|m|s|t|w|m|j',
+                      'now':            [ 'jetzt' ],
+                    }
+
+      # Used to adjust the returned date before/after the source
+      #still looking for insight on how to translate all of them to german.
+    modifiers = { u'from':         1,
+                  u'before':      -1,
+                  u'after':        1,
+                  u'vergangener': -1,
+                  u'vorheriger':  -1,
+                  u'prev':        -1,
+                  u'letzter':     -1,
+                  u'n\xe4chster':  1,
+                  u'dieser':       0,
+                  u'previous':    -1,
+                  u'in a':         2,
+                  u'end of':       0,
+                  u'eod':          0,
+                  u'eo':           0,
+                }
+
+     #morgen/abermorgen does not work, see http://code.google.com/p/parsedatetime/issues/detail?id=19
+    dayoffsets = { u'morgen':        1,
+                   u'heute':         0,
+                   u'gestern':      -1,
+                   u'vorgestern':   -2,
+                   u'\xe4bermorgen': 2,
+                 }
+
+      # special day and/or times, i.e. lunch, noon, evening
+      # each element in the dictionary is a dictionary that is used
+      # to fill in any value to be replace - the current date/time will
+      # already have been populated by the method buildSources
+    re_sources    = { u'mittag':      { 'hr': 12, 'mn': 0, 'sec': 0 },
+                      u'mittags':     { 'hr': 12, 'mn': 0, 'sec': 0 },
+                      u'mittagessen': { 'hr': 12, 'mn': 0, 'sec': 0 },
+                      u'morgen':      { 'hr':  6, 'mn': 0, 'sec': 0 },
+                      u'morgens':     { 'hr':  6, 'mn': 0, 'sec': 0 },
+                      u'fr\e4hst\xe4ck': { 'hr':  8, 'mn': 0, 'sec': 0 },
+                      u'abendessen':  { 'hr': 19, 'mn': 0, 'sec': 0 },
+                      u'abend':       { 'hr': 18, 'mn': 0, 'sec': 0 },
+                      u'abends':      { 'hr': 18, 'mn': 0, 'sec': 0 },
+                      u'mitternacht': { 'hr':  0, 'mn': 0, 'sec': 0 },
+                      u'nacht':       { 'hr': 21, 'mn': 0, 'sec': 0 },
+                      u'nachts':      { 'hr': 21, 'mn': 0, 'sec': 0 },
+                      u'heute abend': { 'hr': 21, 'mn': 0, 'sec': 0 },
+                      u'heute nacht': { 'hr': 21, 'mn': 0, 'sec': 0 },
+                      u'feierabend':  { 'hr': 17, 'mn': 0, 'sec': 0 },
+                    }
+
+
 pdtLocales = { 'en_US': pdtLocale_en,
                'en_AU': pdtLocale_au,
-               'es':    pdtLocale_es,
+               'es_ES': pdtLocale_es,
+               'de_DE': pdtLocale_de,
              }
 
 
