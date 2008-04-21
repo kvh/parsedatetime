@@ -40,7 +40,7 @@ desc='Parse human-readable date/time expressions',
 
 setuptools.setup(
     name='parsedatetime',
-    version='0.8.6',
+    version='0.8.7',
     description=desc,
     author='Mike Taylor and Darshana Chhajed',
     author_email='bear@code-bear.com',
