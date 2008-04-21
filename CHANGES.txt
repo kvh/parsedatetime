@@ -13,6 +13,17 @@
     glitches - will have to work on them
     Issue 20 http://code.google.com/p/parsedatetime/issues/detail?id=20
 
+    Tweaked run_tests.py to default to all tests if not given on the command line
+    Removed 'this' from the list of "specials" - it was causing some grief and from the
+    looks of the unit tests, not all that necessary
+
+    Worked on bug 19 - Bernd identified that for the German locale the dayofweek check
+    was being triggered for the dayoffset word "morgen" (the "mo" matched the day "morgen")
+    To solve this I added a small check to make sure if the whole word being checked was
+    not in the dayOffsets list, and if so not trigger.
+    Issue 19 http://code.google.com/p/parsedatetime/issues/detail?id=19
+
+
 28 Nov 2007 - bear
 
     0.8.5.1 release - removed debug code
