@@ -715,14 +715,21 @@ def _initPatterns(ptc):
     # TODO add code to parse the date formats and build the regexes up from sub-parts
     # TODO find all hard-coded uses of date/time seperators
 
+    ptc.RE_DATE4     = r'''(?P<date>(((?P<day>\d\d?)(?P<suffix>%(daysuffix)s)?(,)?(\s)?)
+                                      (?P<mthname>(%(months)s|%(shortmonths)s))\s?
+                                      (?P<year>\d\d(\d\d)?)?
+                                    )
+                           )''' % ptc.re_values
+
     # I refactored DATE3 to fix Issue 16 http://code.google.com/p/parsedatetime/issues/detail?id=16
     # I suspect the final line was for a trailing time - but testing shows it's not needed
     # ptc.RE_DATE3     = r'''(?P<date>((?P<mthname>(%(months)s|%(shortmonths)s))\s?
     #                                  ((?P<day>\d\d?)(\s?|%(daysuffix)s|$)+)?
     #                                  (,\s?(?P<year>\d\d(\d\d)?))?))
     #                        (\s?|$|[^0-9a-zA-Z])''' % ptc.re_values
-    ptc.RE_DATE3     = r'''(?P<date>((?P<mthname>(%(months)s|%(shortmonths)s))\s?
-                                     ((?P<day>\d\d?)(?P<suffix>%(daysuffix)s)?)?
+    ptc.RE_DATE3     = r'''(?P<date>(
+                                     (((?P<mthname>(%(months)s|%(shortmonths)s))|
+                                     ((?P<day>\d\d?)(?P<suffix>%(daysuffix)s)?))(\s)?){1,2}
                                      ((,)?(\s)?(?P<year>\d\d(\d\d)?))?
                                     )
                            )''' % ptc.re_values
@@ -775,6 +782,8 @@ def _initPatterns(ptc):
     ptc.RE_DAY       = r'''(\s?|^)
                            (?P<day>(today|tomorrow|yesterday))
                            (\s?|$|[^0-9a-zA-Z])''' % ptc.re_values
+    ptc.RE_DAY2      = r'''(?P<day>\d\d?)|(?P<suffix>%(daysuffix)s)
+                        ''' % ptc.re_values
     ptc.RE_TIME      = r'''(\s?|^)
                            (?P<time>(morning|breakfast|noon|lunch|evening|midnight|tonight|dinner|night|now))
                            (\s?|$|[^0-9a-zA-Z])''' % ptc.re_values
@@ -858,6 +867,8 @@ def _initConstants(ptc):
     for key in ptc.shortMonths:
         ptc.MonthOffsets[key] = o
         o += 1
+
+    # ptc.DaySuffixes = ptc.re_consts['daysuffix'].split('|')
 
 
 class Constants:
@@ -978,6 +989,7 @@ class Constants:
         self.uses24         = None
         self.dp_order       = None
 
+        self.RE_DATE4     = r''
         self.RE_DATE3     = r''
         self.RE_MONTH     = r''
         self.RE_WEEKDAY   = r''
@@ -991,6 +1003,7 @@ class Constants:
         self.RE_DATE      = r''
         self.RE_DATE2     = r''
         self.RE_DAY       = r''
+        self.RE_DAY2      = r''
         self.RE_TIME      = r''
         self.RE_REMAINING = r''
         self.RE_RTIMEHMS  = r''
@@ -1021,9 +1034,11 @@ class Constants:
                             'CRE_DATE':      self.RE_DATE,
                             'CRE_DATE2':     self.RE_DATE2,
                             'CRE_DATE3':     self.RE_DATE3,
+                            'CRE_DATE4':     self.RE_DATE4,
                             'CRE_MONTH':     self.RE_MONTH,
                             'CRE_WEEKDAY':   self.RE_WEEKDAY,
                             'CRE_DAY':       self.RE_DAY,
+                            'CRE_DAY2':      self.RE_DAY2,
                             'CRE_TIME':      self.RE_TIME,
                             'CRE_REMAINING': self.RE_REMAINING,
                             'CRE_RTIMEHMS':  self.RE_RTIMEHMS,

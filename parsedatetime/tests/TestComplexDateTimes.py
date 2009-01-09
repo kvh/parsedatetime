@@ -35,8 +35,12 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('5pm on 08.25.2006',     start), (target, 3)))
         self.assertTrue(_compareResults(self.cal.parse('5pm August 25, 2006',   start), (target, 3)))
         self.assertTrue(_compareResults(self.cal.parse('5pm August 25th, 2006', start), (target, 3)))
+        self.assertTrue(_compareResults(self.cal.parse('5pm 25 August, 2006',   start), (target, 3)))
+        self.assertTrue(_compareResults(self.cal.parse('5pm 25th August, 2006', start), (target, 3)))
         self.assertTrue(_compareResults(self.cal.parse('Aug 25, 2006 5pm',      start), (target, 3)))
         self.assertTrue(_compareResults(self.cal.parse('Aug 25th, 2006 5pm',    start), (target, 3)))
+        self.assertTrue(_compareResults(self.cal.parse('25 Aug, 2006 5pm',      start), (target, 3)))
+        self.assertTrue(_compareResults(self.cal.parse('25th Aug 2006, 5pm',    start), (target, 3)))
 
         if self.mth > 8 or (self.mth == 8 and self.dy > 5):
             target = datetime.datetime(self.yr + 1, 8, 5, 17, 0, 0).timetuple()
@@ -51,6 +55,11 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('5pm Aug 05',     start), (target, 3)))
         self.assertTrue(_compareResults(self.cal.parse('Aug 05 5pm',     start), (target, 3)))
         self.assertTrue(_compareResults(self.cal.parse('Aug 05th 5pm',   start), (target, 3)))
+        self.assertTrue(_compareResults(self.cal.parse('5 August 5pm',   start), (target, 3)))
+        self.assertTrue(_compareResults(self.cal.parse('5th August 5pm', start), (target, 3)))
+        self.assertTrue(_compareResults(self.cal.parse('5pm 05 Aug',     start), (target, 3)))
+        self.assertTrue(_compareResults(self.cal.parse('05 Aug 5pm',     start), (target, 3)))
+        self.assertTrue(_compareResults(self.cal.parse('05th Aug 5pm',   start), (target, 3)))
 
 
 if __name__ == "__main__":

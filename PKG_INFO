@@ -11,8 +11,8 @@ Description: Parse human-readable date/time expressions
 Platform: Any
 Classifier: Development Status :: 4 - Beta
 Classifier: Operating System :: OS Independent
-Classifier: Environment :: Library
 Classifier: Intended Audience :: Developers
 Classifier: License :: OSI Approved :: Apache Software License
+Classifier: Programming Language :: Python
 Classifier: Topic :: Text Processing
 Classifier: Topic :: Software Development :: Libraries :: Python Modules

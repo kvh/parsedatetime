@@ -1245,9 +1245,18 @@ class Calendar:
                         parseStr = s
 
             if parseStr == '':
+                valid_date = False
+                for match in self.ptc.CRE_DATE3.finditer(s):
+                    # to prevent "HH:MM(:SS) time strings" expressions from triggering
+                    # this regex, we checks if the month field exists in the searched 
+                    # expression, if it doesn't exist, the date field is not valid
+                    if match.group('mthname'):
+                        m = self.ptc.CRE_DATE3.search(s, match.start())
+                        valid_date = True
+                        break
+
                 # String date format
-                m = self.ptc.CRE_DATE3.search(s)
-                if m is not None:
+                if valid_date:
                     self.dateStrFlag = True
                     self.dateFlag    = 1
                     if (m.group('date') != s):

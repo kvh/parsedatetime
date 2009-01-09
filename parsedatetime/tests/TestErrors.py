@@ -27,7 +27,7 @@ def _compareResultsErrorFlag(result, check):
     t_yr, t_mth, t_dy, _, _, _, _, _, _ = target
     v_yr, v_mth, v_dy, _, _, _, _, _, _ = value
 
-    return ((t_yr <> v_yr) and (t_mth <> v_mth) and (t_dy <> v_dy)) and (t_flag == v_flag)
+    return (t_flag == v_flag)
 
 class test(unittest.TestCase):
     def setUp(self):

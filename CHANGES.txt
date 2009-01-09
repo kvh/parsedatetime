@@ -1,3 +1,15 @@
+07 Jan 2009 - bear
+
+    0.8.7 release
+    Apply patch submitted by Michael Lim to fix the problem parsedatetime
+    was having handling dates when the month day preceeded the month
+    Issue 26 http://code.google.com/p/parsedatetime/issues/detail?id=26
+
+    Fixed TestErrors when in a local where the bad date actually returns
+    a date ;)
+
+    Checked in the TestGermanLocale unit test file missed from previous commit
+
 20 Apr 2008 - bear
 
     Upating Copyright year info

@@ -103,6 +103,8 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('Aug 25, 2006',    start), (target, 1)))
         self.assertTrue(_compareResults(self.cal.parse('August 25 2006',  start), (target, 1)))
         self.assertTrue(_compareResults(self.cal.parse('Aug 25 2006',     start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('25 August 2006',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('25 Aug 2006',     start), (target, 1)))
 
         if self.mth > 8 or (self.mth == 8 and self.dy > 25):
             target = datetime.datetime(self.yr + 1, 8, 25,  self.hr, self.mn, self.sec).timetuple()
@@ -156,6 +158,17 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('Aug 22nd, 2008',    start), (target, 1)))
         self.assertTrue(_compareResults(self.cal.parse('August 22nd 2008',  start), (target, 1)))
         self.assertTrue(_compareResults(self.cal.parse('Aug 22nd 2008',     start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('22nd August 2008',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('22nd Aug 2008',     start), (target, 1)))
+
+        target = datetime.datetime(1949, 12, 31,  self.hr, self.mn, self.sec).timetuple()
+
+        self.assertTrue(_compareResults(self.cal.parse('December 31st, 1949', start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('Dec 31st, 1949',      start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('December 31st 1949',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('Dec 31st 1949',       start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('31st December 1949',  start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('31st Dec 1949',       start), (target, 1)))
 
         target = datetime.datetime(2008, 8, 23,  self.hr, self.mn, self.sec).timetuple()
 
