@@ -3,6 +3,8 @@ Installing parsedatetime
 
 python setup.py install
 
+Python 3.+ is required for parsedatetime v1.+
+
 
 Running Unit Tests
 ------------------
@@ -16,7 +18,7 @@ Using parsedatetime
 
 The simple example of how to use parsedatetime is:
 
-    import parsedatetime.parsedatetime as pdt
+    import parsedatetime as pdt
 
     cal = pdt.Calendar()
 

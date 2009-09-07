@@ -1,11 +1,10 @@
-#!/usr/bin/env python
 
 """
 Test parsing of complex date and times
 """
 
 import unittest, time, datetime
-import parsedatetime.parsedatetime as pt
+import parsedatetime as pdt
 
 
   # a special compare function is used to allow us to ignore the seconds as
@@ -23,7 +22,7 @@ def _compareResults(result, check):
 
 class test(unittest.TestCase):
     def setUp(self):
-        self.cal = pt.Calendar()
+        self.cal = pdt.Calendar()
         self.yr, self.mth, self.dy, self.hr, self.mn, self.sec, self.wd, self.yd, self.isdst = time.localtime()
 
 

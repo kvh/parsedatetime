@@ -5,7 +5,7 @@ following folks:
 
 Darshana Chhajed
 
-    As the first "real" user of the new python code, Darshana pointed
+    As the first "real" user of the new Python code, Darshana pointed
     out many of the initial flaws and bugs and then started fixing them!
     Her aide was so helpful that I was happy to add her as co-author.
 

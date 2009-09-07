@@ -1,9 +1,9 @@
 Metadata-Version: 1.0
 Name: parsedatetime
-Version: 0.8.7
+Version: 1.0.0
 Summary: Parse human-readable date/time expressions
 Home-page: http://code-bear.com/code/parsedatetime/
-Author: Mike Taylor and Darshana Chhajed
+Author: Mike Taylor
 Author-email: bear at code-bear.com
 License: Apache Software License v2.0
 Download-URL: http://code-bear.com/code/parsedatetime/

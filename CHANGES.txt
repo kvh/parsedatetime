@@ -1,3 +1,12 @@
+07 Sep 2009 - bear
+
+    Created branches/python25 from current trunk to save the current code
+
+    Converted trunk to Python 3 and also refactored how the module is structured
+    so that it no longer requires import parsedatetime.parsedatetime
+
+    Bumped version to 1.0.0 to reflect the major refactoring
+
 07 Jan 2009 - bear
 
     0.8.7 release

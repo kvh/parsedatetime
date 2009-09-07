@@ -1,61 +1,37 @@
-#!/usr/bin/env python
+from distutils.core import setup
 
-import ez_setup
-ez_setup.use_setuptools()
+VERSION = '1.0.0'
+desc    = """Parse human-readable date/time text.
+Python 3.+ is required for parsedatetime v1.+
+The simple example of how to use parsedatetime is:
 
-import sys
-import setuptools
+    import parsedatetime as pdt
 
-# swiped from Zanshin's setup.py - thanks Grant!
-class MakeDocsCommand(setuptools.Command):
-    """
-    Command to generate documentation
-    """
+    cal = pdt.Calendar()
 
-    description  = "create html documentation"
-    user_options = [ ('output-dir=', 'o', "Output directory for html tree"),
-                   ]
-    output_dir   = None
+    cal.parse("tomorrow")
 
-    def initialize_options(self):
-        pass
+More detailed examples can be found in the examples/
+"""
 
-    def finalize_options(self):
-        self.output_dir = self.output_dir or "docs"
-
-    def run(self):
-        if self.output_dir:
-            import epydoc.cli
-
-            sys.argv = ['epydoc.py', '--html', '--config', 'epydoc.conf']
-
-            if self.dry_run:
-                self.announce('skipping running %s (dry run)' % (sys.argv))
-            else:
-                self.announce('running %s' % (sys.argv))
-                epydoc.cli.cli()
-
-
-desc='Parse human-readable date/time expressions',
-
-setuptools.setup(
-    name='parsedatetime',
-    version='0.8.8',
-    description=desc,
-    author='Mike Taylor and Darshana Chhajed',
-    author_email='bear@code-bear.com',
-    url='http://code-bear.com/code/parsedatetime/',
-    license='http://www.apache.org/licenses/LICENSE-2.0',
-    packages=['parsedatetime'],
-    platforms=['Any'],
-    cmdclass={'doc': MakeDocsCommand},
-    classifiers=['Development Status :: 4 - Beta',
-                 'Environment :: Library',
-                 'Intended Audience :: Developers',
-                 'License :: OSI Approved :: Apache Software License',
-                 'Operating System :: OS Independent',
-                 'Topic :: Text Processing',
-                 'Topic :: Software Development :: Libraries :: Python Modules',
-                ]
-     )
+setup(name='parsedatetime',
+        version=VERSION, 
+        author='Mike Taylor',
+        author_email='bear@code-bear.com',
+        url='http://code-bear.com/code/parsedatetime/',
+        download_url='http://code-bear.com/code/parsedatetime/parsedatetime-%s.tar.gz' % VERSION,
+        description='Parse human-readable date/time text.',
+        license='http://www.apache.org/licenses/LICENSE-2.0',
+        packages=['parsedatetime'],
+        platforms=['Any'],
+        long_description=desc,
+        classifiers=['Development Status :: 4 - Beta',
+                     'Environment :: Library',
+                     'Intended Audience :: Developers',
+                     'License :: OSI Approved :: Apache Software License',
+                     'Operating System :: OS Independent',
+                     'Topic :: Text Processing',
+                     'Topic :: Software Development :: Libraries :: Python Modules',
+                    ]
+        )
 

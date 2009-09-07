@@ -1,12 +1,10 @@
-#!/usr/bin/env python
 
 """
 Test parsing of simple date and times using the German locale
 """
 
 import unittest, time, datetime
-import parsedatetime.parsedatetime as pt
-import parsedatetime.parsedatetime_consts as ptc
+import parsedatetime as pdt
 
 
   # a special compare function is used to allow us to ignore the seconds as
@@ -23,8 +21,8 @@ def _compareResults(result, check):
 
 class test(unittest.TestCase):
     def setUp(self):
-        self.ptc = ptc.Constants('de_DE', usePyICU=False)
-        self.cal = pt.Calendar(self.ptc)
+        self.ptc = pdt.Constants('de_DE', usePyICU=False)
+        self.cal = pdt.Calendar(self.ptc)
 
         self.yr, self.mth, self.dy, self.hr, self.mn, self.sec, self.wd, self.yd, self.isdst = time.localtime()
 

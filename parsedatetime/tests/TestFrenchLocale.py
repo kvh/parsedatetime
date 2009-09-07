@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 
 """
 Test parsing of simple date and times using the French locale
@@ -7,8 +6,7 @@ Note: requires PyICU
 """
 
 import unittest, time, datetime
-import parsedatetime.parsedatetime as pt
-import parsedatetime.parsedatetime_consts as ptc
+import parsedatetime as pdt
 
 
   # a special compare function is used to allow us to ignore the seconds as
@@ -25,8 +23,8 @@ def _compareResults(result, check):
 
 class test(unittest.TestCase):
     def setUp(self):
-        self.ptc = ptc.Constants('fr_FR', usePyICU=True)
-        self.cal = pt.Calendar(self.ptc)
+        self.ptc = pdt.Constants('fr_FR', usePyICU=True)
+        self.cal = pdt.Calendar(self.ptc)
 
         self.yr, self.mth, self.dy, self.hr, self.mn, self.sec, self.wd, self.yd, self.isdst = time.localtime()
 
@@ -60,10 +58,10 @@ class test(unittest.TestCase):
             start  = datetime.datetime(self.yr, self.mth, self.dy, self.hr, self.mn, self.sec).timetuple()
             target = datetime.datetime(2006, 8, 25, self.hr, self.mn, self.sec).timetuple()
 
-            self.assertTrue(_compareResults(self.cal.parse('25/08/2006',        start), (target, 1)))
-            self.assertTrue(_compareResults(self.cal.parse('25/8/06',           start), (target, 1)))
-            self.assertTrue(_compareResults(self.cal.parse(u'ao\xfbt 25, 2006', start), (target, 1)))
-            self.assertTrue(_compareResults(self.cal.parse(u'ao\xfbt 25 2006',  start), (target, 1)))
+            self.assertTrue(_compareResults(self.cal.parse('25/08/2006',       start), (target, 1)))
+            self.assertTrue(_compareResults(self.cal.parse('25/8/06',          start), (target, 1)))
+            self.assertTrue(_compareResults(self.cal.parse('ao\xfbt 25, 2006', start), (target, 1)))
+            self.assertTrue(_compareResults(self.cal.parse('ao\xfbt 25 2006',  start), (target, 1)))
 
             if self.mth > 8 or (self.mth == 8 and self.dy > 25):
                 target = datetime.datetime(self.yr+1, 8, 25, self.hr, self.mn, self.sec).timetuple()

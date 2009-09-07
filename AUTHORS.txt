@@ -9,5 +9,5 @@ Bug Fixes
 
 Locale Patches:
 
-    de_DE   Bernd Zeimetz <bzed@debian.org>
+    de_DE           Bernd Zeimetz <bzed@debian.org>
 

@@ -1,11 +1,10 @@
-#!/usr/bin/env python
 
 """
 Test Calendar.Inc() routine
 """
 
 import unittest, time, datetime
-import parsedatetime.parsedatetime as pt
+import parsedatetime as pdt
 
 
   # a special compare function is used to allow us to ignore the seconds as
@@ -19,7 +18,7 @@ def _compareResults(target, value):
 
 class test(unittest.TestCase):
     def setUp(self):
-        self.cal = pt.Calendar()
+        self.cal = pdt.Calendar()
         self.yr, self.mth, self.dy, self.hr, self.mn, self.sec, self.wd, self.yd, self.isdst = time.localtime()
 
     def testIncMonths(self):

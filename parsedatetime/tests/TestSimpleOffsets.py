@@ -1,11 +1,10 @@
-#!/usr/bin/env python
 
 """
 Test parsing of 'simple' offsets
 """
 
 import unittest, time, datetime
-import parsedatetime.parsedatetime as pt
+import parsedatetime as pdt
 
 
   # a special compare function is used to allow us to ignore the seconds as
@@ -22,7 +21,7 @@ def _compareResults(result, check):
 
 class test(unittest.TestCase):
     def setUp(self):
-        self.cal = pt.Calendar()
+        self.cal = pdt.Calendar()
         self.yr, self.mth, self.dy, self.hr, self.mn, self.sec, self.wd, self.yd, self.isdst = time.localtime()
 
     def testMinutesFromNow(self):
@@ -55,15 +54,45 @@ class test(unittest.TestCase):
         self.assertTrue(_compareResults(self.cal.parse('5m before now',        start), (target, 2)))
 
 
-    def testOffsetAfterNoon(self):
+    def testHoursFromNow(self):
         s = datetime.datetime.now()
+        t = s + datetime.timedelta(hours=5)
+
+        start  = s.timetuple()
+        target = t.timetuple()
+
+        self.assertTrue(_compareResults(self.cal.parse('5 hours from now', start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hour from now',  start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hr from now',    start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('in 5 hours',       start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('in 5 hour',        start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hr from now',    start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours',          start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hr',             start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('5h',               start), (target, 2)))
+
+
+    def testHoursBeforeNow(self):
+        s = datetime.datetime.now()
+        t = s + datetime.timedelta(hours=-5)
+
+        start  = s.timetuple()
+        target = t.timetuple()
+
+        self.assertTrue(_compareResults(self.cal.parse('5 hours before now', start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hr before now',    start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('5h before now',      start), (target, 2)))
+
+
+    def testOffsetAfterNoon(self):
+        s = datetime.datetime(self.yr, self.mth, self.dy, 10, 0, 0)
         t = datetime.datetime(self.yr, self.mth, self.dy, 12, 0, 0) + datetime.timedelta(hours=5)
 
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('5 hours from noon',      start), (target, 2)))
         self.assertTrue(_compareResults(self.cal.parse('5 hours after noon',     start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours from noon',      start), (target, 2)))
         self.assertTrue(_compareResults(self.cal.parse('5 hours after 12pm',     start), (target, 2)))
         self.assertTrue(_compareResults(self.cal.parse('5 hours after 12 pm',    start), (target, 2)))
         self.assertTrue(_compareResults(self.cal.parse('5 hours after 12:00pm',  start), (target, 2)))
@@ -105,9 +134,9 @@ class test(unittest.TestCase):
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('1 week before now', start), (target, 1)))
-        self.assertTrue(_compareResults(self.cal.parse('7 days before now', start), (target, 1)))
-        #self.assertTrue(_compareResults(self.cal.parse('last week',         start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('1 week before now', start), (target, 0)))
+        self.assertTrue(_compareResults(self.cal.parse('7 days before now', start), (target, 0)))
+        #self.assertTrue(_compareResults(self.cal.parse('last week',         start), (target, 0)))
 
 
     def testSpecials(self):
