@@ -97,18 +97,17 @@ class test(unittest.TestCase):
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('eom',         start), (target, 1)))
-        self.assertTrue(_compareResults(self.cal.parse('meeting eom', start), (target, 1)))
+        self.assertTrue(_compareResults(self.cal.parse('eom',         start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('meeting eom', start), (target, 2)))
 
         s = datetime.datetime.now()
 
         (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = s.timetuple()
 
-        t = datetime.datetime(yr, 12, 31, hr, mn, sec)
+        t = datetime.datetime(yr, 12, 31, 9, 0, 0)
 
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('eoy',         start), (target, 1)))
-        self.assertTrue(_compareResults(self.cal.parse('meeting eoy', start), (target, 1)))
-
+        self.assertTrue(_compareResults(self.cal.parse('eoy',         start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('meeting eoy', start), (target, 2)))

@@ -91,12 +91,12 @@ class test(unittest.TestCase):
         start  = s.timetuple()
         target = t.timetuple()
 
-        self.assertTrue(_compareResults(self.cal.parse('5 hours after noon',     start), (target, 2)))
-        self.assertTrue(_compareResults(self.cal.parse('5 hours from noon',      start), (target, 2)))
         self.assertTrue(_compareResults(self.cal.parse('5 hours after 12pm',     start), (target, 2)))
         self.assertTrue(_compareResults(self.cal.parse('5 hours after 12 pm',    start), (target, 2)))
         self.assertTrue(_compareResults(self.cal.parse('5 hours after 12:00pm',  start), (target, 2)))
         self.assertTrue(_compareResults(self.cal.parse('5 hours after 12:00 pm', start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours after noon',     start), (target, 2)))
+        self.assertTrue(_compareResults(self.cal.parse('5 hours from noon',      start), (target, 2)))
 
 
     def testOffsetBeforeNoon(self):

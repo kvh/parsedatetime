@@ -111,8 +111,9 @@ class pdtLocale_base(object):
                            'previous': -1,
                            'in a':      2,
                            'end of':    0,
-                           'eod':       0,
-                           'eo':        0
+                           'eod':       1,
+                           'eom':       1,
+                           'eoy':       1,
                          }
 
         self.dayOffsets = { 'tomorrow':   1,
@@ -154,14 +155,14 @@ class pdtLocale_icu(pdtLocale_base):
 
               # grab ICU list of weekdays, skipping first entry which
               # is always blank
-            wd  = map(lcase, self.symbols.getWeekdays()[1:])
-            swd = map(lcase, self.symbols.getShortWeekdays()[1:])
+            wd  = list(map(lcase, self.symbols.getWeekdays()[1:]))
+            swd = list(map(lcase, self.symbols.getShortWeekdays()[1:]))
 
               # store them in our list with Monday first (ICU puts Sunday first)
             self.Weekdays      = wd[1:] + wd[0:1]
             self.shortWeekdays = swd[1:] + swd[0:1]
-            self.Months        = map(lcase, self.symbols.getMonths())
-            self.shortMonths   = map(lcase, self.symbols.getShortMonths())
+            self.Months        = list(map(lcase, self.symbols.getMonths()))
+            self.shortMonths   = list(map(lcase, self.symbols.getShortMonths()))
 
             self.icu_df      = { 'full':   pyicu.DateFormat.createDateInstance(pyicu.DateFormat.kFull,   self.icu),
                                  'long':   pyicu.DateFormat.createDateInstance(pyicu.DateFormat.kLong,   self.icu),

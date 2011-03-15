@@ -4,7 +4,7 @@ parsedatetime
 
 Parse human-readable date/time text.
 
-Requires Python 3.0 or later
+Requires Python 2.6 or later
 """
 
 __author__       = 'Mike Taylor (bear@code-bear.com)'
@@ -24,6 +24,7 @@ import logging
 import email.utils
 
 from . import pdt_locales
+
 
 log = logging.getLogger()
 echoHandler   = logging.StreamHandler()
@@ -726,6 +727,8 @@ class Calendar:
 
         flag = False
 
+        log.debug("modifier [%s] chunk1 [%s] chunk2 [%s] unit [%s] flag %s" % (modifier, chunk1, chunk2, unit, flag))
+
         if unit == 'month' or \
            unit == 'mth' or \
            unit == 'm':
@@ -809,7 +812,22 @@ class Calendar:
             flag          = True
             self.dateFlag = 1
 
-        if flag == False:
+        if not flag:
+            if modifier == 'eom':
+                self.modifierFlag = False
+                dy                = self.ptc.daysInMonth(mth, yr)
+                sourceTime        = (yr, mth, dy, 9, 0, 0, wd, yd, isdst)
+                self.dateFlag     = 2
+                flag              = True
+            elif modifier == 'eoy':
+                self.modifierFlag = False
+                mth               = 12
+                dy                = self.ptc.daysInMonth(mth, yr)
+                sourceTime        = (yr, mth, dy, 9, 0, 0, wd, yd, isdst)
+                self.dateFlag     = 2
+                flag              = True
+
+        if not flag:
             m = self.ptc.CRE_WEEKDAY.match(unit)
             if m is not None:
                 wkdy          = m.group()
@@ -824,7 +842,6 @@ class Calendar:
 
                     if modifier in sources:
                         sourceTime = sources[modifier]
-
                 else:
                     wkdy       = self.ptc.WeekdayOffsets[wkdy]
                     diff       = self._CalculateDOWDelta(wd, wkdy, offset,
@@ -1923,7 +1940,7 @@ class Constants(object):
                             'CRE_DATERNG2':  self.DATERNG2,
                             'CRE_DATERNG3':  self.DATERNG3,
                           }
-        self.cre_keys = self.cre_source.keys()
+        self.cre_keys = list(self.cre_source.keys())
 
     def __getattr__(self, name):
         if name in self.cre_keys:
@@ -1977,7 +1994,7 @@ class Constants(object):
             values = {}
             source = self.re_sources[item]
 
-            for key in defaults.keys():
+            for key in list(defaults.keys()):
                 if key in source:
                     values[key] = source[key]
                 else:
