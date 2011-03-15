@@ -3,7 +3,7 @@ Installing parsedatetime
 
 python setup.py install
 
-Python 3.+ is required for parsedatetime v1.+
+Python 2.6+ is required for parsedatetime v1.+
 
 
 Running Unit Tests
@@ -24,23 +24,21 @@ The simple example of how to use parsedatetime is:
 
     cal.parse("tomorrow")
 
-More detailed examples can be found in the examples/
+More detailed examples can be found in the examples directory.
 
 
 Documentation
 -------------
 
-The generated documentation is included by default in the docs/
+The generated documentation is included by default in the docs
 directory and can also be viewed online at
 
     http://code-bear.com/code/parsedatetime/docs/index.html
 
-The docs can be generated (into the docs/ directory) using either
-of the two commands:
+The docs can be generated using either of the two commands:
 
     python setup.py doc
     epydoc --html --config epydoc.conf
-
 
 Notes
 -----
@@ -48,10 +46,6 @@ Notes
 The Calendar class has a member property named ptc which
 is created during the class init method to be an instance
 of parsedatetime_consts.CalendarConstants() 
-
-This code is under some serious refactoring as now it appears
-it will have more than one user.  Up until now I've been the
-only person to even look at the code so bear with me please :)
 
 History
 -------

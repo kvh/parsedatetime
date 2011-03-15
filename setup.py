@@ -2,7 +2,7 @@ from distutils.core import setup
 
 VERSION = '1.0.0'
 desc    = """Parse human-readable date/time text.
-Python 3.+ is required for parsedatetime v1.+
+Python 2.6+ is required for parsedatetime v1.+
 The simple example of how to use parsedatetime is:
 
     import parsedatetime as pdt
@@ -11,7 +11,8 @@ The simple example of how to use parsedatetime is:
 
     cal.parse("tomorrow")
 
-More detailed examples can be found in the examples/
+More detailed examples can be found in the examples
+directory.
 """
 
 setup(name='parsedatetime',
@@ -25,13 +26,20 @@ setup(name='parsedatetime',
         packages=['parsedatetime'],
         platforms=['Any'],
         long_description=desc,
-        classifiers=['Development Status :: 4 - Beta',
+        classifiers=['Development Status :: 5 - Production/Stable',
                      'Environment :: Library',
                      'Intended Audience :: Developers',
                      'License :: OSI Approved :: Apache Software License',
                      'Operating System :: OS Independent',
                      'Topic :: Text Processing',
                      'Topic :: Software Development :: Libraries :: Python Modules',
+                     'Programming Language :: Python :: 2.5',
+                     'Programming Language :: Python :: 2.6',
+                     'Programming Language :: Python :: 2.7',
+                     'Programming Language :: Python :: 3',
+                     'Programming Language :: Python :: 3.0',
+                     'Programming Language :: Python :: 3.1',
+                     'Programming Language :: Python :: 3.2',
                     ]
         )
 

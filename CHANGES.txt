@@ -1,3 +1,8 @@
+15 Mar 2011 - bear
+
+    Updated 1.0.0 code to work with 2.6+ (need to try 2.5) and also updated 
+    docs and other supporting code
+
 07 Sep 2009 - bear
 
     Created branches/python25 from current trunk to save the current code

@@ -5,7 +5,7 @@ parsedatetime uses a standard setup.py install method:
 This will install parsedatetime into your Python's site-packages
 location and make it available for import'ing
 
-Python 3.+ is required now for parsedatetime 1.+
+Python 2.6+ is required now for parsedatetime 1.+
 
 parsedatetime is a pure Python module so it does not require any
 compiler build step.
