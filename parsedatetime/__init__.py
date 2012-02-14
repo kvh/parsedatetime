@@ -32,7 +32,7 @@ echoFormatter = logging.Formatter('%(levelname)-8s %(message)s')
 log.addHandler(echoHandler)
 # log.addHandler(logging.NullHandler())
 
-log.setLevel(logging.DEBUG)
+#log.setLevel(logging.ERROR)
 
 pdtLocales = { 'icu':   pdt_locales.pdtLocale_icu,
                'en_US': pdt_locales.pdtLocale_en,
@@ -216,7 +216,7 @@ class Calendar:
         self.weekdyFlag    = False  # monday/tuesday/...
         self.dateStdFlag   = False  # 07/21/06
         self.dateStrFlag   = False  # July 21st, 2006
-        self.timeStdFlag   = False  # 5:50 
+        self.timeStdFlag   = False  # 5:50
         self.meridianFlag  = False  # am/pm
         self.dayStrFlag    = False  # tomorrow/yesterday/today/..
         self.timeStrFlag   = False  # lunch/noon/breakfast/...
@@ -323,7 +323,7 @@ class Calendar:
         return target.timetuple()
 
 
-    def parseDate(self, dateString):
+    def parseDate(self, dateString, sourceTime=None):
         """
         Parse short-form date strings::
 
@@ -335,7 +335,9 @@ class Calendar:
         @rtype:  struct_time
         @return: calculated C{struct_time} value of dateString
         """
-        yr, mth, dy, hr, mn, sec, wd, yd, isdst = time.localtime()
+        if not sourceTime:
+            sourceTime = time.localtime()
+        yr, mth, dy, hr, mn, sec, wd, yd, isdst = sourceTime
 
         # values pulled from regex's will be stored here and later
         # assigned to mth, dy, yr based on information from the locale
@@ -391,15 +393,14 @@ class Calendar:
            (dy > 0 and dy <= self.ptc.daysInMonth(mth, yr)):
             sourceTime = (yr, mth, dy, hr, mn, sec, wd, yd, isdst)
         else:
+            # not a valid date, set flags
             self.dateFlag = 0
             self.timeFlag = 0
-            sourceTime    = time.localtime() # return current time if date
-                                             # string is invalid
 
         return sourceTime
 
 
-    def parseDateText(self, dateString):
+    def parseDateText(self, dateString, sourceTime=None):
         """
         Parse long-form date strings::
 
@@ -413,7 +414,9 @@ class Calendar:
         @rtype:  struct_time
         @return: calculated C{struct_time} value of dateString
         """
-        yr, mth, dy, hr, mn, sec, wd, yd, isdst = time.localtime()
+        if not sourceTime:
+            sourceTime = time.localtime()
+        yr, mth, dy, hr, mn, sec, wd, yd, isdst = sourceTime
 
         currentMth = mth
         currentDy  = dy
@@ -445,10 +448,10 @@ class Calendar:
         if dy > 0 and dy <= self.ptc.daysInMonth(mth, yr):
             sourceTime = (yr, mth, dy, hr, mn, sec, wd, yd, isdst)
         else:
-            # Return current time if date string is invalid
+            print "nottt validdd"
+            # date is not valid, set flags
             self.dateFlag = 0
             self.timeFlag = 0
-            sourceTime    = time.localtime()
 
         return sourceTime
 
@@ -611,9 +614,7 @@ class Calendar:
 
             if (eflag != 0)  and (sflag != 0):
                 return (startDate, endDate, 1)
-        else:
-            # if range is not found
-            sourceTime = time.localtime()
+
 
             return (sourceTime, sourceTime, 0)
 
@@ -1081,17 +1082,19 @@ class Calendar:
 
         # Given string is in the format 07/21/2006
         if self.dateStdFlag:
-            sourceTime       = self.parseDate(s)
+            sourceTime       = self.parseDate(s, sourceTime)
             self.dateStdFlag = False
 
         # Given string is in the format  "May 23rd, 2005"
         if self.dateStrFlag:
-            sourceTime       = self.parseDateText(s)
+            sourceTime       = self.parseDateText(s, sourceTime)
             self.dateStrFlag = False
 
         # Given string is a weekday
         if self.weekdyFlag:
-            (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = now
+            if sourceTime is None:
+                sourceTime = now
+            (yr, mth, dy, hr, mn, sec, wd, yd, isdst) = sourceTime
 
             start = datetime.datetime(yr, mth, dy, hr, mn, sec)
             wkdy  = self.ptc.WeekdayOffsets[s]
@@ -1273,7 +1276,7 @@ class Calendar:
                 valid_date = False
                 for match in self.ptc.CRE_DATE3.finditer(s):
                     # to prevent "HH:MM(:SS) time strings" expressions from triggering
-                    # this regex, we checks if the month field exists in the searched 
+                    # this regex, we checks if the month field exists in the searched
                     # expression, if it doesn't exist, the date field is not valid
                     if match.group('mthname'):
                         m = self.ptc.CRE_DATE3.search(s, match.start())
@@ -1365,7 +1368,7 @@ class Calendar:
                         s    = '%s %s' % (chunk1, chunk2)
                         flag = True
                     else:
-                        parseStr = s 
+                        parseStr = s
 
             if parseStr == '':
                 # Weekday
@@ -1492,7 +1495,7 @@ class Calendar:
                     parseStr  = ''
 
         # String is not parsed at all
-        if totalTime is None or totalTime == sourceTime:
+        if totalTime is None:
             totalTime     = time.localtime()
             self.dateFlag = 0
             self.timeFlag = 0
