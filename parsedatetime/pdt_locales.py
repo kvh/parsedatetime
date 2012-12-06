@@ -53,7 +53,7 @@ class pdtLocale_base(object):
                                'thursday', 'friday', 'saturday', 'sunday',
                              ]
         self.shortWeekdays = [ 'mon', 'tues', 'wed',
-                               'th', 'fri', 'sat', 'sun',
+                               'thur', 'fri', 'sat', 'sun',
                              ]
         self.Months        = [ 'january', 'february', 'march',
                                'april',   'may',      'june',
@@ -100,7 +100,7 @@ class pdtLocale_base(object):
                              }
 
           # Used to adjust the returned date before/after the source
-        self.Modifiers = { 'from':      1,
+        self.Modifiers = { 'from':      2,
                            'before':   -1,
                            'after':     1,
                            'ago':      -1,
@@ -110,6 +110,7 @@ class pdtLocale_base(object):
                            'next':      1,
                            'previous': -1,
                            'in a':      2,
+                           'in an':      2,
                            'end of':    0,
                            'eod':       1,
                            'eom':       1,
