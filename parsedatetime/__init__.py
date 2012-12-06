@@ -10,7 +10,7 @@ Requires Python 2.6 or later
 __author__       = 'Mike Taylor (bear@code-bear.com)'
 __copyright__    = 'Copyright (c) 2004 Mike Taylor'
 __license__      = 'Apache v2.0'
-__version__      = '1.0.0'
+__version__      = '1.1.3'
 __contributors__ = [ 'Darshana Chhajed',
                      'Michael Lim (lim.ck.michael@gmail.com)',
                      'Bernd Zeimetz (bzed@debian.org)',
@@ -32,7 +32,7 @@ echoFormatter = logging.Formatter('%(levelname)-8s %(message)s')
 log.addHandler(echoHandler)
 # log.addHandler(logging.NullHandler())
 
-#log.setLevel(logging.ERROR)
+#log.setLevel(logging.DEBUG)
 
 pdtLocales = { 'icu':   pdt_locales.pdtLocale_icu,
                'en_US': pdt_locales.pdtLocale_en,
@@ -656,7 +656,9 @@ class Calendar:
         elif offset == 2:
             # no modifier is present.
             # i.e. string to be parsed is just DOW
-            if style == 1:
+            if wd == wkdy:
+                diff = 0
+            elif style == 1:
                 # next occurance of the DOW is calculated
                 if currentDayStyle == True:
                     if wkdy >= wd:
@@ -782,7 +784,7 @@ class Calendar:
                 sourceTime = target.timetuple()
             else:
                 start      = datetime.datetime(yr, mth, dy, 9, 0, 0)
-                target     = start + datetime.timedelta(days=offset)
+                target     = start + datetime.timedelta(days=1)
                 sourceTime = target.timetuple()
 
             flag          = True
@@ -792,9 +794,41 @@ class Calendar:
            unit == 'hr':
             if offset == 0:
                 sourceTime = (yr, mth, dy, hr, 0, 0, wd, yd, isdst)
+            if offset ==2:
+                start      = datetime.datetime(yr, mth, dy, hr, mn, sec)
+                target     = start + datetime.timedelta(hours=1)
+                sourceTime = target.timetuple()
             else:
                 start      = datetime.datetime(yr, mth, dy, hr, 0, 0)
-                target     = start + datetime.timedelta(hours=offset)
+                target     = start + datetime.timedelta(hours=1)
+                sourceTime = target.timetuple()
+
+            flag          = True
+            self.timeFlag = 2
+
+        if unit == 'minute' or \
+           unit == 'mn':
+            if offset == 0:
+                sourceTime = (yr, mth, dy, hr, mn, 0, wd, yd, isdst)
+            if offset == 2:
+                start      = datetime.datetime(yr, mth, dy, hr, mn, sec)
+                target     = start + datetime.timedelta(minutes=1)
+                sourceTime = target.timetuple()
+            else:
+                start      = datetime.datetime(yr, mth, dy, hr, mn, 0)
+                target     = start + datetime.timedelta(minutes=1)
+                sourceTime = target.timetuple()
+
+            flag          = True
+            self.timeFlag = 2
+
+        if unit == 'second' or \
+           unit == 'sec':
+            if offset == 0:
+                sourceTime = (yr, mth, dy, hr, mn, 0, wd, yd, isdst)
+            else:
+                start      = datetime.datetime(yr, mth, dy, hr, mn, sec)
+                target     = start + datetime.timedelta(seconds=1)
                 sourceTime = target.timetuple()
 
             flag          = True
@@ -1069,6 +1103,11 @@ class Calendar:
                 hr, mn, sec = _extract_time(m)
             if hr == 24:
                 hr = 0
+
+            # we have no am/pm information, so we assume the most likely _human_
+            # time
+            if hr < 6:
+                hr += 12
 
             if hr > 24 or mn > 59 or sec > 59:
                 # invalid time
@@ -1814,7 +1853,7 @@ class Constants(object):
                                          (?P<units>((%(units)s)s?))
                                         ))''' % self.locale.re_values
         self.RE_QUNITS    = r'''(?P<qty>(-?\d+\s?
-                                         (?P<qunits>%(qunits)s)
+                                         (?P<qunits>%(qunits)s)\b
                                          (\s?|,|$)
                                         ))''' % self.locale.re_values
         # self.RE_MODIFIER  = r'''(\s?|^)
